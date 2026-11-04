@@ -1,0 +1,359 @@
+<title>Six Factors of a Life</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=STIX+Two+Text:ital,wght@0,400;0,600;1,400;1,600&family=Schibsted+Grotesk:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: a mathematician's notebook. Squared paper, a left margin rule, propositions set as boxed statements with a live "demonstration" pane beside each. */
+:root{
+  --paper:#f7f8fb; --grid:#e3e8f2; --card:#ffffff; --ink:#1b2233; --muted:#596277; --rule:#d8473b; --line:#d3d9e6;
+  --pen:#2643a3; --pencil:#7b8496; --hi:#fff1a8; --green:#1f7a5a; --soft:#e9eefb;
+  --serif:"STIX Two Text","Cambria Math",Georgia,serif; --sans:"Schibsted Grotesk","Segoe UI",system-ui,sans-serif; --mono:"JetBrains Mono",ui-monospace,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --paper:#141b17; --grid:#1f2a24; --card:#18221d; --ink:#e7eee9; --muted:#9fb1a7; --rule:#ff8a78; --line:#2b3a32;
+  --pen:#9fb7ff; --pencil:#7f9087; --hi:#4a4314; --green:#6fd3a8; --soft:#1e2b25; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --paper:#141b17; --grid:#1f2a24; --card:#18221d; --ink:#e7eee9; --muted:#9fb1a7; --rule:#ff8a78; --line:#2b3a32;
+  --pen:#9fb7ff; --pencil:#7f9087; --hi:#4a4314; --green:#6fd3a8; --soft:#1e2b25; color-scheme:dark}
+*{box-sizing:border-box}
+body{background-color:var(--paper);background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:24px 24px;color:var(--ink);font:17px/1.7 var(--serif);margin:0}
+.wrap{max-width:1100px;margin:0 auto;padding-block:34px 80px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+h1,h2,h3{font-family:var(--serif);font-weight:400;margin:0;line-height:1.1;text-wrap:balance}
+h1{font-size:clamp(46px,7.5vw,92px);letter-spacing:-.01em}
+h1 i{color:var(--pen)}
+h2{font-size:clamp(28px,3.6vw,40px)}
+p{margin:0 0 13px;max-width:68ch}
+.lab{font:500 12px/1.4 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.m{font-family:var(--serif);font-style:italic;white-space:nowrap}
+.m b{font-style:normal;font-weight:400}
+:focus-visible{outline:3px solid var(--pen);outline-offset:3px}
+.margin{border-left:2px solid var(--rule);padding-left:22px}
+.top{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:40px;align-items:end;margin-bottom:36px}
+.top p{font-size:18.5px;color:var(--muted)}
+.abstract{background:var(--card);border:1px solid var(--line);border-radius:6px;padding:20px 24px;font-size:16.5px}
+.abstract .lab{margin-bottom:6px}
+/* Theorem display */
+.thm{background:var(--card);border:1.5px solid var(--ink);border-radius:4px;padding:22px 24px;margin:26px 0}
+.thm .head{font:600 15px var(--sans);letter-spacing:.02em;margin-bottom:10px}
+.thm .head i{font-family:var(--serif);font-weight:400}
+.product{display:flex;flex-wrap:wrap;align-items:center;gap:8px 10px;font:italic 400 clamp(22px,3vw,32px)/1.4 var(--serif)}
+.factor{all:unset;cursor:pointer;display:inline-flex;flex-direction:column;align-items:center;padding:4px 10px 6px;border-radius:6px;border:1px dashed transparent;transition:background .2s,border-color .2s}
+.factor small{font:500 10.5px var(--mono);letter-spacing:.08em;text-transform:uppercase;font-style:normal;color:var(--muted);margin-top:2px}
+.factor:hover,.factor[aria-pressed="true"]{background:var(--hi);border-color:var(--ink)}
+.factor:focus-visible{outline:3px solid var(--pen)}
+.times{color:var(--pencil)}
+.fnote{font-size:15.5px;color:var(--muted);margin-top:12px;min-height:3.4em}
+/* Proposition sections */
+.prop{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:30px;margin-top:62px;align-items:start}
+.statement{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--pen);border-radius:4px;padding:18px 20px;margin:14px 0}
+.statement .head{font:600 14px var(--sans);margin-bottom:6px}
+.why{font-size:16px;color:var(--muted)}
+.demo{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:16px;position:sticky;top:calc(14px + env(safe-area-inset-top,0px))}
+.demo .lab{margin-bottom:8px}
+.demo svg{display:block;width:100%;height:auto}
+.demo svg text{font:12px var(--mono);fill:var(--muted)}
+.demo svg .t{font:italic 14px var(--serif);fill:var(--ink)}
+.ctl{display:grid;gap:3px;margin-top:10px}
+.ctl label{display:flex;justify-content:space-between;gap:10px;font:500 13.5px var(--sans)}
+.ctl output{font:500 13px var(--mono);color:var(--pen)}
+.ctl input{width:100%;accent-color:var(--pen)}
+.seg{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
+.seg button{all:unset;cursor:pointer;font:500 13px var(--sans);border:1px solid var(--line);border-radius:30px;padding:5px 11px;background:var(--card)}
+.seg button[aria-pressed="true"]{border-color:var(--pen);background:var(--soft);color:var(--pen)}
+.seg button:focus-visible{outline:3px solid var(--pen)}
+.readout{font:500 14px var(--sans);margin-top:10px;color:var(--ink)}
+.readout b{font:500 15px var(--mono);color:var(--pen)}
+.qed{float:right;font-family:var(--serif)}
+section.calib{margin-top:70px}
+table{border-collapse:collapse;width:100%;font:15px var(--sans);background:var(--card)}
+th,td{padding:9px 12px;border-bottom:1px solid var(--line);text-align:right;font-variant-numeric:tabular-nums}
+th:first-child,td:first-child{text-align:left}
+thead th{font:500 11.5px var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.tablewrap{overflow-x:auto;border:1px solid var(--line);border-radius:6px;margin-top:14px}
+.refs{font:14px/1.6 var(--sans);color:var(--muted);columns:2 320px;column-gap:32px;margin-top:50px;border-top:1px solid var(--line);padding-top:16px}
+.refs p{break-inside:avoid;margin-bottom:8px}
+@media(max-width:860px){.top,.prop{grid-template-columns:minmax(0,1fr)}.demo{position:static}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+
+<div class="wrap">
+  <div class="top margin">
+    <div><div class="lab">Working paper · theory</div><h1>Six factors<br>of a <i>life</i></h1></div>
+    <p>A visual companion to <i>One Price for a Healthy Year: A Life-Cycle Decomposition of the Gap Between the Value of a Statistical Life and the Value of a QALY</i>. Each result in the paper comes with a small working demonstration.</p>
+  </div>
+
+  <div class="abstract margin">
+    <div class="lab">The question</div>
+    <p style="margin:0">New Zealand's transport agency values a statistical life at NZ$12.5 million. Spread over a 40-year-old's discounted, quality-adjusted remaining life, that is about NZ$516,000 per QALY. The Treasury values a QALY at about NZ$36,000. The paper asks what theory says each number measures, and splits the fourteen-fold gap into parts that can each be measured.</p>
+  </div>
+
+  <div class="thm">
+    <div class="head">Theorem 1 · <i>exact decomposition</i></div>
+    <div class="product" role="group" aria-label="The six factors">
+      <span><span class="m">G</span> =</span>
+      <button type="button" class="factor" data-f="arith"><span>DQALE / LE</span><small>arithmetic</small></button><span class="times">×</span>
+      <button type="button" class="factor" data-f="n"><span>N</span><small>net contribution</small></button><span class="times">×</span>
+      <button type="button" class="factor" data-f="sigma"><span>σ</span><small>state dependence</small></button><span class="times">×</span>
+      <button type="button" class="factor" data-f="pi"><span>π</span><small>context</small></button><span class="times">×</span>
+      <button type="button" class="factor" data-f="m"><span>M</span><small>measurement</small></button><span class="times">×</span>
+      <button type="button" class="factor" data-f="lam"><span>λ</span><small>budget</small></button>
+    </div>
+    <p class="fnote" id="fnote">G is the road VSL divided by (health threshold × remaining life expectancy). Select a factor to see what it is and which result pins it down.</p>
+  </div>
+
+  <!-- Proposition 1 -->
+  <div class="prop" id="p1">
+    <div>
+      <div class="lab">Proposition 1 and Remark 1</div>
+      <h2>When a statistical life is a stack of QALYs</h2>
+      <div class="statement"><div class="head">Proposition 1 (common value)</div>Suppose (L) utility at reference consumption is proportional to quality of life, <span class="m">u(c̄, h) = Q(h) u(c̄, h*)</span>, and (M) the marginal utility of consumption does not depend on health. Then <span class="m">VSL<sub>a</sub> = v* · DQALE<sub>a</sub> + NC<sub>a</sub></span>, and willingness to pay for better health is <span class="m">v*</span> per discounted QALY. <span class="qed">∎</span></div>
+      <p class="why">Each future year enters the VSL with a weight. Under L and M that weight is quality of life, Q. Under the popular multiplicative form <span class="m">u = Q(h) w(c)</span>, condition M fails. People then shift consumption toward healthy years, and each year is weighted by <span class="m">Q<sup>1/η</sup></span> instead, where η is the curvature of utility.</p>
+      <p class="why">Dividing a VSL by DQALE therefore assumes M as well as L. This is the restriction that Bleichrodt and Quiggin's equivalence quietly needs.</p>
+    </div>
+    <div class="demo">
+      <div class="lab">Demonstration · weight on each remaining year, age 40</div>
+      <svg id="d1" viewBox="0 0 480 230" role="img" aria-label="Weights on remaining life-years under different utility forms"></svg>
+      <div class="seg" id="d1form" role="group" aria-label="Utility form"><button type="button" data-v="LM" aria-pressed="true">L and M hold: weight = Q</button><button type="button" data-v="mult" aria-pressed="false">Multiplicative: weight = Q<sup>1/η</sup></button><button type="button" data-v="ly" aria-pressed="false">Life-years: weight = 1</button></div>
+      <div class="ctl" id="d1eta"><label for="eta">η · curvature of utility <output id="eta-o">0.6</output></label><input id="eta" type="range" min="0.2" max="0.95" step="0.05" value="0.6"></div>
+      <p class="readout" id="d1r"></p>
+    </div>
+  </div>
+
+  <!-- Proposition 2-3 -->
+  <div class="prop" id="p2">
+    <div>
+      <div class="lab">Propositions 2 and 3</div>
+      <h2>Why the bias only runs one way</h2>
+      <div class="statement"><div class="head">Proposition 2 (one-signed bias)</div>If L holds but the marginal utility of consumption depends on health, then with optimal consumption <span class="m">ν(t) ≥ v* Q(h(t)) + y(t) − c̄</span>, with equality only if consumption does not move. So the VSL can only exceed its QALY-consistent benchmark. <span class="qed">∎</span></div>
+      <div class="statement"><div class="head">Proposition 3 (it is second-order)</div>If consumption moves by a fraction δ, the excess is <span class="m">(η/2) δ² c̄</span>: about 1% of a healthy year's value for δ = 0.2, η = 1.5 and <span class="m">v*/c̄</span> = 3. <span class="qed">∎</span></div>
+      <p class="why">The proof is the picture on the right. A concave utility curve always lies below its tangent lines. When health changes the marginal utility of money, the person moves along the curve to a new consumption level <span class="m">c<sub>t</sub></span>. The tangent at <span class="m">c<sub>t</sub></span> passes above the curve at <span class="m">c̄</span>, and that overshoot is exactly how much the life-year is worth beyond its QALY benchmark. Moving left or right makes no difference: the gap is never negative, and it shrinks with the square of the distance.</p>
+    </div>
+    <div class="demo">
+      <div class="lab">Demonstration · the tangent-line proof</div>
+      <svg id="d2" viewBox="0 0 480 260" role="img" aria-label="Concave utility curve, tangent at shifted consumption, and the gap at reference consumption"></svg>
+      <div class="ctl"><label for="delta">δ · consumption shift caused by health <output id="delta-o">−20%</output></label><input id="delta" type="range" min="-0.5" max="0.5" step="0.01" value="-0.2"></div>
+      <div class="ctl"><label for="eta2">η · curvature <output id="eta2-o">1.5</output></label><input id="eta2" type="range" min="0.5" max="4" step="0.1" value="1.5"></div>
+      <p class="readout" id="d2r"></p>
+    </div>
+  </div>
+
+  <!-- Proposition 4 -->
+  <div class="prop" id="p4">
+    <div>
+      <div class="lab">Proposition 4</div>
+      <h2>Two kinds of context premium, two age profiles</h2>
+      <div class="statement"><div class="head">Proposition 4 (context premia)</div><span class="m">π<sub>k,a</sub> = ω<sub>k</sub> (1 + α<sub>k</sub> D<sub>a,T</sub> / (μ VSL<sup>0</sup><sub>a</sub>))</span>. Misperception ω is flat in age. The anxiety premium grows with age as remaining healthy life shrinks. <span class="qed">∎</span></div>
+      <p class="why">People pay more to avoid dreaded or involuntary deaths. Part of that premium is <b>anxiety</b> felt while exposed. Anxiety is a real welfare cost and belongs in appraisal. Part is <b>misperception</b>: a vivid risk feels larger than it is. A planner should correct a misperception, not pay for it.</p>
+      <p class="why">The two parts are separable in data because they behave differently with age. Anxiety is felt for as long as the exposure lasts, whatever one's age, so it is a larger share of a smaller remaining life for older people.</p>
+    </div>
+    <div class="demo">
+      <div class="lab">Demonstration · context premium by age</div>
+      <svg id="d4" viewBox="0 0 480 230" role="img" aria-label="Context premium by age, split into misperception and anxiety"></svg>
+      <div class="ctl"><label for="omega">ω · misperception <output id="omega-o">1.15</output></label><input id="omega" type="range" min="1" max="2" step="0.05" value="1.15"></div>
+      <div class="ctl"><label for="alpha">α · anxiety (as a share of a 40-year-old's VSL) <output id="alpha-o">10%</output></label><input id="alpha" type="range" min="0" max="0.5" step="0.01" value="0.1"></div>
+      <p class="readout" id="d4r"></p>
+    </div>
+  </div>
+
+  <!-- Proposition 5 -->
+  <div class="prop" id="p5">
+    <div>
+      <div class="lab">Proposition 5</div>
+      <h2>How scope insensitivity inflates a VSL</h2>
+      <div class="statement"><div class="head">Proposition 5 (measurement factor)</div>If stated willingness to pay is <span class="m">β Δp<sup>θ</sup></span>, a VSL measured with risk changes of size <span class="m">Δp<sub>s</sub></span> and applied to policies of size <span class="m">Δp<sub>0</sub></span> is inflated by <span class="m">M = (Δp<sub>s</sub>/Δp<sub>0</sub>)<sup>θ−1</sup></span>. <span class="qed">∎</span></div>
+      <p class="why">Theory says willingness to pay for a tiny risk reduction should be proportional to its size: twice the risk reduction, twice the money. Survey answers are often much flatter than that. Dividing a flat answer by a very small risk gives a very large VSL. Testing two sample groups with different risk sizes reveals θ, and the inflation can then be removed.</p>
+    </div>
+    <div class="demo">
+      <div class="lab">Demonstration · stated WTP against risk reduction</div>
+      <svg id="d5" viewBox="0 0 480 230" role="img" aria-label="Willingness to pay curve with exponent theta compared with proportionality"></svg>
+      <div class="ctl"><label for="theta">θ · scope elasticity <output id="theta-o">0.5</output></label><input id="theta" type="range" min="0.1" max="1" step="0.05" value="0.5"></div>
+      <div class="ctl"><label for="ratio">Survey risk ÷ policy risk <output id="ratio-o">1/9</output></label><input id="ratio" type="range" min="0.05" max="1" step="0.01" value="0.111"></div>
+      <p class="readout" id="d5r"></p>
+    </div>
+  </div>
+
+  <!-- Proposition 6 -->
+  <div class="prop" id="p6">
+    <div>
+      <div class="lab">Proposition 6</div>
+      <h2>A threshold is v* divided by a shadow price</h2>
+      <div class="statement"><div class="head">Proposition 6 (decision rule)</div>Fund project <span class="m">j</span> in sector <span class="m">s</span> if <span class="m">v* Σ π̃<sub>k</sub> ΔQ<sub>jk</sub> + ΔY<sub>j</sub> ≥ λ<sub>s</sub> C<sub>j</sub></span>. For pure health projects this is a cost-per-QALY threshold <span class="m">k<sub>s</sub> = v*/λ<sub>s</sub></span>. Efficiency requires every <span class="m">λ<sub>s</sub></span> to equal the marginal cost of public funds. <span class="qed">∎</span></div>
+      <p class="why">A low health threshold does not mean health is worth less in hospitals than on roads. It means the health budget is tight: each health dollar has a high shadow price λ. Moving a dollar from a sector with a low λ to one with a high λ raises welfare by the difference.</p>
+    </div>
+    <div class="demo">
+      <div class="lab">Demonstration · same v*, different budgets</div>
+      <svg id="d6" viewBox="0 0 480 220" role="img" aria-label="Thresholds implied by one v star and different sector shadow prices"></svg>
+      <div class="ctl"><label for="vs">v* · common value of a healthy year <output id="vs-o">NZ$143k</output></label><input id="vs" type="range" min="40000" max="520000" step="1000" value="143000"></div>
+      <p class="readout" id="d6r"></p>
+    </div>
+  </div>
+
+  <section class="calib" aria-labelledby="cal-h">
+    <div class="lab">Section 6 · New Zealand calibration</div>
+    <h2 id="cal-h">The gap is 7.96. The arithmetic makes it bigger.</h2>
+    <p class="why" style="margin-top:12px">At age 40 and a 2% discount rate, 43.6 years of remaining life are worth 24.2 discounted QALYs. The arithmetic factor is therefore 0.556, and the other factors must multiply to 14.3. Three reconciliations, none an estimate:</p>
+    <div class="tablewrap"><table><thead><tr><th>Scenario</th><th>π</th><th>M</th><th>λ<sub>health</sub></th><th>Implied v*</th><th>What it would mean</th></tr></thead><tbody>
+      <tr><td>A · the budget explains everything</td><td>1.0</td><td>1.0</td><td>14.3</td><td>NZ$516k</td><td style="text-align:left">Health spending at the margin is fourteen times too scarce</td></tr>
+      <tr><td>B · measurement and budget</td><td>1.2</td><td>3.0</td><td>4.0</td><td>NZ$143k</td><td style="text-align:left">Close to the UK Green Book value; the road VSL is inflated about threefold by survey design</td></tr>
+      <tr><td>C · context, measurement and budget</td><td>2.0</td><td>1.5</td><td>4.8</td><td>NZ$172k</td><td style="text-align:left">A large dread premium that citizens would need to endorse</td></tr>
+    </tbody></table></div>
+    <div class="demo" style="position:static;margin-top:22px">
+      <div class="lab">Figure 1 · the v* implied by a constant NZ$12.5m VSL, by age</div>
+      <svg id="fig1" viewBox="0 0 900 280" role="img" aria-label="Implied value per discounted QALY by age at three discount rates"></svg>
+      <p class="why" style="margin:8px 0 0">Under Proposition 1 this line should be flat. A VSL that is the same at every age implies that a healthy year is worth more than three times as much at 70 as at 10. Either the VSL should fall with age, or v* is not common. The survey's hypothesis H1 tests this directly.</p>
+    </div>
+  </section>
+
+  <div class="refs">
+    <p><b>The paper.</b> Henderson A. One Price for a Healthy Year: a life-cycle decomposition of the gap between the value of a statistical life and the value of a QALY. Working paper draft, November 2026. Research repository, <code>papers/cvhy-theory/</code>.</p>
+    <p>Rosen S. The value of changes in life expectancy. <i>J Risk Uncertain</i> 1988;1:285–304.</p>
+    <p>Murphy KM, Topel RH. The value of health and longevity. <i>J Polit Econ</i> 2006;114(5):871–904.</p>
+    <p>Bleichrodt H, Quiggin J. Life-cycle preferences over consumption and health. <i>J Health Econ</i> 1999;18(6):681–708.</p>
+    <p>Finkelstein A, Luttmer EFP, Notowidigdo MJ. What good is wealth without health? <i>J Eur Econ Assoc</i> 2013;11(S1):221–258.</p>
+    <p>Pliskin JS, Shepard DS, Weinstein MC. Utility functions for life years and health status. <i>Oper Res</i> 1980;28(1):206–224.</p>
+    <p>Claxton K, et al. Methods for the estimation of the NICE cost effectiveness threshold. <i>Health Technol Assess</i> 2015;19(14).</p>
+    <p>Portney PR. Trouble in Happyville. <i>J Policy Anal Manage</i> 1992;11(1):131–132.</p>
+    <p><b>Numbers.</b> NZTA VSL NZ$12.5m (2023). NZ Treasury CBAx QALY ≈ NZ$36k. Life expectancy and quality norms are approximate. All demonstration parameters are illustrative.</p>
+  </div>
+</div>
+
+<script>
+(() => {
+  const $ = id => document.getElementById(id);
+  const css = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+  const fmt = (n, d = 0) => n.toLocaleString('en-NZ', {maximumFractionDigits: d, minimumFractionDigits: d});
+  const money = n => n >= 1e6 ? `NZ$${fmt(n / 1e6, 2)}m` : `NZ$${fmt(n / 1e3)}k`;
+  const LE = [[0, 82.5], [5, 77.9], [20, 63.2], [40, 43.6], [60, 25.0], [70, 16.7], [80, 9.6], [90, 4.5], [100, 2.2]];
+  const QN = [[0, .94], [20, .93], [40, .89], [60, .83], [70, .80], [80, .74], [100, .68]];
+  const ip = (t, x) => { for (let i = 1; i < t.length; i++) if (x <= t[i][0]) { const [a, ya] = t[i - 1], [b, yb] = t[i]; return ya + (yb - ya) * (x - a) / (b - a); } return t.at(-1)[1]; };
+  const dq = (age, r, pow = 1, flat = false) => { const e = ip(LE, age); let s = 0; for (let t = 0; t < Math.ceil(e); t++) { const w = Math.min(1, e - t); s += w * (flat ? 1 : Math.pow(ip(QN, age + t + .5), pow)) * (1 + r) ** -(t + .5); } return s; };
+
+  // ---------------- Theorem factor notes
+  const NOTES = {
+    arith: 'Arithmetic: discounting and quality adjustment of the years at stake. Below 1 whenever r > 0 or Q < 1; 0.556 for a 40-year-old at 2%. It widens the gap rather than closing it.',
+    n: 'Net contribution N: the annuity term in Lemma 1, from income minus consumption over remaining life. Conventionally set to 1 in reference cases.',
+    sigma: 'State dependence σ ≥ 1 (Propositions 2–3): if illness changes the marginal utility of money, the VSL can only rise above v* × DQALE, and only by a second-order amount, about 1% at realistic values.',
+    pi: 'Context premium π (Proposition 4): misperception ω, flat in age, multiplied by an anxiety term that rises with age. Only the anxiety part belongs in appraisal.',
+    m: 'Measurement M (Proposition 5): scope insensitivity in stated preferences inflates a VSL by (Δp_s/Δp_0)^(θ−1). Identified by testing different risk sizes in separate sample groups.',
+    lam: 'Budget shadow price λ (Proposition 6): v* divided by the health threshold. Above 1 when the health budget is constrained; efficiency requires the same λ in every sector.'
+  };
+  document.querySelectorAll('.factor').forEach(b => b.addEventListener('click', () => {
+    document.querySelectorAll('.factor').forEach(x => x.setAttribute('aria-pressed', String(x === b)));
+    $('fnote').textContent = NOTES[b.dataset.f];
+  }));
+
+  // ---------------- Demo 1: weights on years
+  let form = 'LM';
+  function d1() {
+    const eta = Number($('eta').value); $('eta-o').textContent = fmt(eta, 2);
+    $('d1eta').hidden = form !== 'mult';
+    const age = 40, e = ip(LE, age), n = Math.ceil(e), W = 480, H = 230, L = 34, R = 10, T = 16, B = 34, bw = (W - L - R) / n;
+    const Y = v => T + (1 - v) * (H - T - B);
+    let out = [0, .5, 1].map(v => `<path d="M${L} ${Y(v)}H${W - R}" stroke="${css('--line')}"/><text x="${L - 6}" y="${Y(v) + 4}" text-anchor="end">${v}</text>`).join('');
+    for (let t = 0; t < n; t++) {
+      const q = ip(QN, age + t + .5), w = form === 'LM' ? q : form === 'mult' ? Math.pow(q, 1 / eta) : 1;
+      out += `<rect x="${L + t * bw + .5}" y="${Y(q)}" width="${Math.max(1, bw - 1)}" height="${H - B - Y(q)}" fill="${css('--soft')}"/>`;
+      out += `<rect x="${L + t * bw + bw * .2}" y="${Y(w)}" width="${Math.max(1, bw * .6)}" height="${H - B - Y(w)}" fill="${css('--pen')}"/>`;
+    }
+    out += `<text x="${L}" y="${H - 12}">age 40</text><text x="${W - R}" y="${H - 12}" text-anchor="end">age ${fmt(age + e)}</text><text x="${L + 6}" y="${T + 10}" class="t">pale: Q · ink: weight used by the VSL</text>`;
+    $('d1').innerHTML = out;
+    const base = dq(40, .02), used = form === 'LM' ? base : form === 'mult' ? dq(40, .02, 1 / eta) : dq(40, .02, 1, true);
+    $('d1r').innerHTML = `VSL ÷ DQALE gives <b>${money(12.5e6 / base)}</b> per QALY, but the VSL actually covers ${fmt(used, 1)} weighted years, so the true v* is <b>${money(12.5e6 / used)}</b>.${form === 'LM' ? ' The two agree only under L and M.' : ''}`;
+  }
+  $('d1form').addEventListener('click', e => { const b = e.target.closest('button'); if (!b) return; form = b.dataset.v; document.querySelectorAll('#d1form button').forEach(x => x.setAttribute('aria-pressed', String(x === b))); d1(); });
+  $('eta').addEventListener('input', d1);
+
+  // ---------------- Demo 2: tangent proof
+  function d2() {
+    const delta = Number($('delta').value), eta = Number($('eta2').value);
+    $('delta-o').textContent = `${delta > 0 ? '+' : ''}${fmt(delta * 100)}%`; $('eta2-o').textContent = fmt(eta, 1);
+    const u = c => eta === 1 ? Math.log(c) : (Math.pow(c, 1 - eta) - 1) / (1 - eta), up = c => Math.pow(c, -eta);
+    const cbar = 1, ct = 1 + delta, W = 480, H = 260, L = 40, R = 14, T = 16, B = 36, c0 = .35, c1 = 1.65;
+    const ys = []; for (let i = 0; i <= 120; i++) ys.push(u(c0 + (c1 - c0) * i / 120));
+    const lo = Math.min(...ys) - .1, hi = Math.max(...ys) + .1;
+    const X = c => L + (c - c0) / (c1 - c0) * (W - L - R), Y = v => T + (hi - v) / (hi - lo) * (H - T - B);
+    const curve = ys.map((v, i) => `${i ? 'L' : 'M'}${X(c0 + (c1 - c0) * i / 120).toFixed(1)},${Y(v).toFixed(1)}`).join('');
+    const tan = c => u(ct) + up(ct) * (c - ct);
+    const tline = `M${X(c0)},${Y(tan(c0))} L${X(c1)},${Y(tan(c1))}`;
+    const gap = tan(cbar) - u(cbar);
+    let out = `<path d="${curve}" fill="none" stroke="${css('--ink')}" stroke-width="2.4"/><path d="${tline}" stroke="${css('--rule')}" stroke-width="1.6" stroke-dasharray="6 4"/>`;
+    out += `<path d="M${X(cbar)} ${Y(u(cbar))}V${Y(tan(cbar))}" stroke="${css('--green')}" stroke-width="5" opacity=".8"/>`;
+    out += `<circle cx="${X(ct)}" cy="${Y(u(ct))}" r="5" fill="${css('--rule')}"/><circle cx="${X(cbar)}" cy="${Y(u(cbar))}" r="5" fill="${css('--ink')}"/>`;
+    out += `<path d="M${X(cbar)} ${H - B}V${T}" stroke="${css('--line')}" stroke-dasharray="2 4"/><text x="${X(cbar)}" y="${H - 14}" text-anchor="middle" class="t">c̄</text><text x="${X(ct)}" y="${H - 14}" text-anchor="middle" class="t">cₜ</text>`;
+    out += `<text x="${W - R}" y="${T + 12}" text-anchor="end" class="t">u(c)</text><text x="${X(c1) - 4}" y="${Y(tan(c1)) - 8}" text-anchor="end" style="fill:${css('--rule')}">tangent at cₜ</text>`;
+    if (Math.abs(delta) > .03) out += `<text x="${X(cbar) + 10}" y="${(Y(u(cbar)) + Y(tan(cbar))) / 2 + 4}" style="fill:${css('--green')}">gap ≥ 0</text>`;
+    $('d2').innerHTML = out;
+    const exact = gap / up(ct), approx = eta / 2 * delta * delta; // in units of c̄ (consumption)
+    $('d2r').innerHTML = `Excess value of the life-year: <b>${fmt(exact * 100, 2)}%</b> of annual consumption (second-order approximation ${fmt(approx * 100, 2)}%). With v* = 3 × consumption, that is <b>${fmt(exact / 3 * 100, 2)}%</b> of a healthy year's value.`;
+  }
+  ['delta', 'eta2'].forEach(id => $(id).addEventListener('input', d2));
+
+  // ---------------- Demo 4: context premium by age
+  function d4() {
+    const om = Number($('omega').value), al = Number($('alpha').value);
+    $('omega-o').textContent = fmt(om, 2); $('alpha-o').textContent = `${fmt(al * 100)}%`;
+    const ages = Array.from({length: 17}, (_, i) => 5 + i * 5), base40 = dq(40, .02);
+    // anxiety term = alpha × (DQALE40 / DQALEa): a fixed money premium over a shrinking base
+    const pi = a => om * (1 + al * base40 / dq(a, .02));
+    const W = 480, H = 230, L = 40, R = 14, T = 16, B = 34, mx = Math.max(2.2, ...ages.map(pi)) * 1.05;
+    const X = a => L + (a - 5) / 80 * (W - L - R), Y = v => T + (mx - v) / (mx - 1) * (H - T - B);
+    let out = [1, 1.5, 2, 2.5, 3].filter(v => v <= mx).map(v => `<path d="M${L} ${Y(v)}H${W - R}" stroke="${css('--line')}"/><text x="${L - 6}" y="${Y(v) + 4}" text-anchor="end">${v}</text>`).join('');
+    out += `<path d="M${X(5)} ${Y(om)}H${X(85)}" stroke="${css('--pencil')}" stroke-width="2" stroke-dasharray="5 4"/><text x="${X(85)}" y="${Y(om) - 6}" text-anchor="end">misperception ω (flat)</text>`;
+    out += `<path d="${ages.map((a, i) => `${i ? 'L' : 'M'}${X(a)},${Y(pi(a))}`).join('')}" fill="none" stroke="${css('--pen')}" stroke-width="2.6"/>`;
+    out += [5, 25, 45, 65, 85].map(a => `<text x="${X(a)}" y="${H - 12}" text-anchor="middle">${a}</text>`).join('') + `<text x="${L + 4}" y="${T + 10}" class="t">π by age</text>`;
+    $('d4').innerHTML = out;
+    $('d4r').innerHTML = `At age 20, π = <b>${fmt(pi(20), 2)}</b>; at age 70, π = <b>${fmt(pi(70), 2)}</b>. The rise with age reveals the anxiety share; the floor reveals misperception.`;
+  }
+  ['omega', 'alpha'].forEach(id => $(id).addEventListener('input', d4));
+
+  // ---------------- Demo 5: scope
+  function d5() {
+    const th = Number($('theta').value), ratio = Number($('ratio').value);
+    $('theta-o').textContent = fmt(th, 2); $('ratio-o').textContent = ratio > .98 ? '1' : `1/${fmt(1 / ratio, 1)}`;
+    const W = 480, H = 230, L = 40, R = 14, T = 16, B = 34, X = p => L + p * (W - L - R), Y = v => T + (1 - v) * (H - T - B);
+    // normalise so WTP at policy size p0 = 1 equals proportional benchmark
+    const wtp = p => Math.pow(p, th), prop = p => p;
+    const pts = f => Array.from({length: 101}, (_, i) => `${i ? 'L' : 'M'}${X(i / 100)},${Y(f(i / 100))}`).join('');
+    let out = `<path d="M${L} ${Y(0)}H${W - R}M${L} ${Y(0)}V${T}" stroke="${css('--line')}"/>`;
+    out += `<path d="${pts(prop)}" fill="none" stroke="${css('--pencil')}" stroke-width="2" stroke-dasharray="5 4"/><path d="${pts(wtp)}" fill="none" stroke="${css('--pen')}" stroke-width="2.6"/>`;
+    out += `<path d="M${X(ratio)} ${Y(0)}V${Y(wtp(ratio))}" stroke="${css('--rule')}"/><circle cx="${X(ratio)}" cy="${Y(wtp(ratio))}" r="5" fill="${css('--rule')}"/><circle cx="${X(1)}" cy="${Y(1)}" r="5" fill="${css('--ink')}"/>`;
+    out += `<text x="${X(ratio) + 6}" y="${H - 20}" style="fill:${css('--rule')}">survey Δpₛ</text><text x="${X(1) - 4}" y="${H - 20}" text-anchor="end">policy Δp₀</text><text x="${L + 6}" y="${T + 10}" class="t">stated WTP</text><text x="${X(.62)}" y="${Y(.62) + 18}">proportional (theory)</text>`;
+    $('d5').innerHTML = out;
+    const M = Math.pow(ratio, th - 1);
+    $('d5r').innerHTML = `VSL from the survey = WTP ÷ Δpₛ, which is the slope of the line from the origin to the red point. Inflation factor <b>M = ${fmt(M, 2)}×</b>.`;
+  }
+  ['theta', 'ratio'].forEach(id => $(id).addEventListener('input', d5));
+
+  // ---------------- Demo 6: thresholds
+  function d6() {
+    const vs = Number($('vs').value); $('vs-o').textContent = money(vs);
+    const sectors = [['Transport (VSL-based)', 516000], ['UK Green Book', 133000], ['NICE upper, 2026', 66500], ['NZ Treasury CBAx', 36000], ['NHS supply side', 24600]];
+    const W = 480, H = 220, L = 160, R = 70, T = 14, rowH = 38, mx = 4;
+    const X = v => L + Math.log10(v / 1e4) / Math.log10(1e6 / 1e4) * (W - L - R);
+    let out = '';
+    sectors.forEach(([n, k], i) => { const y = T + i * rowH, lam = vs / k;
+      out += `<text x="${L - 8}" y="${y + 16}" text-anchor="end" class="t" style="font-style:normal;font-family:${css('--sans')};font-size:13px">${n}</text><rect x="${L}" y="${y + 4}" width="${X(k) - L}" height="16" fill="${lam > 1.05 ? css('--pen') : lam < .95 ? css('--rule') : css('--green')}" opacity=".85"/><text x="${X(k) + 6}" y="${y + 16}">λ = ${fmt(lam, lam < 10 ? 2 : 1)}</text>`; });
+    out += `<path d="M${X(vs)} ${T - 4}V${T + sectors.length * rowH}" stroke="${css('--ink')}" stroke-width="2"/><text x="${X(vs)}" y="${T + sectors.length * rowH + 14}" text-anchor="middle" class="t">v*</text>`;
+    $('d6').innerHTML = out;
+    $('d6r').innerHTML = `Each bar is a published value per QALY, read as a threshold <i>k</i>. With one common v*, each implies λ = v*/k. A value above 1 means a dollar in that budget is worth more than a dollar of private consumption.`;
+  }
+  $('vs').addEventListener('input', d6);
+
+  // ---------------- Figure 1
+  function fig1() {
+    const W = 900, H = 280, L = 70, R = 30, T = 18, B = 36, ages = Array.from({length: 81}, (_, i) => 5 + i);
+    const lo = Math.log10(2e5), hi = Math.log10(3e6), X = a => L + (a - 5) / 80 * (W - L - R), Y = v => T + (hi - Math.log10(v)) / (hi - lo) * (H - T - B);
+    let out = [2e5, 5e5, 1e6, 2e6].map(v => `<path d="M${L} ${Y(v)}H${W - R}" stroke="${css('--line')}"/><text x="${L - 8}" y="${Y(v) + 4}" text-anchor="end">${money(v)}</text>`).join('');
+    [[0, '--pencil', '3 4'], [.02, '--pen', ''], [.035, '--rule', '7 4']].forEach(([r, c, d]) => {
+      out += `<path d="${ages.map((a, i) => `${i ? 'L' : 'M'}${X(a)},${Y(12.5e6 / dq(a, r))}`).join('')}" fill="none" stroke="${css(c)}" stroke-width="2.4" ${d ? `stroke-dasharray="${d}"` : ''}/><text x="${X(85) + 4}" y="${Y(12.5e6 / dq(85, r)) + 4}" style="fill:${css(c)}">${fmt(r * 100, 1)}%</text>`;
+    });
+    out += [5, 20, 40, 60, 85].map(a => `<text x="${X(a)}" y="${H - 12}" text-anchor="middle">age ${a}</text>`).join('');
+    $('fig1').innerHTML = out;
+  }
+
+  const all = () => { d1(); d2(); d4(); d5(); d6(); fig1(); };
+  matchMedia('(prefers-color-scheme: dark)').addEventListener?.('change', all);
+  new MutationObserver(all).observe(document.documentElement, {attributes: true, attributeFilter: ['data-theme']});
+  all();
+})();
+</script>
