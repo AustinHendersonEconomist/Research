@@ -15,3 +15,4 @@ Standalone interactive pages, published as Claude artifacts (private to the owne
 These files are artifact page bodies: the artifact host wraps them in `<html>/<head>/<body>`. Opening one directly in a browser also works.
 
 The CVHY research proposal and its explainer live in `papers/common-value-healthy-year/` (explainer artifact: https://claude.ai/artifact/VcYZDa9sShgEJqRVXD92cV).
+| `otepoti-cellar.html` | The Ōtepoti Cellar: southern NZ ferments field book | https://claude.ai/artifact/PbEi8GR87mJHEqngaJKFjr |

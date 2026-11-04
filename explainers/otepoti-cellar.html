@@ -1,0 +1,354 @@
+<title>The Ōtepoti Cellar</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;0,9..144,700;1,9..144,400&family=Hanken+Grotesk:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: a forager's field book. Hero is a radial sourcing chart centred on Dunedin; below, a seasonal wheel, recipe cards with a batch scaler, a sourcing ledger and a safety page. Palette from Otago: schist, tussock, thyme, kōwhai, bush and harbour. */
+:root{
+  --bg:#f3f1ea; --card:#fffdf8; --ink:#22281f; --muted:#5d6656; --line:#d9d6c8;
+  --schist:#6b7280; --tussock:#c9a24a; --thyme:#8a5a9e; --kowhai:#e0b21b; --bush:#2f6b47; --harbour:#2f6f8f; --berry:#9b2f4c; --clay:#b4602f;
+  --display:"Fraunces",Georgia,serif; --body:"Hanken Grotesk","Segoe UI",system-ui,sans-serif; --mono:"IBM Plex Mono",ui-monospace,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#161a15; --card:#1d221c; --ink:#ebe8dc; --muted:#a8ae9d; --line:#323a30;
+  --schist:#9aa3ae; --tussock:#e2bf68; --thyme:#c194d6; --kowhai:#f2cb4a; --bush:#6fbf8c; --harbour:#79b8d6; --berry:#e07a98; --clay:#e39a68; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#161a15; --card:#1d221c; --ink:#ebe8dc; --muted:#a8ae9d; --line:#323a30;
+  --schist:#9aa3ae; --tussock:#e2bf68; --thyme:#c194d6; --kowhai:#f2cb4a; --bush:#6fbf8c; --harbour:#79b8d6; --berry:#e07a98; --clay:#e39a68; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font:16.5px/1.65 var(--body);margin:0}
+.wrap{max-width:1180px;margin:0 auto;padding-block:30px 80px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+h1,h2,h3{font-family:var(--display);font-weight:500;margin:0;line-height:1.05;text-wrap:balance}
+h1{font-size:clamp(52px,9vw,116px);font-weight:300;letter-spacing:-.02em}
+h1 em{font-style:italic;color:var(--bush)}
+h2{font-size:clamp(32px,4.4vw,52px);font-weight:400}
+h3{font-size:24px}
+p{margin:0 0 12px;max-width:66ch}
+.lab{font:500 11.5px/1.4 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+:focus-visible{outline:3px solid var(--kowhai);outline-offset:3px}
+a{color:var(--harbour)}
+.hero{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);gap:30px;align-items:center}
+.hero p.lede{font-size:18.5px;color:var(--muted)}
+.chips{display:flex;flex-wrap:wrap;gap:7px;margin:14px 0}
+.chips button{all:unset;cursor:pointer;font:500 13px var(--body);border:1px solid var(--line);border-radius:30px;padding:6px 12px;background:var(--card);display:inline-flex;gap:7px;align-items:center}
+.chips button i{width:10px;height:10px;border-radius:50%;background:var(--c)}
+.chips button[aria-pressed="true"]{border-color:var(--ink);background:color-mix(in srgb,var(--c) 18%,var(--card))}
+.chips button:focus-visible{outline:3px solid var(--kowhai)}
+.radial{position:relative;background:var(--card);border:1px solid var(--line);border-radius:22px;padding:8px}
+#radial{display:block;width:100%;height:auto}
+#radial text{font:11px var(--mono);fill:var(--muted)}
+#radial .dot{cursor:pointer}
+#radial .dot:focus{outline:none}
+#radial .dot:focus circle.c,#radial .dot.sel circle.c{stroke:var(--ink);stroke-width:2.5}
+.detail{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--c,var(--bush));border-radius:12px;padding:16px 18px;margin-top:12px;min-height:150px}
+.detail h3{font-size:22px;margin:4px 0 6px}
+.detail .meta{font:500 12.5px var(--mono);color:var(--muted);margin-bottom:8px}
+.detail p{font-size:15px;margin:0 0 8px}
+.warn{color:var(--berry);font-weight:600}
+section{margin-top:76px}
+.lede{font-size:18px;color:var(--muted)}
+/* Calendar */
+.cal-wrap{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px;margin-top:16px;overflow-x:auto}
+#cal{display:block;min-width:760px;width:100%;height:auto}
+#cal text{font:11.5px var(--body);fill:var(--ink)}
+#cal .m{font:500 11px var(--mono);fill:var(--muted)}
+/* Recipes */
+.scaler{display:flex;flex-wrap:wrap;gap:12px 22px;align-items:center;margin:16px 0 4px}
+.scaler label{font:600 14px var(--body);display:flex;gap:10px;align-items:center}
+.scaler input{accent-color:var(--bush)}
+.scaler output{font:500 15px var(--mono);color:var(--bush);min-width:4ch}
+.recipes{display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));gap:18px;margin-top:16px}
+.recipe{background:var(--card);border:1px solid var(--line);border-radius:16px;overflow:hidden;display:flex;flex-direction:column}
+.recipe .band{height:8px;background:var(--c)}
+.recipe .body{padding:18px 20px 20px;display:flex;flex-direction:column;gap:8px;flex:1}
+.recipe .style{font:500 11.5px var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--c)}
+.recipe h3{font-size:26px}
+.recipe .story{font-size:14.5px;color:var(--muted);margin:0}
+.recipe table{border-collapse:collapse;width:100%;font-size:14px}
+.recipe td{padding:4px 0;border-bottom:1px dotted var(--line);vertical-align:top}
+.recipe td.q{text-align:right;font:500 13.5px var(--mono);white-space:nowrap;padding-left:10px}
+.recipe .stats{display:flex;gap:16px;flex-wrap:wrap;font:500 13px var(--mono);color:var(--ink);background:color-mix(in srgb,var(--c) 10%,transparent);border-radius:8px;padding:8px 10px}
+.recipe details{font-size:14.5px}
+.recipe summary{cursor:pointer;font-weight:600;padding:4px 0}
+.recipe ol{margin:6px 0 0;padding-left:20px}
+.recipe li{margin-bottom:4px}
+.tag{display:inline-block;font:500 11px var(--mono);border:1px solid var(--line);border-radius:4px;padding:1px 6px;margin-right:4px;color:var(--muted)}
+/* Calculator */
+.calc{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:24px;margin-top:16px}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:20px}
+.ctl{display:grid;gap:3px;margin-bottom:14px}
+.ctl label{display:flex;justify-content:space-between;gap:10px;font-weight:600;font-size:14px}
+.ctl output{font:500 14px var(--mono);color:var(--bush)}
+.ctl input,.ctl select{width:100%;accent-color:var(--bush)}
+.ctl select{font:inherit;padding:8px 10px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--ink);min-height:42px}
+.big{font:300 64px/1 var(--display);color:var(--bush)}
+.gauge{height:14px;border-radius:7px;background:linear-gradient(90deg,var(--harbour),var(--bush),var(--tussock),var(--clay),var(--berry));position:relative;margin:14px 0 6px}
+.gauge b{position:absolute;top:-5px;width:4px;height:24px;background:var(--ink);border-radius:2px;transform:translateX(-50%)}
+.gauge-l{display:flex;justify-content:space-between;font:500 11px var(--mono);color:var(--muted)}
+/* Ledger */
+.ledger{margin-top:16px;overflow-x:auto;border:1px solid var(--line);border-radius:14px;background:var(--card)}
+.ledger table{border-collapse:collapse;width:100%;min-width:880px;font-size:14px}
+.ledger th,.ledger td{padding:9px 12px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+.ledger thead th{font:500 11px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);position:sticky;top:0;background:var(--card)}
+.ledger td .dotc{display:inline-block;width:9px;height:9px;border-radius:50%;background:var(--c);margin-right:7px}
+.ledger td.km{font:500 13px var(--mono);white-space:nowrap}
+/* Safety */
+.safety{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin-top:16px}
+.safe{background:var(--card);border:1px solid var(--line);border-top:4px solid var(--c);border-radius:12px;padding:18px}
+.safe h3{font-size:21px;margin-bottom:8px}
+.safe p,.safe li{font-size:14.5px}
+.safe ul{margin:0;padding-left:18px}
+.kauru{background:color-mix(in srgb,var(--tussock) 14%,var(--card));border:1px solid var(--tussock);border-radius:16px;padding:22px 24px;margin-top:22px}
+.kauru h3{font-size:28px;margin-bottom:8px}
+.refs{font-size:13px;color:var(--muted);columns:2 320px;column-gap:32px;margin-top:40px;border-top:1px solid var(--line);padding-top:14px}
+.refs p{break-inside:avoid;margin-bottom:8px}
+@media(max-width:900px){.hero,.calc{grid-template-columns:minmax(0,1fr)}.safety{grid-template-columns:minmax(0,1fr)}}
+@media(max-width:420px){.recipes{grid-template-columns:minmax(0,1fr)}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+
+<div class="wrap">
+  <div class="hero">
+    <div>
+      <div class="lab">A field book for southern fermentation</div>
+      <h1>The Ōtepoti<br><em>cellar</em></h1>
+      <p class="lede">Meads, ales, sparkling ferments and spirits that could only come from around Dunedin. They draw on Central Otago thyme honey, Leith Valley elderflower, Harraways oats from Green Island, wilding Douglas fir tips, horopito from the southern bush, and Pinot pomace from Cromwell. The chart maps each ingredient by direction and distance from the city. Select a dot for its story, season and sourcing.</p>
+      <div class="chips" id="chips" role="group" aria-label="Filter ingredients"></div>
+      <div class="detail" id="detail" aria-live="polite"></div>
+    </div>
+    <div class="radial"><svg id="radial" viewBox="0 0 640 640" role="img" aria-label="Ingredients plotted by direction and distance from Dunedin"></svg></div>
+  </div>
+
+  <section aria-labelledby="season-h">
+    <div class="lab">When to gather</div>
+    <h2 id="season-h">The southern forager's year</h2>
+    <p class="lede">Seasons for Otago, roughly. Coastal Dunedin runs a few weeks behind Central Otago, and every year differs. The red line marks today.</p>
+    <div class="cal-wrap"><svg id="cal" viewBox="0 0 1000 560" role="img" aria-label="Seasonal calendar of ingredients"></svg></div>
+  </section>
+
+  <section aria-labelledby="rec-h">
+    <div class="lab">Recipes</div>
+    <h2 id="rec-h">Fourteen southern ferments</h2>
+    <p class="lede">Each recipe is a starting point to adapt, not a finished formula. Quantities scale with the batch size. Gravities are estimates: 1 kg of honey per litre adds about 0.292 to specific gravity, and malt is calculated at 72% mash efficiency. Measure your own.</p>
+    <div class="scaler"><label for="batch">Batch size <input id="batch" type="range" min="5" max="40" step="1" value="10"> <output id="batch-o">10 L</output></label><span class="lab">Spirit recipes are per litre of finished spirit and do not scale</span></div>
+    <div class="recipes" id="recipes"></div>
+  </section>
+
+  <section aria-labelledby="calc-h">
+    <div class="lab">Tool</div>
+    <h2 id="calc-h">Mead calculator</h2>
+    <div class="calc">
+      <div class="panel">
+        <div class="ctl"><label for="m-vol">Total volume <output id="m-vol-o"></output></label><input id="m-vol" type="range" min="4" max="60" value="10"></div>
+        <div class="ctl"><label for="m-honey">Honey <output id="m-honey-o"></output></label><input id="m-honey" type="range" min="0.5" max="20" step="0.1" value="3.2"></div>
+        <div class="ctl"><label for="m-fg">Finish <output id="m-fg-o"></output></label><input id="m-fg" type="range" min="0.996" max="1.040" step="0.001" value="1.008"></div>
+        <div class="ctl"><label for="m-yeast">Yeast</label><select id="m-yeast"><option value="14">Lalvin 71B · tolerates ~14% · fruity, softens acids</option><option value="15">Lalvin D47 · ~15% · floral; keep below 20 °C</option><option value="18">Lalvin EC-1118 · ~18% · clean, dry, robust</option><option value="12">Voss kveik · ~12% · fast and warm; good for session meads</option></select></div>
+      </div>
+      <div class="panel">
+        <div class="lab">Estimated</div>
+        <div class="big" id="m-abv">—</div>
+        <div class="gauge" aria-hidden="true"><b id="m-g"></b></div>
+        <div class="gauge-l"><span>session</span><span>hydromel</span><span>standard</span><span>sack</span></div>
+        <p id="m-txt" style="margin-top:12px"></p>
+        <p class="lab" style="margin-top:6px">Nutrients: a staggered organic schedule (TOSNA-style) at 24, 48 and 72 hours and at the 1/3 sugar break keeps honey ferments clean.</p>
+      </div>
+    </div>
+  </section>
+
+  <section aria-labelledby="ledger-h">
+    <div class="lab">Sourcing ledger</div>
+    <h2 id="ledger-h">Where every ingredient comes from</h2>
+    <p class="lede">Road distances from central Dunedin are approximate. "Buy" means a commercial or market source. "Forage" means wild, with the landowner's permission. "Ask" means a producer's by-product or a favour.</p>
+    <div class="ledger" tabindex="0" role="region" aria-label="Sourcing ledger"><table><thead><tr><th>Ingredient</th><th>Where</th><th>km</th><th>Season</th><th>How</th><th>What it brings · notes</th></tr></thead><tbody id="ledger"></tbody></table></div>
+  </section>
+
+  <section aria-labelledby="safe-h">
+    <div class="lab">Read before you forage or distil</div>
+    <h2 id="safe-h">Safety, law and respect</h2>
+    <div class="safety">
+      <div class="safe" style="--c:var(--berry)"><h3>Poisonous plants</h3><ul>
+        <li><b>Tutu</b> (<i>Coriaria</i>), common in Otago. Its glossy black berry clusters look edible, and the seeds and plant are deadly.</li>
+        <li><b>Hemlock</b> (<i>Conium</i>) grows on Otago roadsides and resembles elderflower and wild carrot. Look for purple-blotched hairless stems and a mousy smell.</li>
+        <li><b>Yew</b> (<i>Taxus</i>), planted in gardens, is lethal. Use only Douglas fir or spruce tips you can identify with certainty.</li>
+        <li><b>Elder</b> leaves, stems and unripe berries are toxic. Use flowers and cooked ripe berries only.</li>
+        <li><b>Kōwhai</b> seeds, <b>karaka</b> kernels, <b>ngaio</b> and unripe <b>poroporo</b> are all toxic.</li>
+      </ul></div>
+      <div class="safe" style="--c:var(--kowhai)"><h3>Honey</h3><p>Honey made from honeydew of passion-vine hoppers feeding on tutu can contain <b>tutin</b>, which has caused serious poisonings. You cannot taste, see or smell it. Buy honey from registered beekeepers who meet the MPI tutin standard. Never use wild or untested comb.</p><p>The risk is highest in late-season North Island and upper-South Island honey, but buy tested honey wherever it comes from.</p></div>
+      <div class="safe" style="--c:var(--harbour)"><h3>Law</h3><ul>
+        <li><b>Brewing and home distilling</b> for personal use are lawful in New Zealand, and NZ Customs charges no excise on them. "Personal use" is not defined, so do not sell spirits. Gifting may also fall outside personal use.</li>
+        <li><b>Selling</b> any alcohol needs a licence under the Sale and Supply of Alcohol Act 2012, plus a Customs excise licence for manufacture.</li>
+        <li><b>Native plants</b> on public conservation land need a DOC permit to collect. On council reserves, check the bylaws. On private land, ask the owner.</li>
+        <li><b>Seaweed</b> harvest falls under Fisheries rules. Buy dried karengo unless you have confirmed the rules for your spot.</li>
+      </ul></div>
+      <div class="safe" style="--c:var(--clay)"><h3>Distilling safely</h3><ul>
+        <li>Discard the foreshots, which contain methanol and acetone. Make generous heads cuts, especially with pomace and fruit, because pectin raises methanol.</li>
+        <li>Never distil unattended or near open flame. Ethanol vapour ignites.</li>
+        <li>Use food-grade stills made of copper or stainless steel. Avoid lead solder and plastics in hot zones.</li>
+      </ul></div>
+      <div class="safe" style="--c:var(--bush)"><h3>Respect</h3><p>Plants such as horopito, kawakawa and kānuka are taonga with rongoā (medicinal) significance. Harvest lightly: never more than a fraction of a plant, and never the whole plant. Native fruits are bird food. If you want to tell the story of native ingredients, talk with mana whenua: Te Rūnanga o Ōtākou on the Otago Peninsula and Kāti Huirapa Rūnaka ki Puketeraki at Karitāne.</p></div>
+      <div class="safe" style="--c:var(--thyme)"><h3>Sparkling ferments</h3><p>Wild elderflower and gorse sparkling ferments keep fermenting in the bottle. Use pressure-rated bottles (swing-tops, champagne bottles or PET), vent or refrigerate after 3–5 days, and never use thin glass. Exploding bottles injure people every summer.</p></div>
+    </div>
+    <div class="kauru">
+      <div class="lab">A note on kāuru</div>
+      <h3>The sweetness of the tī kōuka</h3>
+      <p>For centuries, Kāi Tahu cooked the stems and roots of the cabbage tree for up to two days in large umu tī. Remains of these ovens still survive across Otago and Canterbury. The cooking turned the stored carbohydrate into kāuru, a sugary food that sustained journeys across the Southern Alps. It is one of the most distinctive sources of sweetness in southern New Zealand, and fermenting it is an obvious idea.</p>
+      <p>This page gives no recipe on purpose. Kāuru is a cultural practice, not an ingredient. Harvesting the root kills the tree. If the idea moves you, start by learning from the people whose taonga it is, and let any project be theirs to shape.</p>
+    </div>
+  </section>
+
+  <div class="refs">
+    <p><b>Honey.</b> MPI, <i>Managing tutin contamination in honey</i>; Food Standards Code tutin limit 0.7 mg/kg. Central Otago thyme honey is from <i>Thymus vulgaris</i>, naturalised around Alexandra since the gold rush.</p>
+    <p><b>Law.</b> NZ Customs, excise guidance; Customs and Excise Act 2018, Schedule 3 (no excise on alcohol made for personal use); Sale and Supply of Alcohol Act 2012.</p>
+    <p><b>Grain.</b> Harraway &amp; Sons, Green Island, Dunedin, milling since 1867; about 80% of its oats are grown in Otago and Southland. Gladfield Malt (Dunsandel, Canterbury) makes mānuka-smoked malt over West Coast mānuka.</p>
+    <p><b>Plants.</b> Te Ara: horopito extends to sea level in the southern South Island; kawakawa's natural range covers the North Island and the northern South Island. Kōtukutuku (konini) berries are edible and fruit January–March.</p>
+    <p><b>Kāuru.</b> Canterbury Museum, <i>Gardening at the margins</i>; Te Ara, tī kōuka. Wilding conifer control: Otago Regional Council and the Central Otago Wilding Conifer Group run volunteer days.</p>
+    <p><b>Disclaimer.</b> Seasons, distances and recipes are approximate guidance written for a home brewer. Identify every wild plant with certainty, and check current rules before you act.</p>
+  </div>
+</div>
+
+<script>
+(() => {
+  const $ = id => document.getElementById(id);
+  const css = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+  const CATS = {honey: ['Honey', '--kowhai'], fruit: ['Fruit & flowers', '--berry'], botanical: ['Botanicals', '--bush'], grain: ['Grains & starches', '--tussock'], hops: ['Hops & yeast', '--harbour'], sea: ['Coast', '--thyme']};
+  // name, cat, place, km, bearing (deg from north), season months [start,end] (1-12), how, notes
+  const I = [
+    ['Wild thyme honey', 'honey', 'Alexandra, Central Otago', 190, 305, [12, 3], 'Buy', 'Pungent, herbal, faintly savoury honey from thyme naturalised since the gold rush. The signature southern mead honey.'],
+    ["Viper's bugloss honey", 'honey', 'Central Otago and Canterbury high country', 200, 320, [1, 3], 'Buy', 'Pale, delicate and floral. Excellent for traditional meads where the yeast should show.'],
+    ['Clover honey', 'honey', 'Taieri and North Otago', 40, 220, [1, 3], 'Buy', 'Neutral base honey for melomels, braggots and gorse wine.'],
+    ['Kānuka honey', 'honey', 'Otago coast and Central', 120, 330, [12, 2], 'Buy', 'Clean, lightly herbal. Mānuka is close but more medicinal; kānuka suits drinks better.'],
+    ['Southern rātā honey', 'honey', 'West Coast', 550, 335, [1, 2], 'Buy', 'Very pale, quick to crystallise, mild and creamy. A showpiece for a white mead.'],
+    ['Rewarewa honey', 'honey', 'North Island (buy in)', 1100, 15, [12, 2], 'Buy', 'Malty, caramel notes. Pairs naturally with barley in a braggot.'],
+    ['Beech honeydew', 'honey', 'Canterbury and Nelson beech forest', 400, 10, [1, 4], 'Buy', 'Dark, mineral, low-glucose honeydew from the native beech scale insect. Makes a fascinating dark mead.'],
+    ['Elderflower and elderberry', 'fruit', 'Leith Valley and Dunedin hill suburbs', 5, 350, [11, 12], 'Forage', 'Weedy and abundant around Dunedin. Flowers in early summer, berries in March–April (cook them). Confirm ID against hemlock.'],
+    ['Gorse flowers', 'fruit', 'Otago Peninsula and Flagstaff', 12, 60, [8, 11], 'Forage', 'A coconut-and-vanilla scent from a declared pest. Wear gloves and pick only flowers.'],
+    ['Rosehips (sweet briar)', 'fruit', 'Central Otago roadsides', 150, 300, [3, 5], 'Forage', 'Wild briar is everywhere in Central. Rich in vitamin C and tart-fruity. Strain out the hairs.'],
+    ['Kōtukutuku (konini) berries', 'fruit', 'Leith Valley and Silverpeaks', 8, 340, [1, 3], 'Forage', 'Native tree fuchsia with sweet, distinctive purple-black berries. Take few; birds need them.'],
+    ['Apricots', 'fruit', 'Clyde, Alexandra and Roxburgh', 180, 300, [1, 2], 'Buy', 'Central Otago stonefruit; seconds and jam grades are perfect for melomel.'],
+    ['Cherries', 'fruit', 'Cromwell and Teviot Valley', 200, 305, [12, 1], 'Buy', 'Dark cherries for a cyser-style melomel or a kriek-style ale.'],
+    ['Blackcurrants', 'fruit', 'Otago and Canterbury growers', 100, 20, [1, 1], 'Buy', 'Frozen blackcurrants are easy to find. Huge colour and acidity for melomel.'],
+    ['Pinot noir pomace', 'fruit', 'Cromwell and Bannockburn wineries', 200, 305, [3, 4], 'Ask', 'Fermented skins after pressing, for grappa. Ask a winery at vintage; it is often a waste stream.'],
+    ['Heritage apples and crab apples', 'fruit', 'Taieri, Teviot and old orchards', 60, 260, [3, 5], 'Forage/Buy', 'Cider and cyser (honey cider). Crab apples add tannin and acid.'],
+    ['Horopito', 'botanical', 'Southern bush; Dunedin Botanic Garden collection', 20, 340, [1, 12], 'Forage lightly / nursery', 'Native peppertree: a hot, bitter leaf. Use a pinch in gin, gose or bitters.'],
+    ['Kānuka and mānuka leaf', 'botanical', 'Otago coastal scrub', 25, 30, [1, 12], 'Forage lightly', 'Resinous, eucalypt-lemon tea notes. Use leaf tips in stout, gin or mead.'],
+    ['Kawakawa leaf', 'botanical', 'Cultivated (natural range ends further north)', 0, 0, [1, 12], 'Buy / grow', 'Peppery, minty and green. Buy dried leaf or grow a plant; it is not wild in Otago.'],
+    ['Central Otago wild thyme', 'botanical', 'Alexandra and Ophir', 190, 305, [11, 1], 'Forage', 'Strongly aromatic wild thyme. A little goes a long way in aquavit and herbal ales.'],
+    ['Douglas fir tips', 'botanical', 'Wilding control sites, Otago', 120, 300, [10, 11], 'Forage (with control groups)', 'Bright citrus-resin spring tips. Picking from wilding pest trees turns conservation into flavour.'],
+    ['Harraways oats', 'grain', 'Green Island, Dunedin', 7, 225, [1, 12], 'Buy', 'Oats milled in Dunedin since 1867, mostly grown in Otago and Southland. Toast them for stout.'],
+    ['Gladfield malts', 'grain', 'Dunsandel, Canterbury', 380, 15, [1, 12], 'Buy', 'NZ-grown barley malts, including mānuka-smoked, peat-smoked, crystal and specialty malts.'],
+    ['Oca ("NZ yam")', 'grain', 'Dunedin gardens and markets', 5, 180, [5, 7], 'Grow / Buy', 'Tangy tuber that grows well in the south. A starch base for a koji spirit.'],
+    ['Taewa (Māori potatoes)', 'grain', 'Specialist growers and markets', 20, 200, [3, 5], 'Buy', 'Heritage potatoes with deep colour. Buy from growers who hold them as taonga, and ask first.'],
+    ['Southland barley', 'grain', 'Southland farms', 150, 240, [2, 4], 'Ask', 'Raw barley for distillers who malt their own grain.'],
+    ['NZ hops: Nelson Sauvin, Motueka, Nectaron, Green Bullet, Southern Cross', 'hops', 'Nelson and Motueka', 800, 8, [3, 3], 'Buy', 'World-famous southern hemisphere hops. Fresh crop arrives in March–April.'],
+    ['Wild yeast from kānuka and elderflower', 'hops', 'Your own garden', 0, 45, [11, 1], 'Capture', 'Build a starter from flowers in honey-water. Taste it before scaling up.'],
+    ['Karengo (dried)', 'sea', 'Southern coast (buy dried)', 30, 100, [8, 10], 'Buy', 'Native laver seaweed with umami and brine notes. A gose ingredient with a strong sense of place.'],
+    ['Otago sea salt', 'sea', 'Otago coast producers', 30, 110, [1, 12], 'Buy', 'Salt for gose, and for rimming glasses of anything here.']
+  ];
+  let filter = new Set(Object.keys(CATS)), sel = 0;
+
+  $('chips').innerHTML = Object.entries(CATS).map(([k, [n, c]]) => `<button type="button" data-k="${k}" aria-pressed="true" style="--c:var(${c})"><i></i>${n}</button>`).join('');
+  $('chips').addEventListener('click', e => { const b = e.target.closest('button'); if (!b) return; const k = b.dataset.k;
+    if (filter.size === Object.keys(CATS).length) filter = new Set([k]); else filter.has(k) ? filter.delete(k) : filter.add(k);
+    if (!filter.size) filter = new Set(Object.keys(CATS));
+    document.querySelectorAll('#chips button').forEach(x => x.setAttribute('aria-pressed', String(filter.has(x.dataset.k)))); radial(); });
+
+  function radial() {
+    const C = 320, rOf = km => km <= 0 ? 34 : 34 + Math.log10(km + 1) / Math.log10(1200) * 250;
+    let out = '';
+    [[5, 'Dunedin city'], [50, '50 km'], [200, '200 km · Central Otago'], [800, '800 km · Nelson']].forEach(([km, l]) => { const r = rOf(km);
+      out += `<circle cx="${C}" cy="${C}" r="${r}" fill="none" stroke="${css('--line')}" stroke-dasharray="3 5"/><text x="${C + 4}" y="${C - r - 4}">${l}</text>`; });
+    [['N', 0], ['E', 90], ['S', 180], ['W', 270]].forEach(([l, b]) => { const a = (b - 90) * Math.PI / 180; out += `<text x="${C + 300 * Math.cos(a)}" y="${C + 300 * Math.sin(a) + 4}" text-anchor="middle" style="font-weight:600">${l}</text>`; });
+    out += `<circle cx="${C}" cy="${C}" r="30" fill="${css('--bush')}"/><text x="${C}" y="${C + 4}" text-anchor="middle" style="fill:${css('--card')};font-weight:600;font-size:10.5px">Ōtepoti</text>`;
+    I.forEach((it, i) => { if (!filter.has(it[1])) return;
+      const jitter = (i % 5 - 2) * 4, a = (it[4] + jitter - 90) * Math.PI / 180, r = rOf(it[3]) + (i % 3) * 6, x = C + r * Math.cos(a), y = C + r * Math.sin(a);
+      out += `<g class="dot ${i === sel ? 'sel' : ''}" data-i="${i}" tabindex="0" role="button" aria-label="${it[0]}, ${it[2]}"><circle class="c" cx="${x}" cy="${y}" r="9" fill="${css(CATS[it[1]][1])}" opacity=".9"/></g>`; });
+    $('radial').innerHTML = out;
+    show(sel);
+  }
+  function show(i) {
+    sel = i; const it = I[i], c = CATS[it[1]][1];
+    document.querySelectorAll('#radial .dot').forEach(d => d.classList.toggle('sel', Number(d.dataset.i) === i));
+    $('detail').style.setProperty('--c', `var(${c})`);
+    const M = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+    $('detail').innerHTML = `<div class="lab">${CATS[it[1]][0]}</div><h3>${it[0]}</h3><div class="meta">${it[2]} · ${it[3] ? '~' + it[3] + ' km' : 'grow it'} · ${it[5][0] === 1 && it[5][1] === 12 ? 'year-round' : M[it[5][0] - 1] + '–' + M[it[5][1] - 1]} · ${it[6]}</div><p>${it[7]}</p>`;
+  }
+  $('radial').addEventListener('click', e => { const d = e.target.closest('.dot'); if (d) show(Number(d.dataset.i)); });
+  $('radial').addEventListener('keydown', e => { const d = e.target.closest('.dot'); if (d && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); show(Number(d.dataset.i)); } });
+
+  // ---------------------------------------------------------------- calendar
+  function cal() {
+    const rows = I.filter(it => !(it[5][0] === 1 && it[5][1] === 12)), W = 1000, L = 290, R = 16, T = 30, rh = 21;
+    const H = T + rows.length * rh + 10; $('cal').setAttribute('viewBox', `0 0 ${W} ${H}`);
+    const X = m => L + (m - 1) / 12 * (W - L - R), cw = (W - L - R) / 12;
+    const M = ['J', 'F', 'M', 'A', 'M', 'J', 'J', 'A', 'S', 'O', 'N', 'D'];
+    let out = M.map((m, i) => `<rect x="${X(i + 1)}" y="${T - 6}" width="${cw}" height="${rows.length * rh + 6}" fill="${i % 2 ? 'transparent' : css('--bg')}"/><text class="m" x="${X(i + 1) + cw / 2}" y="${T - 12}" text-anchor="middle">${M[i]}</text>`).join('');
+    rows.forEach((it, j) => { const y = T + j * rh, [s, e] = it[5], col = css(CATS[it[1]][1]);
+      out += `<text x="${L - 10}" y="${y + 14}" text-anchor="end">${it[0].length > 38 ? it[0].slice(0, 36) + '…' : it[0]}</text>`;
+      const seg = (a, b) => `<rect x="${X(a) + 2}" y="${y + 4}" width="${(b - a + 1) * cw - 4}" height="13" rx="6" fill="${col}" opacity=".85"/>`;
+      out += s <= e ? seg(s, e) : seg(s, 12) + seg(1, e); });
+    const now = new Date(), mm = now.getMonth() + 1 + (now.getDate() - 1) / 31;
+    out += `<path d="M${X(mm)} ${T - 6}V${T + rows.length * rh}" stroke="${css('--berry')}" stroke-width="2"/>`;
+    $('cal').innerHTML = out;
+  }
+
+  // ---------------------------------------------------------------- recipes
+  // per 10 L; kind: honey/malt/oat/fruit/sugar give gravity points per kg per litre
+  const PTS = {honey: 292, malt: 222, cmalt: 160, oat: 190, fruit: 40, sugar: 384, none: 0};
+  const R = [
+    {n: "Feraud's Thyme", s: 'Traditional mead · semi-sweet', c: '--thyme', story: 'Named for the French gold miner said to have brought thyme to Central Otago. The honey does the talking.', ing: [['Central Otago wild thyme honey', 3.2, 'kg', 'honey'], ['Water', 'to volume', '', 'none'], ['Lalvin 71B yeast', 5, 'g', 'none'], ['Organic yeast nutrient', 10, 'g', 'none']], fg: 1.010, steps: ['Warm the honey and dissolve it in 4 L of water at about 35 °C, then top up to volume at 18 °C.', 'Rehydrate the yeast with a little nutrient and pitch. Add the remaining nutrient in four parts at 24, 48 and 72 h and at the 1/3 sugar break.', 'Ferment at 16–18 °C for about 3–4 weeks, rack, and age for 4–6 months.', 'Stabilise, then backsweeten with more thyme honey to about 1.010.'], tags: ['~11% ABV', 'Ready in 6 months']},
+    {n: 'Rātā & Blackcurrant', s: 'Melomel', c: '--berry', story: 'Pale West Coast rātā honey and dark Otago blackcurrants: a southern rosé-coloured mead.', ing: [['Southern rātā honey', 2.8, 'kg', 'honey'], ['Blackcurrants, frozen (in secondary)', 1.5, 'kg', 'fruit'], ['Lalvin 71B', 5, 'g', 'none'], ['Pectic enzyme', 3, 'g', 'none']], fg: 1.006, steps: ['Make the honey must as for a traditional mead and ferment for two weeks.', 'Rack onto thawed, crushed blackcurrants with pectic enzyme in a mesh bag for 10–14 days.', 'Rack off the fruit, clear and age 6 months. The acidity carries the sweetness.'], tags: ['~11%', 'Fruit forward']},
+    {n: 'Konini Session', s: 'Short mead · sparkling', c: '--berry', story: 'A low-strength, quick sparkling mead for summer, scented with native tree-fuchsia berries from the Leith Valley.', ing: [['Kānuka honey', 1.4, 'kg', 'honey'], ['Kōtukutuku berries (or blackcurrant)', 0.5, 'kg', 'fruit'], ['Voss kveik yeast', 5, 'g', 'none'], ['Priming honey per litre', 7, 'g/L', 'none']], fg: 1.002, steps: ['Ferment warm (28–35 °C) with kveik; it finishes in about 5 days.', 'Add the lightly crushed berries for the last 3 days.', 'Prime with honey, bottle in pressure-rated bottles and condition for 2 weeks. Drink young.'], tags: ['~5.5%', '3 weeks to drink']},
+    {n: 'Gorse Gold', s: 'Flower wine · honey', c: '--kowhai', story: 'A pest with a coconut scent. Picking its flowers on a sunny spring day is the most Otago thing in this book.', ing: [['Gorse flowers, loosely packed', 3, 'L', 'none'], ["Clover or viper's bugloss honey", 2.4, 'kg', 'honey'], ['Lemons, zest and juice', 2, '', 'none'], ['Black tea (for tannin)', 2, 'bags', 'none'], ['Lalvin 71B', 5, 'g', 'none']], fg: 1.004, steps: ['Steep the flowers and zest in 5 L of hot (not boiling) water with the tea for 2 hours, then strain.', 'Dissolve the honey, add the lemon juice and top up to volume.', 'Ferment cool, rack at 4 weeks and age 3 months. It tastes of spring.'], tags: ['~9%', 'Gloves on']},
+    {n: 'Leith Valley Elderflower', s: 'Wild sparkling ferment', c: '--berry', story: 'The classic hedgerow sparkler made with wild yeast from the flowers themselves.', ing: [['Elderflower heads, fully open', 18, 'heads', 'none'], ['Sugar or 1.0 kg honey', 1.2, 'kg', 'sugar'], ['Lemons, sliced', 3, '', 'none'], ['White wine vinegar', 30, 'mL', 'none']], fg: 1.010, steps: ['Shake off insects without washing (the yeast lives on the flowers). Combine everything in cool water.', 'Cover with cloth and stir daily for 3–5 days until fizzing.', 'Strain into pressure-rated bottles. Vent daily or refrigerate after 3 days. Drink within a month.'], tags: ['~3–5%, drunk young', 'Bottle pressure!']},
+    {n: 'Green Island Oat Stout', s: 'Oatmeal stout · kānuka', c: '--tussock', story: "Harraways oats from Green Island and Gladfield malts, with a finish of kānuka leaf that recalls the coastal scrub.", ing: [['Gladfield ale malt', 2.0, 'kg', 'malt'], ['Harraways rolled oats, oven-toasted', 0.4, 'kg', 'oat'], ['Gladfield crystal (medium)', 0.15, 'kg', 'cmalt'], ['Chocolate malt', 0.15, 'kg', 'cmalt'], ['Roasted barley', 0.12, 'kg', 'cmalt'], ['Green Bullet hops @ 60 min', 12, 'g', 'none'], ['Kānuka leaf tips @ flameout', 8, 'g', 'none'], ['English ale yeast', 1, 'pkt', 'none']], fg: 1.016, steps: ['Toast the oats at 160 °C until they smell like biscuits.', 'Mash at 67 °C for 60 min and boil 60 min.', 'Steep the kānuka for 10 min at flameout, then chill.', 'Ferment at 18–19 °C.'], tags: ['~5.5%', 'Velvet body']},
+    {n: 'Wilding Tip Ale', s: 'Spruce-style pale ale', c: '--bush', story: 'Spring Douglas fir tips from wilding-control days: citrus and resin, and a pest problem turned into a pint.', ing: [['Gladfield pale malt', 2.2, 'kg', 'malt'], ['Gladfield biscuit malt', 0.15, 'kg', 'cmalt'], ['Douglas fir tips @ 10 min', 30, 'g', 'none'], ['Douglas fir tips, dry-steep', 30, 'g', 'none'], ['Nelson Sauvin @ 10 min', 10, 'g', 'none'], ['Nelson Sauvin, dry hop', 20, 'g', 'none'], ['US-05 yeast', 1, 'pkt', 'none']], fg: 1.010, steps: ['Pick only bright new tips and identify the tree with certainty (never yew).', 'Mash at 65 °C, boil 60 min, add tips and hops at 10 min.', 'Dry-steep tips and hops for 3 days. Taste daily: resin builds fast.'], tags: ['~5%', 'Oct–Nov tips']},
+    {n: 'Karengo & Horopito Gose', s: 'Kettle-soured wheat ale', c: '--harbour', story: 'Salt, laver and native pepper: a sour beer that tastes of the coast below the Otago Peninsula.', ing: [['Gladfield pilsner malt', 1.0, 'kg', 'malt'], ['Wheat malt', 1.0, 'kg', 'malt'], ['Lactobacillus plantarum culture', 1, 'pkt', 'none'], ['Otago sea salt @ 5 min', 10, 'g', 'none'], ['Dried karengo @ 5 min', 5, 'g', 'none'], ['Dried horopito leaf @ 5 min', 0.5, 'g', 'none'], ['Coriander seed, cracked', 8, 'g', 'none'], ['Motueka @ 15 min', 10, 'g', 'none']], fg: 1.008, steps: ['Mash, boil 10 min to sanitise, cool to 37 °C, pitch lacto and hold until pH is about 3.4 (24–48 h).', 'Boil 30 min with Motueka; add salt, karengo, horopito and coriander at 5 min.', 'Ferment clean with US-05 and carbonate briskly.'], tags: ['~4.5%', 'Pinch of horopito only']},
+    {n: 'Mānuka Smoke Lager', s: 'Smoked lager', c: '--clay', story: 'Gladfield smokes pilsner malt over West Coast mānuka. It is sweeter and more floral than beechwood rauchbier.', ing: [['Gladfield mānuka-smoked malt', 1.2, 'kg', 'malt'], ['Gladfield pilsner malt', 1.0, 'kg', 'malt'], ['Munich malt', 0.3, 'kg', 'malt'], ['Motueka @ 60 min', 15, 'g', 'none'], ['Motueka @ 10 min', 15, 'g', 'none'], ['W-34/70 lager yeast', 1, 'pkt', 'none']], fg: 1.011, steps: ['Mash at 65 °C for 75 min.', 'Ferment at 10–12 °C for 2 weeks, raise to 16 °C for a diacetyl rest, then lager cold for 4–6 weeks.'], tags: ['~5.5%', 'Patience']},
+    {n: 'Rewarewa Braggot', s: 'Honey-malt hybrid', c: '--tussock', story: "Half beer, half mead. Rewarewa's malty honey meets Gladfield pale and Nelson Sauvin's white-wine tropics.", ing: [['Gladfield pale malt', 1.5, 'kg', 'malt'], ['Rewarewa honey (add at high kräusen)', 1.2, 'kg', 'honey'], ['Nelson Sauvin @ 10 min', 15, 'g', 'none'], ['Nelson Sauvin, dry hop', 25, 'g', 'none'], ['US-05 or Lalvin 71B', 1, 'pkt', 'none']], fg: 1.008, steps: ['Brew a 1.040 wort from the malt.', 'Add honey dissolved in a little warm wort at high kräusen to keep its aroma.', 'Dry hop, condition 2 months.'], tags: ['~8%', 'Gift-worthy']},
+    {n: 'Horopito Gin', s: 'Spirit · per 1 L at 45%', c: '--bush', spirit: true, story: 'Juniper with southern bush notes: horopito heat, kawakawa pepper-mint, kānuka resin and a breath of Central Otago thyme.', ing: [['Neutral spirit, diluted to 45% ABV', 1, 'L', 'none'], ['Juniper berries', 22, 'g', 'none'], ['Coriander seed', 8, 'g', 'none'], ['Angelica root', 1, 'g', 'none'], ['Dried horopito leaf', 1.2, 'g', 'none'], ['Dried kawakawa leaf (cultivated)', 3, 'g', 'none'], ['Kānuka leaf tips', 2, 'g', 'none'], ['Lemon peel (no pith)', 3, 'g', 'none'], ['Wild thyme', 0.5, 'g', 'none']], fg: null, steps: ['Macerate the botanicals for 24 h.', 'Redistil for a clear gin, discarding foreshots and cutting heads and tails. Or filter and rest for a "compound" gin (it will be coloured).', 'Rest 2 weeks before dilution; bottle at 40–42%.'], tags: ['Personal use only']},
+    {n: 'Southern Shochu', s: 'Koji spirit from oca and taewa', c: '--tussock', spirit: true, story: 'Japanese two-stage koji fermentation applied to southern tubers. Earthy, tangy and quietly fruity.', ing: [['Rice koji (Aspergillus oryzae)', 1.0, 'kg', 'none'], ['Water, stage 1', 1.2, 'L', 'none'], ['Shochu or sake yeast', 1, 'pkt', 'none'], ['Oca and/or taewa, steamed and mashed', 3.0, 'kg', 'none'], ['Water, stage 2', 2.0, 'L', 'none']], fg: null, steps: ['Stage 1: koji, water and yeast for 6 days at about 25 °C.', 'Stage 2: add the cooled steamed tubers and water and ferment 10–14 days.', 'Single pot distillation, discarding foreshots, to about 40%; dilute to 25–30% traditionally. Yield is about 1 L.'], tags: ['Advanced', 'Personal use only']},
+    {n: 'Pinot Pomace Grappa', s: 'Spirit · Central Otago', c: '--berry', spirit: true, story: 'After vintage at Bannockburn, the pressed skins still hold Pinot perfume. Distil the season.', ing: [['Fermented Pinot noir pomace (by permission)', 20, 'kg', 'none'], ['Water to slurry (or steam distil)', 10, 'L', 'none']], fg: null, steps: ['Distil within days of pressing, before acetic spoilage sets in.', 'Use steam or a water bath to avoid scorching solids.', 'Pectin-rich skins raise methanol: discard foreshots and take a generous heads cut.', 'Rest, then dilute to 40–42%.'], tags: ['Mar–Apr', 'Methanol caution']},
+    {n: 'Briar & Thyme Aquavit', s: 'Spirit · per 1 L at 45%', c: '--thyme', spirit: true, story: 'A Nordic form in Central Otago colours: caraway and dill with wild rosehip and the hills\' own thyme.', ing: [['Neutral spirit at 45%', 1, 'L', 'none'], ['Caraway seed', 15, 'g', 'none'], ['Dill seed', 5, 'g', 'none'], ['Fennel seed', 2, 'g', 'none'], ['Dried wild rosehips, deseeded', 10, 'g', 'none'], ['Wild thyme', 0.5, 'g', 'none'], ['Orange peel', 2, 'g', 'none']], fg: null, steps: ['Macerate for 3 days, then redistil or filter.', 'Rest in a lightly toasted oak spiral for a "lagrede" (oak-aged) version.', 'Serve icy with smoked fish.'], tags: ['Personal use only']}
+  ];
+  function recipes() {
+    const b = Number($('batch').value), k = b / 10; $('batch-o').textContent = `${b} L`;
+    const qty = (q, u, spirit) => typeof q !== 'number' ? q : spirit ? `${q} ${u}` : (u === 'g/L' ? `${q} ${u}` : `${(q * k) >= 10 ? Math.round(q * k) : Math.round(q * k * 100) / 100} ${u}`);
+    $('recipes').innerHTML = R.map(r => {
+      let og = null;
+      if (!r.spirit) { const pts = r.ing.reduce((a, [, q, u, kind]) => a + (typeof q === 'number' && (u === 'kg') ? q * PTS[kind] : 0), 0) / 10; og = 1 + pts / 1000 * (r.n === 'Rewarewa Braggot' ? 1 : 1); }
+      const abv = og && r.fg ? (og - r.fg) * 131.25 : null;
+      return `<article class="recipe" style="--c:var(${r.c})"><div class="band"></div><div class="body"><div class="style">${r.s}</div><h3>${r.n}</h3><p class="story">${r.story}</p>
+        <table>${r.ing.map(([n, q, u]) => `<tr><td>${n}</td><td class="q">${qty(q, u, r.spirit)}</td></tr>`).join('')}</table>
+        ${og ? `<div class="stats"><span>OG ≈ ${og.toFixed(3)}</span><span>FG ≈ ${r.fg.toFixed(3)}</span><span>ABV ≈ ${abv.toFixed(1)}%</span></div>` : ''}
+        <details><summary>Method</summary><ol>${r.steps.map(s => `<li>${s}</li>`).join('')}</ol></details>
+        <div>${r.tags.map(t => `<span class="tag">${t}</span>`).join('')}</div></div></article>`;
+    }).join('');
+  }
+  $('batch').addEventListener('input', recipes);
+
+  // ---------------------------------------------------------------- calculator
+  function mead() {
+    const v = Number($('m-vol').value), h = Number($('m-honey').value), fg = Number($('m-fg').value), tol = Number($('m-yeast').value);
+    $('m-vol-o').textContent = `${v} L`; $('m-honey-o').textContent = `${h.toFixed(1)} kg`;
+    const og = 1 + h / v * 0.292, maxAbv = (og - fg) * 131.25, abv = Math.min(maxAbv, tol);
+    const realFg = abv < maxAbv ? og - tol / 131.25 : fg;
+    $('m-fg-o').textContent = `${fg.toFixed(3)} · ${fg < 1.002 ? 'dry' : fg < 1.012 ? 'semi-sweet' : fg < 1.025 ? 'sweet' : 'dessert'}`;
+    $('m-abv').textContent = `${abv.toFixed(1)}%`;
+    $('m-g').style.left = `${Math.min(100, abv / 18 * 100)}%`;
+    const cls = abv < 6 ? 'a session mead' : abv < 9 ? 'a hydromel' : abv < 14 ? 'a standard mead' : 'a sack mead';
+    $('m-txt').innerHTML = `OG ≈ <b>${og.toFixed(3)}</b>. ${h.toFixed(1)} kg of honey in ${v} L makes ${cls}.${abv < maxAbv - .2 ? ` The yeast should stop near ${tol}%, leaving it sweeter (FG ≈ ${realFg.toFixed(3)}) than your target unless you choose a hardier yeast.` : ' Stabilise before backsweetening to reach the target finish.'}`;
+  }
+  ['m-vol', 'm-honey', 'm-fg', 'm-yeast'].forEach(id => $(id).addEventListener('input', mead));
+
+  // ---------------------------------------------------------------- ledger
+  function ledger() {
+    const M = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+    $('ledger').innerHTML = [...I].sort((a, b) => a[3] - b[3]).map(it => `<tr><td><span class="dotc" style="--c:var(${CATS[it[1]][1]})"></span><b>${it[0]}</b></td><td>${it[2]}</td><td class="km">${it[3] ? '~' + it[3] : '—'}</td><td>${it[5][0] === 1 && it[5][1] === 12 ? 'Year-round' : M[it[5][0] - 1] + '–' + M[it[5][1] - 1]}</td><td>${it[6]}</td><td>${it[7]}</td></tr>`).join('');
+  }
+
+  const all = () => { radial(); cal(); };
+  matchMedia('(prefers-color-scheme: dark)').addEventListener?.('change', all);
+  new MutationObserver(all).observe(document.documentElement, {attributes: true, attributeFilter: ['data-theme']});
+  radial(); cal(); recipes(); mead(); ledger();
+})();
+</script>
