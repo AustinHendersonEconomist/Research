@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang xml:lang>
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <meta name="dcterms.date" content="2026-11-04" />
+  <title>Audit of the supplemental materials for Auditing with Rewards for Honesty and Punishments for Cheating</title>
+  <style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+
+ul.task-list[class]{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+font-size: inherit;
+width: 0.8em;
+margin: 0 0.8em 0.2em -1.6em;
+vertical-align: middle;
+}
+.display.math{display: block; text-align: center; margin: 0.5rem auto;}
+</style>
+  <style type="text/css">@page{size:A4;margin:25mm 22mm}
+body{font-family:"Times New Roman",Times,serif;font-size:11.5pt;line-height:1.6;color:#000;max-width:170mm;margin:auto}
+h1{font-size:14pt;margin:20pt 0 8pt}h2{font-size:12pt;font-style:italic;font-weight:normal;margin:14pt 0 6pt}
+header h1.title{font-size:17pt;line-height:1.3;margin-top:0}p.subtitle{font-style:italic}p.author,p.date{margin:2pt 0}
+table{border-collapse:collapse;width:100%;font-size:9pt;margin:8pt 0;page-break-inside:avoid}th,td{padding:3pt 5pt;vertical-align:top}thead th{border-top:1.2pt solid #000;border-bottom:.6pt solid #000}tbody tr:last-child td{border-bottom:1.2pt solid #000}
+img{max-width:100%}hr{border:0;border-top:.5pt solid #999;margin:14pt 0}.csl-entry{font-size:9.5pt;margin-bottom:3pt;padding-left:2em;text-indent:-2em}.csl-left-margin{display:inline}.csl-right-inline{display:inline}
+code{font-size:9.5pt}a{color:#000}
+</style>
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">Audit of the supplemental materials for <em>Auditing
+with Rewards for Honesty and Punishments for Cheating</em></h1>
+<p class="subtitle">File audited:
+<code>Auditing JBEP Supplemental Materials Jan 2025.docx</code></p>
+<p class="date">4 November 2026</p>
+</header>
+<h1 id="summary">Summary</h1>
+<p>I checked every reported number in the supplement that can be
+recomputed from the supplement itself:</p>
+<ul>
+<li>the expected-value table;</li>
+<li>the derivatives of the model;</li>
+<li>all χ² tests in Experiment 1, including the 21 pairwise
+<em>p</em>-values in Table 2;</li>
+<li>the minimum detectable effects and achieved-power figures;</li>
+<li>every count, percentage and mean in Table S2;</li>
+<li>all 42 rank-sum statistics in Tables S3 and S4.</li>
+</ul>
+<p>The script <code>audit/recompute.py</code> reproduces each check, and
+its output is saved in <code>audit/recompute-output.txt</code>.</p>
+<p><strong>Overall.</strong> The empirical core is sound. The cheating
+rates, the Experiment 2 tallies and most test statistics are internally
+consistent, and I recovered integer cell counts that reproduce all
+Experiment 1 χ² statistics exactly. However, several errors would be
+visible to a careful referee. Five of them change a stated result or its
+interpretation:</p>
+<table>
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>#</th>
+<th>Severity</th>
+<th>Location</th>
+<th>Issue</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>A1</td>
+<td><strong>High</strong></td>
+<td>Table S1 (expected values)</td>
+<td>The cheating EVs for the punishment treatments are wrong: 1% P
+should be $0.99 (not $1.00) and 10% P $0.90 (not $0.99). The S3 text and
+the H1 classification already use the correct values.</td>
+</tr>
+<tr class="even">
+<td>A2</td>
+<td><strong>High</strong></td>
+<td>Table S4; S5 results text</td>
+<td>The honesty rank-sum for 10% P vs 1% R10 is reported as <em>Z</em> =
+0.07, <em>p</em> = 0.94. Recomputed from Table S2, it is
+<strong><em>Z</em> = −2.07, <em>p</em> = 0.038</strong>; the reported
+entry duplicates the 1% P vs 1% R10 cell. The claim that “the only
+significant difference” among small incentives is 10% P vs 1% P is
+therefore incorrect.</td>
+</tr>
+<tr class="odd">
+<td>A3</td>
+<td><strong>High</strong></td>
+<td>S4, H3</td>
+<td>Two comparisons are labelled as against the <em>10%</em> punishment
+arm but are, by their statistics, against the <em>1%</em> arm: (i) “1%
+chance of a <span class="math inline">10<em>r</em><em>e</em><em>w</em><em>a</em><em>r</em><em>d</em><em>a</em><em>n</em><em>d</em><em>a</em>10</span>&gt;$”
+in Experiment 2.</td>
+</tr>
+<tr class="even">
+<td>A13</td>
+<td>Low</td>
+<td>Procedures</td>
+<td>The procedures state that low and high payments were “$0.50 or
+$0.60” and “$1.00 or $1.10”, but the EV table uses only $0.50 and $1.00.
+State which treatments used which pair.</td>
+</tr>
+<tr class="odd">
+<td>A14</td>
+<td>Low</td>
+<td>References</td>
+<td>10 works are cited but not listed, 3 are listed but not cited, and
+several names are misspelled (details below).</td>
+</tr>
+</tbody>
+</table>
+<p>The corrections below would make the supplement internally consistent
+without changing any of the main qualitative conclusions, except where
+noted under A2, A4 and A5.</p>
+<hr />
+<h1 id="theory-s1-s2">1 Theory (S1, S2)</h1>
+<h2 id="expected-values-table-s1-first-instance-a1">1.1 Expected values
+(Table S1, first instance) — A1</h2>
+<p>With honest payment <em>X</em> = $0.50, cheating payment <em>Y</em> =
+$1.00, a $1 penalty and $1 or $10 rewards:</p>
+<table>
+<colgroup>
+<col style="width: 13%" />
+<col style="width: 17%" />
+<col style="width: 17%" />
+<col style="width: 17%" />
+<col style="width: 17%" />
+<col style="width: 17%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Treatment</th>
+<th style="text-align: right;">EV(honest) reported</th>
+<th style="text-align: right;">EV(cheat) reported</th>
+<th style="text-align: right;">EV(honest) recomputed</th>
+<th style="text-align: right;">EV(cheat) recomputed</th>
+<th style="text-align: right;">Gain from cheating</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1% punishment</td>
+<td style="text-align: right;">$0.50</td>
+<td style="text-align: right;">$1.00</td>
+<td style="text-align: right;">$0.50</td>
+<td style="text-align: right;"><strong>$0.99</strong></td>
+<td style="text-align: right;">$0.49</td>
+</tr>
+<tr class="even">
+<td>10% punishment</td>
+<td style="text-align: right;">$0.50</td>
+<td style="text-align: right;">$0.99</td>
+<td style="text-align: right;">$0.50</td>
+<td style="text-align: right;"><strong>$0.90</strong></td>
+<td style="text-align: right;">$0.40</td>
+</tr>
+<tr class="odd">
+<td>1% small reward</td>
+<td style="text-align: right;">$0.51</td>
+<td style="text-align: right;">$1.00</td>
+<td style="text-align: right;">$0.51</td>
+<td style="text-align: right;">$1.00</td>
+<td style="text-align: right;">$0.49</td>
+</tr>
+<tr class="even">
+<td>10% small reward</td>
+<td style="text-align: right;">$0.60</td>
+<td style="text-align: right;">$1.00</td>
+<td style="text-align: right;">$0.60</td>
+<td style="text-align: right;">$1.00</td>
+<td style="text-align: right;">$0.40</td>
+</tr>
+<tr class="odd">
+<td>1% large reward</td>
+<td style="text-align: right;">$0.60</td>
+<td style="text-align: right;">$1.00</td>
+<td style="text-align: right;">$0.60</td>
+<td style="text-align: right;">$1.00</td>
+<td style="text-align: right;">$0.40</td>
+</tr>
+<tr class="even">
+<td>1% large reward or punishment</td>
+<td style="text-align: right;">$0.60</td>
+<td style="text-align: right;">$0.99</td>
+<td style="text-align: right;">$0.60</td>
+<td style="text-align: right;">$0.99</td>
+<td style="text-align: right;">$0.39</td>
+</tr>
+</tbody>
+</table>
+<p>The corrected values are already implied elsewhere in the
+supplement:</p>
+<ul>
+<li>S3 states that the expected gain falls from $0.50 to $0.40 under a
+10% chance of punishment.</li>
+<li>H1 describes four treatments, including 10% P, as reducing the gain
+by $0.10–0.11.</li>
+</ul>
+<p>Check that main-text Table 1 does not carry the same error.</p>
+<h2 id="derivatives-a11">1.2 Derivatives — A11</h2>
+<ul>
+<li>Eq. (6): replace ∂EU<sub>h,r</sub>/∂<em>R</em> with
+∂EU<sub>h,r</sub>/∂<em>M</em>.</li>
+<li>Eqs. (7)–(8): replace the subscript <em>c,m</em> with <em>c,k</em>,
+to match the punishment notation in (3)–(4).</li>
+<li>In Experiment 2, number the Krupka–Weber utility function as (9), or
+remove “Expanding (9)”.</li>
+<li>Replace “(gamma) <span class="math inline">&gt;</span> 0” with “γ
+&gt; 0”.</li>
+</ul>
+<p>The signs of all derivatives are correct.</p>
+<hr />
+<h1 id="experiment-1-statistics">2 Experiment 1 statistics</h1>
+<h2 id="recovered-cell-counts">2.1 Recovered cell counts</h2>
+<p>Each reported percentage is consistent with several integer
+fractions. The fractions below are the unique ones near the stated group
+sizes that reproduce the reported χ² statistics:</p>
+<table>
+<thead>
+<tr class="header">
+<th>Treatment</th>
+<th style="text-align: right;">Cheated / <em>N</em></th>
+<th style="text-align: right;">Rate</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Control</td>
+<td style="text-align: right;">29 / 122</td>
+<td style="text-align: right;">23.77%</td>
+</tr>
+<tr class="even">
+<td>1% punishment</td>
+<td style="text-align: right;">19 / 123</td>
+<td style="text-align: right;">15.45%</td>
+</tr>
+<tr class="odd">
+<td>10% punishment</td>
+<td style="text-align: right;">13 / 124</td>
+<td style="text-align: right;">10.48%</td>
+</tr>
+<tr class="even">
+<td>1% reward</td>
+<td style="text-align: right;">32 / 118</td>
+<td style="text-align: right;">27.12%</td>
+</tr>
+<tr class="odd">
+<td>10% reward</td>
+<td style="text-align: right;">43 / 126</td>
+<td style="text-align: right;">34.13%</td>
+</tr>
+<tr class="even">
+<td>1% $10 reward</td>
+<td style="text-align: right;">16 / 102</td>
+<td style="text-align: right;">15.69%</td>
+</tr>
+<tr class="odd">
+<td>1% $10 reward + punishment</td>
+<td style="text-align: right;">7 / 103</td>
+<td style="text-align: right;">6.80%</td>
+</tr>
+</tbody>
+</table>
+<p>Total <em>N</em> = 818. Report these counts in the supplement; they
+also allow readers to verify the tests. For example, 10% P = 11/105
+would also give 10.48%, but only 13/124 reproduces χ² = 7.67 against
+control and χ² = 20.10 against 10% R.</p>
+<h2 id="tests-against-reported-values">2.2 Tests against reported
+values</h2>
+<p>All tests are Pearson χ² without continuity correction, which is what
+the reported statistics imply.</p>
+<table>
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Comparison (as described in text)</th>
+<th>Reported</th>
+<th>Recomputed</th>
+<th>Note</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>10% P vs control</td>
+<td>χ² = 7.67, <em>p</em> &lt; 0.01</td>
+<td>7.67, <em>p</em> = 0.006</td>
+<td>✓</td>
+</tr>
+<tr class="even">
+<td>10% R vs control</td>
+<td>3.23, <em>p</em> = 0.07</td>
+<td>3.23, 0.072</td>
+<td>✓</td>
+</tr>
+<tr class="odd">
+<td>10% R vs 1% R</td>
+<td>1.41, 0.24</td>
+<td>1.41, 0.236</td>
+<td>✓</td>
+</tr>
+<tr class="even">
+<td>1% R10 vs control</td>
+<td>2.26, 0.13</td>
+<td>2.26, 0.133</td>
+<td>✓</td>
+</tr>
+<tr class="odd">
+<td>1% R10P vs control</td>
+<td>11.97, <em>p</em> &lt; 0.01</td>
+<td>11.97, 0.001</td>
+<td>✓</td>
+</tr>
+<tr class="even">
+<td>1% P vs control</td>
+<td>2.7, <em>p</em> = 0.10</td>
+<td>2.69, <strong>0.101</strong></td>
+<td>A4: not ≤ 0.10</td>
+</tr>
+<tr class="odd">
+<td>1% R vs control</td>
+<td>0.65, 0.42</td>
+<td><strong>0.35, 0.551</strong></td>
+<td>A6</td>
+</tr>
+<tr class="even">
+<td>1% R vs 1% P</td>
+<td>4.92, 0.03</td>
+<td>4.92, 0.027</td>
+<td>✓</td>
+</tr>
+<tr class="odd">
+<td>10% R vs 10% P</td>
+<td>20.10, <em>p</em> &lt; 0.01</td>
+<td>20.10, &lt; 0.001</td>
+<td>✓</td>
+</tr>
+<tr class="even">
+<td>“1% R10 vs 10% P”</td>
+<td>&lt; 0.01, 0.96</td>
+<td>10% P: 1.35, 0.245 · <strong>1% P: 0.002, 0.961</strong></td>
+<td>A3: arm mislabelled</td>
+</tr>
+<tr class="odd">
+<td>“1% R10P vs 10% P”</td>
+<td>4.12, 0.04</td>
+<td>10% P: 0.95, 0.329 · <strong>1% P: 4.12, 0.042</strong></td>
+<td>A3: arm mislabelled</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Table 2 (pairwise <em>p</em>-values).</strong> All 21 entries
+match the recomputed values to the reported precision, except 1% P vs
+control (reported 0.10<em>, recomputed 0.101). Several Table 2 cells are
+only significant without continuity correction: 1% P vs 1% R10P (</em>p*
+= 0.042; Yates 0.069), 1% R vs 1% R10 (0.041; 0.060) and 1% R10 vs 1%
+R10P (0.044; 0.073). State the test variant in the caption. Given 21
+pairwise comparisons, also consider a multiplicity statement, such as
+Holm-adjusted <em>p</em>-values in an extra column.</p>
+<h2 id="minimum-detectable-effects">2.3 Minimum detectable effects</h2>
+<p>The recomputed MDEs (two-sided α = 0.05, <em>N</em> = 125 per group,
+control 23.77%, pooled-variance normal approximation) are +16.50,
++11.30, −13.30 and −9.75 pp. These agree with the reported +16.45,
++11.30, −13.29 and −9.71 pp to within the resolution of the method.
+✓</p>
+<p>The observed 10% P reduction is 23.77 − 10.48 = 13.29 percentage
+points. In S3, “13.29%” should read “13.29 percentage points”; as
+written it reads as a relative change.</p>
+<h2 id="achieved-power-a7">2.4 Achieved power — A7</h2>
+<table>
+<thead>
+<tr class="header">
+<th>Comparison</th>
+<th style="text-align: right;">Reported</th>
+<th>Recomputed (pooled / unpooled / arcsine)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>10% P vs control</td>
+<td style="text-align: right;">0.84</td>
+<td>0.79 / 0.80 / 0.80</td>
+</tr>
+<tr class="even">
+<td>10% R vs control</td>
+<td style="text-align: right;">0.36</td>
+<td>0.43 / 0.44 / 0.44</td>
+</tr>
+<tr class="odd">
+<td>1% R10 vs control</td>
+<td style="text-align: right;">0.38</td>
+<td>0.32 / 0.33 / 0.33</td>
+</tr>
+<tr class="even">
+<td>1% R10P vs control</td>
+<td style="text-align: right;">0.96</td>
+<td>0.95 / 0.96 / 0.96 ✓</td>
+</tr>
+<tr class="odd">
+<td>1% P vs control</td>
+<td style="text-align: right;">0.44</td>
+<td>0.37 / 0.38 / 0.38</td>
+</tr>
+<tr class="even">
+<td>1% R vs control</td>
+<td style="text-align: right;">0.07</td>
+<td>0.09</td>
+</tr>
+<tr class="odd">
+<td>1% R vs 1% P</td>
+<td style="text-align: right;">0.60</td>
+<td>0.60 ✓</td>
+</tr>
+<tr class="even">
+<td>10% R vs 10% P</td>
+<td style="text-align: right;">0.99</td>
+<td>1.00 ✓</td>
+</tr>
+<tr class="odd">
+<td>1% R10P vs 1% P</td>
+<td style="text-align: right;">0.16</td>
+<td>0.53 (0.16 is the value for 10% P)</td>
+</tr>
+</tbody>
+</table>
+<p>The required sample sizes also differ for some comparisons. For 10% R
+vs control, 372 is reported against 300 recomputed; for 1% P vs control,
+290 against 357. The figure of 192 for 1% R vs 1% P matches.</p>
+<p><strong>Recommendation.</strong> Remove “achieved power” entirely.
+Post-hoc power computed at the observed effect is a one-to-one function
+of the <em>p</em>-value and adds no information (Hoenig, J. M. and
+Heisey, D. M. (2001), “The abuse of power”, <em>The American
+Statistician</em>, 55(1), 19–24). Keep the ex ante MDE analysis, which
+is informative. Report 95% confidence intervals for each difference in
+proportions, and, where a null is interpreted as “no effect”, an
+equivalence bound. The H3 claim about <em>equal</em> rates in particular
+calls for an equivalence test (e.g., TOST) rather than a non-significant
+χ².</p>
+<hr />
+<h1 id="experiment-2-statistics">3 Experiment 2 statistics</h1>
+<h2 id="table-s2">3.1 Table S2</h2>
+<p>All 14 rows sum to the stated <em>N</em>, and the recomputed means
+match the reported means to two decimals. <em>N</em> sums to 836, as
+stated. ✓ The only defect is the column header (A10). A missing
+parenthesis in “10 (8.40” for R10P–H should be closed.</p>
+<h2 id="rank-sum-tests-tables-s3s4">3.2 Rank-sum tests (Tables
+S3–S4)</h2>
+<p>I recomputed Wilcoxon–Mann–Whitney <em>Z</em> statistics, with tie
+correction, from the Table S2 counts.</p>
+<p><strong>Table S3 (cheating, T).</strong> All 21 cells match in
+absolute value except 0 vs 1% R: reported 1.15 (0.13), recomputed 1.51
+(0.130) (A8).</p>
+<p><strong>Table S4 (honesty, H).</strong> All cells match except
+<strong>10% P vs 1% R10: reported 0.07 (0.94), recomputed −2.07
+(0.038)</strong> (A2). The S5 text gives “Z = 1.71, p = 0.07” for R10P
+vs 10% R; Table S4 and the recomputation give 1.81 (0.070).</p>
+<p><strong>Signs (A9).</strong> Choose one orientation, such as positive
+<em>Z</em> when the column treatment is rated <em>more</em> appropriate
+than the row treatment, and apply it to every cell. Currently, several
+cells (e.g., 10% P vs 1% R in Table S3; 10% P vs 1% R and vs 10% R in
+Table S4) have the opposite orientation to their neighbours.</p>
+<h2 id="corrected-wording">3.3 Corrected wording</h2>
+<ul>
+<li><strong>S5 results</strong>, final paragraph, replace the opening
+clause with: “the social appropriateness of reporting honestly was
+mostly unaffected by small incentives alone; the exceptions were that
+honesty was rated less appropriate under a 10% chance of punishment than
+under a 1% chance of punishment (<em>Z</em> = −1.99, <em>p</em> = 0.046)
+or a 1% chance of a $10 reward (<em>Z</em> = −2.07, <em>p</em> =
+0.038).”</li>
+<li><strong>S5 discussion</strong>, replace the first finding with:
+“Compared with control, a 10% chance of audit with either punishment or
+reward and a 1% chance of a $10 reward significantly weakened the norm
+against cheating, a 1% chance of punishment and a $10 reward with
+punishment weakened it marginally, and a 1% chance of a small reward did
+not significantly change it.”</li>
+</ul>
+<hr />
+<h1 id="presentation-and-references">4 Presentation and references</h1>
+<p><strong>Numbering (A12).</strong> Use S1–S8 consistently and update
+the contents list, adding S2. Label the treatments table “Table S2” and
+renumber the following tables. Change “Figure 1” in S7 to “Figure S9”,
+or cite it as main-text Figure 1. Remove the stray “}” in the Figure S8
+and Table 2 captions.</p>
+<p><strong>Typos.</strong> “So rensen” → “Sørensen”; “Soble” → “Sobel”;
+“Lowenstein” → “Loewenstein”; “Follmi-Heusi” → “Föllmi-Heusi”; “`a la” →
+“à la”; “could driven behavior” → “could drive behavior”; “lead to a
+higher level” → “led to a higher level”; “randomly assigned to one just
+one” → “randomly assigned to just one”; “is intuitively more probably
+associated with producing” → “is intuitively more likely to produce”;
+“Forest, Simmons, and Chesters, 2000” → “Forrest, Simmons and Chesters
+(2002)” (check the year).</p>
+<p><strong>Cited in the text but missing from Works Cited
+(A14):</strong></p>
+<ul>
+<li>Rabin (2000)</li>
+<li>Laske, Saccardo and Gneezy (2018)</li>
+<li>Gneezy (2005)</li>
+<li>Fischbacher and Föllmi-Heusi (2013)</li>
+<li>Loewenstein et al. (2001)</li>
+<li>Krupka and Weber (2013); the text also cites “2011”, so check which
+is meant</li>
+<li>Forrest, Simmons and Chesters (2002)</li>
+<li>Andreoni, Harbaugh and Vesterlund (2003) is listed ✓; Becker (1968)
+is listed, but cite the original, <em>Journal of Political Economy</em>,
+76(2), 169–217, rather than the Palgrave reprint</li>
+</ul>
+<p><strong>Listed but not cited:</strong> Gneezy (2003), “The W effect
+of incentives”; Gneezy and Rustichini (2004); Lochner and Moretti
+(2004).</p>
+<p><strong>Incomplete or incorrect entries:</strong></p>
+<ul>
+<li><em>Dufwenberg (2016)</em>: the published version is Dufwenberg, M.
+Jr. and Dufwenberg, M. Sr. (2018), “Lies in disguise—A theoretical
+analysis of cheating”, <em>Journal of Economic Theory</em>, 175,
+248–264.</li>
+<li><em>Bérgolo et al.</em>: a published version exists, in <em>American
+Economic Journal: Economic Policy</em>, 2023. Confirm the volume and
+pages.</li>
+</ul>
+<p><strong>Style.</strong> <em>JBEP</em> uses author–date (APA-style)
+references. Remove the numbering from the Works Cited list and format it
+consistently.</p>
+<hr />
+<h1 id="what-did-not-need-correcting">5 What did not need
+correcting</h1>
+<ul>
+<li>All seven cheating rates.</li>
+<li>All Table S2 counts, percentages and means.</li>
+<li>20 of 21 Table 2 <em>p</em>-values.</li>
+<li>40 of 42 rank-sum <em>Z</em> statistics in absolute value.</li>
+<li>The MDE calculations.</li>
+<li>The prior-literature arithmetic in S3: 39–64% of participants
+responsive, and 1 pp per $0.01 under the uniform assumption.</li>
+</ul>
+<p><em>Method note.</em> The checks used only information in the
+supplement. Cell counts were inferred, as described in Section 2.1, and
+should be confirmed against the raw data. Rank-sum statistics were
+computed with the normal approximation and tie correction (as in Stata’s
+<code>ranksum</code>).</p>
+</body>
+</html>

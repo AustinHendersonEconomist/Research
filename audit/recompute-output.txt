@@ -1,0 +1,78 @@
+10% P     13/124 =  10.48%
+1% P      19/123 =  15.45%
+0         29/122 =  23.77%
+1% R      32/118 =  27.12%
+10% R     43/126 =  34.13%
+1% R10    16/102 =  15.69%
+1% R10P    7/103 =   6.80%
+
+Pairwise chi-square (no continuity correction) | with Yates
+10% P    vs 1% P     chi2=  1.35 p=0.245 | yates chi2= 0.94 p=0.331 | power=0.21 n80=718
+10% P    vs 0        chi2=  7.67 p=0.006 | yates chi2= 6.76 p=0.009 | power=0.79 n80=126
+10% P    vs 1% R     chi2= 11.05 p=0.001 | yates chi2= 9.98 p=0.002 | power=0.92 n80=86
+10% P    vs 10% R    chi2= 20.10 p=0.000 | yates chi2=18.76 p=0.000 | power=1.00 n80=48
+10% P    vs 1% R10   chi2=  1.35 p=0.245 | yates chi2= 0.93 p=0.335 | power=0.22 n80=659
+10% P    vs 1% R10P  chi2=  0.95 p=0.329 | yates chi2= 0.55 p=0.459 | power=0.16 n80=910
+1% P     vs 0        chi2=  2.69 p=0.101 | yates chi2= 2.19 p=0.139 | power=0.37 n80=357
+1% P     vs 1% R     chi2=  4.92 p=0.027 | yates chi2= 4.24 p=0.039 | power=0.60 n80=192
+1% P     vs 10% R    chi2= 11.61 p=0.001 | yates chi2=10.64 p=0.001 | power=0.93 n80=83
+1% P     vs 1% R10   chi2=  0.00 p=0.961 | yates chi2= 0.00 p=1.000 | power=0.05 n80=None
+1% P     vs 1% R10P  chi2=  4.12 p=0.042 | yates chi2= 3.31 p=0.069 | power=0.53 n80=207
+0        vs 1% R     chi2=  0.35 p=0.551 | yates chi2= 0.20 p=0.655 | power=0.09 n80=2656
+0        vs 10% R    chi2=  3.23 p=0.072 | yates chi2= 2.74 p=0.098 | power=0.43 n80=300
+0        vs 1% R10   chi2=  2.26 p=0.133 | yates chi2= 1.79 p=0.181 | power=0.32 n80=380
+0        vs 1% R10P  chi2= 11.97 p=0.001 | yates chi2=10.74 p=0.001 | power=0.95 n80=70
+1% R     vs 10% R    chi2=  1.41 p=0.236 | yates chi2= 1.10 p=0.295 | power=0.22 n80=678
+1% R     vs 1% R10   chi2=  4.19 p=0.041 | yates chi2= 3.55 p=0.060 | power=0.54 n80=201
+1% R     vs 1% R10P  chi2= 15.63 p=0.000 | yates chi2=14.26 p=0.000 | power=0.98 n80=53
+10% R    vs 1% R10   chi2=  9.99 p=0.002 | yates chi2= 9.06 p=0.003 | power=0.90 n80=86
+10% R    vs 1% R10P  chi2= 24.80 p=0.000 | yates chi2=23.23 p=0.000 | power=1.00 n80=33
+1% R10   vs 1% R10P  chi2=  4.07 p=0.044 | yates chi2= 3.22 p=0.073 | power=0.52 n80=197
+
+MDEs (pp), N=125/group, alpha 0.05:
+  increase power 0.8: 16.50
+  increase power 0.5: 11.30
+  decrease power 0.8: 13.30
+  decrease power 0.5: 9.75
+
+Expected values (honest, cheat, gap) with X=0.50, Y=1.00, M=1 or 10:
+  1% P     0.50 0.99 gap 0.49
+  10% P    0.50 0.90 gap 0.40
+  1% R     0.51 1.00 gap 0.49
+  10% R    0.60 1.00 gap 0.40
+  1% R10   0.60 1.00 gap 0.40
+  1% R10P  0.60 0.99 gap 0.39
+
+Table S2 check: sum vs N; recomputed mean vs reported
+  0      H: sum 119 (N 119), mean +0.367 (reported +0.37)
+  0      T: sum 119 (N 119), mean -0.440 (reported -0.44)
+  0.01P  H: sum 119 (N 119), mean +0.426 (reported +0.43)
+  0.01P  T: sum 119 (N 119), mean -0.291 (reported -0.29)
+  0.1P   H: sum 120 (N 120), mean +0.231 (reported +0.23)
+  0.1P   T: sum 120 (N 120), mean -0.181 (reported -0.18)
+  0.01R  H: sum 120 (N 120), mean +0.378 (reported +0.38)
+  0.01R  T: sum 120 (N 120), mean -0.347 (reported -0.35)
+  0.1R   H: sum 118 (N 118), mean +0.379 (reported +0.38)
+  0.1R   T: sum 118 (N 118), mean -0.218 (reported -0.22)
+  R10    H: sum 121 (N 121), mean +0.427 (reported +0.43)
+  R10    T: sum 121 (N 121), mean -0.209 (reported -0.21)
+  R10P   H: sum 119 (N 119), mean +0.529 (reported +0.53)
+  R10P   T: sum 119 (N 119), mean -0.277 (reported -0.28)
+
+Rank-sum (row vs column), action T: |z| and p
+  0.1P   0.01P:+1.08(0.280)  0:+2.66(0.008)  0.01R:+1.44(0.150)  0.1R:+0.22(0.828)  R10:+0.18(0.856)  R10P:+0.93(0.351)
+  0.01P  0:+1.78(0.075)  0.01R:+0.27(0.790)  0.1R:-1.06(0.289)  R10:-0.98(0.326)  R10P:-0.05(0.960)
+  0      0.01R:-1.51(0.130)  0.1R:-2.79(0.005)  R10:-2.69(0.007)  R10P:-1.67(0.094)
+  0.01R  0.1R:-1.28(0.201)  R10:-1.32(0.186)  R10P:-0.45(0.655)
+  0.1R   R10:-0.01(0.992)  R10P:+0.79(0.428)
+  R10    R10P:+0.83(0.408)
+  R10P   
+
+Rank-sum (row vs column), action H: |z| and p
+  0.1P   0.01P:-1.99(0.046)  0:-1.26(0.208)  0.01R:-1.46(0.145)  0.1R:-1.42(0.155)  R10:-2.07(0.038)  R10P:-3.19(0.001)
+  0.01P  0:+0.73(0.463)  0.01R:+0.60(0.546)  0.1R:+0.58(0.562)  R10:-0.07(0.941)  R10P:-1.23(0.217)
+  0      0.01R:-0.22(0.829)  0.1R:-0.21(0.834)  R10:-0.74(0.459)  R10P:-1.91(0.057)
+  0.01R  0.1R:+0.04(0.966)  R10:-0.73(0.463)  R10P:-1.92(0.055)
+  0.1R   R10:-0.64(0.521)  R10P:-1.81(0.070)
+  R10    R10P:-1.15(0.249)
+  R10P   
