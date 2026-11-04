@@ -1,0 +1,804 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang xml:lang>
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <meta name="author" content="Austin Henderson, University of Otago, Dunedin, New Zealand" />
+  <title>Valuing Life and Health on One Scale: Study 1 Survey Instrument</title>
+  <style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+
+ul.task-list[class]{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+font-size: inherit;
+width: 0.8em;
+margin: 0 0.8em 0.2em -1.6em;
+vertical-align: middle;
+}
+</style>
+  <style type="text/css">@page{size:A4;margin:25mm 22mm}
+body{font-family:"Times New Roman",Times,serif;font-size:11.5pt;line-height:1.6;color:#000;max-width:170mm;margin:auto}
+h1{font-size:14pt;margin:20pt 0 8pt}h2{font-size:12pt;font-style:italic;font-weight:normal;margin:14pt 0 6pt}
+header h1.title{font-size:17pt;line-height:1.3;margin-top:0}p.subtitle{font-style:italic}p.author,p.date{margin:2pt 0}
+table{border-collapse:collapse;width:100%;font-size:9pt;margin:8pt 0;page-break-inside:avoid}th,td{padding:3pt 5pt;vertical-align:top}thead th{border-top:1.2pt solid #000;border-bottom:.6pt solid #000}tbody tr:last-child td{border-bottom:1.2pt solid #000}
+img{max-width:100%}hr{border:0;border-top:.5pt solid #999;margin:14pt 0}.csl-entry{font-size:9.5pt;margin-bottom:3pt;padding-left:2em;text-indent:-2em}.csl-left-margin{display:inline}.csl-right-inline{display:inline}
+code{font-size:9.5pt}a{color:#000}
+</style>
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">Valuing Life and Health on One Scale: Study 1 Survey
+Instrument</h1>
+<p class="subtitle">National stated-preference survey for the Common
+Value of a Healthy Year (CVHY) programme · Draft v0.1 for cognitive
+testing</p>
+<p class="author">Austin Henderson, University of Otago, Dunedin, New
+Zealand</p>
+<p class="date">November 2026</p>
+</header>
+<p><strong>Purpose of this document.</strong> This is the complete draft
+questionnaire and design specification for Study 1 of the CVHY
+programme. It is written for the survey programmer, the ethics committee
+and the cognitive-testing team. Text in boxes marked
+<strong>Screen</strong> is shown to respondents. Text in
+<em>italics</em> is programming or interviewer instruction.</p>
+<p><strong>Licensing note.</strong> The EQ-5D-5L descriptive system, the
+EQ VAS and the EQ-VT composite time trade-off protocol are proprietary.
+Their exact wording must be licensed from the EuroQol Research
+Foundation before fielding. Where they appear below, the wording is a
+placeholder marked <strong>[EQ licensed text]</strong>.</p>
+<p><strong>Link to theory.</strong> Each module identifies one or more
+factors in the decomposition theorem of the companion theory paper:</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>G</mi><mo>=</mo><mfrac displaystyle="false"><mtext mathvariant="normal">DQALE</mtext><mtext mathvariant="normal">LE</mtext></mfrac><mo>×</mo><mi>N</mi><mo>×</mo><mi>σ</mi><mo>×</mo><mi>π</mi><mo>×</mo><mi>M</mi><mo>×</mo><msub><mi>λ</mi><mi>h</mi></msub><mi>.</mi></mrow><annotation encoding="application/x-tex">G = \tfrac{\text{DQALE}}{\text{LE}} \times N \times \sigma \times \pi \times M \times \lambda_h .</annotation></semantics></math></p>
+<p>The identification map is in Section 12.</p>
+<hr />
+<h1 id="design-summary">1 Design summary</h1>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Element</th>
+<th>Specification</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Population</td>
+<td>NZ residents aged 18–79, online panel with quotas on age × sex,
+region and education; probability-based top-up sample for weighting
+checks</td>
+</tr>
+<tr class="even">
+<td>Target sample</td>
+<td>3,000 completes: general sample 1,800; Māori boost 600; Pasifika
+boost 600</td>
+</tr>
+<tr class="odd">
+<td>Median length</td>
+<td>30 minutes (target ≤ 35 minutes at the 90th percentile)</td>
+</tr>
+<tr class="even">
+<td>Languages</td>
+<td>English; te reo Māori version offered (translation and
+back-translation, Module 0 onward)</td>
+</tr>
+<tr class="odd">
+<td>Incentive</td>
+<td>Panel points equivalent to NZ$10</td>
+</tr>
+<tr class="even">
+<td>Between-subject factors</td>
+<td>Context (5) × payment vehicle (2) × risk scope range (2) = 20 cells,
+about 150 respondents each</td>
+</tr>
+<tr class="odd">
+<td>Within-subject tasks</td>
+<td>Module A: 8 mortality-risk choice tasks + 2 checks. Module B: 6
+morbidity choice tasks + 1 check. Module C: 6 composite TTO states + 1
+practice</td>
+</tr>
+<tr class="even">
+<td>Order</td>
+<td>0 Consent → 1 Screening → 2 Risk training → 3 Module A → 4
+Perception → 5 Module B → 6 Module C → 7 Own health and expectations → 8
+Economic background → 9 Debrief</td>
+</tr>
+<tr class="odd">
+<td>Order randomisation</td>
+<td>Modules A and B swapped for a random half (order effects test).
+Module C always follows both choice modules</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Cell allocation (per 3,000).</strong></p>
+<table>
+<colgroup>
+<col style="width: 15%" />
+<col style="width: 21%" />
+<col style="width: 21%" />
+<col style="width: 21%" />
+<col style="width: 21%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Context ↓ / arm →</th>
+<th style="text-align: right;">Private payment, low scope</th>
+<th style="text-align: right;">Private, high scope</th>
+<th style="text-align: right;">Tax, low scope</th>
+<th style="text-align: right;">Tax, high scope</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Road crashes</td>
+<td style="text-align: right;">150</td>
+<td style="text-align: right;">150</td>
+<td style="text-align: right;">150</td>
+<td style="text-align: right;">150</td>
+</tr>
+<tr class="even">
+<td>Air pollution</td>
+<td style="text-align: right;">150</td>
+<td style="text-align: right;">150</td>
+<td style="text-align: right;">150</td>
+<td style="text-align: right;">150</td>
+</tr>
+<tr class="odd">
+<td>Workplace accidents</td>
+<td style="text-align: right;">150</td>
+<td style="text-align: right;">150</td>
+<td style="text-align: right;">150</td>
+<td style="text-align: right;">150</td>
+</tr>
+<tr class="even">
+<td>Bowel cancer</td>
+<td style="text-align: right;">150</td>
+<td style="text-align: right;">150</td>
+<td style="text-align: right;">150</td>
+<td style="text-align: right;">150</td>
+</tr>
+<tr class="odd">
+<td>Hospital care</td>
+<td style="text-align: right;">150</td>
+<td style="text-align: right;">150</td>
+<td style="text-align: right;">150</td>
+<td style="text-align: right;">150</td>
+</tr>
+</tbody>
+</table>
+<p>Allocation uses block randomisation within quota strata. Boost
+samples are allocated in the same proportions.</p>
+<hr />
+<h1 id="module-0-participant-information-and-consent">2 Module 0 ·
+Participant information and consent</h1>
+<blockquote>
+<p><strong>Screen 0.1 — About this study</strong> This survey is run by
+researchers at the University of Otago. It asks how you would trade
+money against risks to your life and health. Your answers will help
+government agencies in Aotearoa New Zealand value health more
+consistently when they decide what to fund.</p>
+<p>The survey takes about 30 minutes. Some questions ask you to imagine
+being in poor health or facing a risk of death. If any question is
+upsetting, you can skip it or stop at any time. Support contacts are
+listed at the end.</p>
+<p>Your answers are anonymous. We do not collect your name or contact
+details. Data are stored securely in New Zealand. The project follows
+the principles of Māori data sovereignty, and data about Māori
+participants will be governed with Māori partners.</p>
+<p>This project has been reviewed and approved by the University of
+Otago Human Ethics Committee (reference <strong>[to be
+inserted]</strong>).</p>
+</blockquote>
+<blockquote>
+<p><strong>Screen 0.2 — Consent</strong> ☐ I have read the information
+above and agree to take part. ☐ I do not want to take part. <em>(→
+end)</em></p>
+</blockquote>
+<hr />
+<h1 id="module-1-screening-and-quotas">3 Module 1 · Screening and
+quotas</h1>
+<ol type="1">
+<li><strong>Age.</strong> What is your age in years? <em>(numeric 18–79;
+outside range → end)</em></li>
+<li><strong>Sex.</strong> <em>(Stats NZ standard: Male / Female /
+Another gender)</em></li>
+<li><strong>Ethnicity.</strong> Which ethnic group or groups do you
+belong to? Select all that apply. <em>(Stats NZ standard ethnicity
+question, Census 2023 wording)</em></li>
+<li><strong>Region.</strong> <em>(16 regions)</em></li>
+<li><strong>Highest qualification.</strong> <em>(Stats NZ standard
+categories)</em></li>
+<li><strong>Household.</strong> How many people live in your household?
+How many are under 18?</li>
+</ol>
+<p><em>Quota check after Q1–Q5. Full quotas → polite exit.</em></p>
+<hr />
+<h1 id="module-2-understanding-small-risks">4 Module 2 · Understanding
+small risks</h1>
+<p>Risk communication follows established visual-aid practice for
+stated-preference studies of mortality risk. Each respondent learns to
+read a 100,000-square grid and is tested on it before any valuation
+task.</p>
+<blockquote>
+<p><strong>Screen 2.1</strong> In this survey we describe risks as “out
+of 100,000 people like you”. The grid below has 100,000 small squares.
+Each square is one person. The coloured squares are people who die from
+a particular cause over the next 10 years.</p>
+</blockquote>
+<p><em>Show a 100,000-cell grid (500 × 200) with 70 cells coloured,
+labelled “70 out of 100,000”.</em></p>
+<p><strong>Practice questions</strong> (feedback shown after each
+answer):</p>
+<ul>
+<li><strong>2.2.</strong> Person A has a risk of 20 in 100,000. Person B
+has a risk of 40 in 100,000. Who is more likely to die? <em>(A / B /
+Same)</em></li>
+<li><strong>2.3.</strong> A safety programme lowers your risk from 70 to
+60 in 100,000. How many fewer people out of 100,000 like you would die?
+<em>(numeric; correct = 10)</em></li>
+<li><strong>2.4.</strong> Which is the larger risk reduction: from 70 to
+60, or from 70 to 50, in 100,000? <em>(First / Second / Same)</em></li>
+</ul>
+<p><strong>Numeracy</strong> (Lipkus three-item short form, adapted to
+“out of 1,000”):</p>
+<ul>
+<li><strong>2.5–2.7.</strong> <em>(standard items)</em></li>
+</ul>
+<p><em>Respondents who answer two or more of Q2.2–2.4 incorrectly see a
+second explanation screen and one repeat item. Final comprehension score
+is recorded; the pre-registered exclusion rule appears in Section
+11.</em></p>
+<hr />
+<h1 id="module-3-mortality-risk-choices-module-a">5 Module 3 · Mortality
+risk choices (Module A)</h1>
+<h2 id="context-scripts-one-per-respondent">5.1 Context scripts (one per
+respondent)</h2>
+<p><em>Show the script for the assigned context, with a context-specific
+illustration and the grid at the baseline risk.</em></p>
+<blockquote>
+<p><strong>Road crashes.</strong> Each year about 300–350 people die on
+New Zealand roads. Your own risk depends on how much and where you
+travel. Out of 100,000 people like you, about <strong>70</strong> will
+die in a road crash over the next 10 years.</p>
+<p><strong>Air pollution.</strong> Air pollution from vehicles and home
+heating contributes to deaths from heart and lung disease. Out of
+100,000 people like you, about <strong>70</strong> will die early
+because of air pollution over the next 10 years.</p>
+<p><strong>Workplace accidents.</strong> Out of 100,000 people like you,
+about <strong>70</strong> will die in an accident at work or while
+travelling for work over the next 10 years.</p>
+<p><strong>Bowel cancer.</strong> Out of 100,000 people like you, about
+<strong>70</strong> will die from bowel cancer over the next 10
+years.</p>
+<p><strong>Hospital care.</strong> When people are treated in hospital,
+some die from complications that better care could prevent. Out of
+100,000 people like you, about <strong>70</strong> will die from such
+complications over the next 10 years.</p>
+</blockquote>
+<p><em>Design note.</em> The baseline risk is held at 70 in 100,000
+across contexts so that the context, not the baseline, varies. The
+script tells respondents that risks are illustrative of “people like
+you” and need not match national statistics exactly. Real national
+figures appear on the debrief screen.</p>
+<h2 id="payment-vehicle-one-per-respondent">5.2 Payment vehicle (one per
+respondent)</h2>
+<blockquote>
+<p><strong>Private payment.</strong> Imagine you could pay for a
+programme that lowers this risk for you personally, for example a
+[context-specific: vehicle safety package / home air filter and cleaner
+heating / workplace safety service / screening and follow-up programme /
+hospital safety programme]. You would pay every year for 10 years.</p>
+<p><strong>Taxation.</strong> Imagine the government could run a
+programme that lowers this risk for everyone, including you. It would be
+paid for by increasing your household’s taxes every year for 10
+years.</p>
+</blockquote>
+<h2 id="consequentiality-and-cheap-talk">5.3 Consequentiality and cheap
+talk</h2>
+<blockquote>
+<p>Results from this survey will be shared with the Treasury, the
+Ministry of Health and the Ministry of Transport. They may influence how
+much is spent on programmes like these. Please answer as if the payments
+were real.</p>
+<p>In surveys, people often say they would pay more than they really
+would. When you choose, please think about your household budget and the
+other things you need to spend money on.</p>
+</blockquote>
+<h2 id="attributes-and-levels">5.4 Attributes and levels</h2>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Attribute</th>
+<th>Levels</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Risk reduction over 10 years (per 100,000)</td>
+<td><strong>Low-scope arm:</strong> 5, 10, 20 · <strong>High-scope
+arm:</strong> 20, 40, 80</td>
+<td>20 appears in both arms for the external scope test (Prop. 5)</td>
+</tr>
+<tr class="even">
+<td>When the reduction starts</td>
+<td>Now; in 10 years</td>
+<td>Shown only for air pollution and bowel cancer, where latency is
+realistic; fixed at “now” for other contexts</td>
+</tr>
+<tr class="odd">
+<td>Annual cost for 10 years</td>
+<td>NZ$25, 50, 100, 200, 400, 800</td>
+<td>Same levels in both vehicles</td>
+</tr>
+<tr class="even">
+<td>Who else benefits</td>
+<td>Only you (private); everyone in NZ (tax)</td>
+<td>Fixed by vehicle; restated on every task</td>
+</tr>
+</tbody>
+</table>
+<h2 id="choice-task-format">5.5 Choice task format</h2>
+<blockquote>
+<p><strong>Screen 3.x</strong> — Which would you choose?</p>
+<table>
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th></th>
+<th>Programme A</th>
+<th>Programme B</th>
+<th>No programme</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Deaths out of 100,000 like you, next 10 years</td>
+<td>70 → <strong>60</strong></td>
+<td>70 → <strong>50</strong></td>
+<td><strong>70</strong></td>
+</tr>
+<tr class="even">
+<td>Reduction starts</td>
+<td>now</td>
+<td>now</td>
+<td>—</td>
+</tr>
+<tr class="odd">
+<td>Cost to your household each year for 10 years</td>
+<td><strong>$100</strong></td>
+<td><strong>$400</strong></td>
+<td><strong>$0</strong></td>
+</tr>
+</tbody>
+</table>
+<p>○ Programme A ○ Programme B ○ No programme</p>
+</blockquote>
+<p><em>Each task shows grids for each option, with the reduction
+highlighted. Two alternatives plus an opt-out. Eight design tasks are in
+random order, with a dominance check inserted at position 4 (one
+programme cheaper and larger) and a repeat of task 2 at position
+9.</em></p>
+<h2 id="experimental-design">5.6 Experimental design</h2>
+<ul>
+<li><strong>Design.</strong> Bayesian D-efficient design with priors
+from the pilot (Section 10), generated separately for latency and
+non-latency contexts.</li>
+<li><strong>Blocks.</strong> 48 choice situations in 6 blocks of 8.</li>
+<li><strong>Constraints.</strong> No dominated pairs apart from the
+planned check. Cost and risk reduction are not perfectly correlated
+within a task.</li>
+<li><strong>Target efficiency.</strong> D-error at or below the
+pilot-based benchmark; level balance within ±5%.</li>
+</ul>
+<hr />
+<h1 id="module-4-risk-perception-and-anxiety">6 Module 4 · Risk
+perception and anxiety</h1>
+<p>These items identify the two components of the context premium
+(Proposition 4): misperception
+(<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>ω</mi><mi>k</mi></msub><annotation encoding="application/x-tex">\omega_k</annotation></semantics></math>)
+and anxiety
+(<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>α</mi><mi>k</mi></msub><annotation encoding="application/x-tex">\alpha_k</annotation></semantics></math>).</p>
+<ol type="1">
+<li><strong>4.1 Perceived own risk.</strong> Out of 100,000 people like
+you, how many do <em>you</em> think will die from [context] over the
+next 10 years? <em>(numeric, with grid slider)</em></li>
+<li><strong>4.2 Perceived effect.</strong> If a programme reduced the
+number from 70 to 60, how much do you think it would really change
+<em>your own</em> chance of dying? <em>(Much less than the figure / A
+bit less / About right / A bit more / Much more)</em></li>
+<li><strong>4.3–4.7 Psychometric ratings</strong> (1–7 scales): How much
+do you <em>dread</em> this kind of death? How much <em>control</em> do
+you have over this risk? Is the risk <em>voluntary</em>? How
+<em>familiar</em> is it? How <em>immediate</em> is death once it
+happens?</li>
+<li><strong>4.8 Worry frequency.</strong> In the past month, how often
+have you worried about dying from [context]? <em>(Never / Once or twice
+/ Weekly / Most days)</em></li>
+<li><strong>4.9 Worry intensity.</strong> When you do think about it,
+how anxious does it make you? <em>(0–10)</em></li>
+<li><strong>4.10 Exposure.</strong> <em>(context-specific)</em>:
+<ul>
+<li><em>Road:</em> hours a week in a car.</li>
+<li><em>Air:</em> main home heating type.</li>
+<li><em>Work:</em> industry and occupation.</li>
+<li><em>Cancer:</em> screening history.</li>
+<li><em>Hospital:</em> hospital stays in the past 5 years.</li>
+</ul></li>
+</ol>
+<hr />
+<h1 id="module-5-health-improvement-choices-module-b">7 Module 5 ·
+Health improvement choices (Module B)</h1>
+<h2 id="script">7.1 Script</h2>
+<blockquote>
+<p>In the next questions, imagine you have a health problem that lowers
+your quality of life but does not shorten your life. A treatment or
+programme could improve your health for some years. You would pay for it
+each year while it works.</p>
+</blockquote>
+<h2 id="attributes-and-levels-1">7.2 Attributes and levels</h2>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Attribute</th>
+<th>Levels</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Your health now</td>
+<td>Four states described with the five EQ-5D-5L dimensions <strong>[EQ
+licensed text]</strong>. The design uses states 21232, 32323, 23242 and
+44343, which span mild to severe</td>
+</tr>
+<tr class="even">
+<td>Your health with the programme</td>
+<td>One to three levels better on one or more dimensions, generated by
+the design; never worse than “now”</td>
+</tr>
+<tr class="odd">
+<td>How long the improvement lasts</td>
+<td>1, 5 or 10 years</td>
+</tr>
+<tr class="even">
+<td>Annual cost while it works</td>
+<td>NZ$25, 50, 100, 200, 400, 800</td>
+</tr>
+<tr class="odd">
+<td>Payment vehicle</td>
+<td>As assigned in Module A (private or tax)</td>
+</tr>
+</tbody>
+</table>
+<h2 id="task-format">7.3 Task format</h2>
+<p>There are six tasks with two programmes plus an opt-out, and one
+dominance check. Health states are shown as five-row profiles with the
+changed dimensions highlighted.</p>
+<h2 id="design">7.4 Design</h2>
+<ul>
+<li>Bayesian D-efficient design.</li>
+<li>36 situations in 6 blocks of 6.</li>
+<li>Priors on health-state coefficients come from the NZ EQ-5D-5L value
+set if one is available at the time; otherwise from a published value
+set from a comparable country.</li>
+</ul>
+<hr />
+<h1 id="module-6-valuing-health-states-module-c">8 Module 6 · Valuing
+health states (Module C)</h1>
+<p>Composite time trade-off following the EQ-VT protocol <strong>[EQ
+licensed text and procedures]</strong>. It is self-completed online with
+an animated aid, after the online feasibility work for EQ-VT-style
+tasks.</p>
+<ul>
+<li><strong>Practice.</strong> One practice state (“being in a
+wheelchair”) is valued with full feedback.</li>
+<li><strong>States.</strong> Six states: the four Module B “now” states
+plus 11111 (to check that it is valued at 1) and 55555.</li>
+<li><strong>Procedure.</strong> Conventional TTO over 10 years.
+Lead-time TTO (10 + 10 years) applies when a respondent prefers
+immediate death.</li>
+<li><strong>Iteration.</strong> Iterative bisection with steps of 0.5
+years. The respondent confirms the final indifference point.</li>
+<li><strong>Checks.</strong>
+<ul>
+<li>55555 valued below 11111 (logical consistency).</li>
+<li>A response time under 3 seconds per state is flagged.</li>
+</ul></li>
+</ul>
+<p><em>Output for analysis.</em> Each respondent’s own quality weights
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>Q</mi><mi>i</mi></msub><mrow><mo stretchy="true" form="prefix">(</mo><mi>h</mi><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">Q_i(h)</annotation></semantics></math>
+for the Module B states. These are used to compute personal DQALE and
+QALY gains (Section 12).</p>
+<hr />
+<h1 id="module-7-own-health-survival-expectations-and-economic-background">9
+Module 7 · Own health, survival expectations and economic
+background</h1>
+<h2 id="own-health">9.1 Own health</h2>
+<ul>
+<li><strong>7.1</strong> EQ-5D-5L, own health today <strong>[EQ licensed
+text]</strong>.</li>
+<li><strong>7.2</strong> EQ VAS <strong>[EQ licensed
+text]</strong>.</li>
+<li><strong>7.3</strong> Long-term conditions <em>(checklist)</em>.</li>
+</ul>
+<h2 id="survival-expectations">9.2 Survival expectations</h2>
+<p>These items give the subjective survival function
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>S</mi><mi>i</mi></msub><mrow><mo stretchy="true" form="prefix">(</mo><mi>t</mi><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">S_i(t)</annotation></semantics></math>,
+using a Health and Retirement Study-style format.</p>
+<ul>
+<li><strong>7.4</strong> What do you think is the chance, from 0 to 100,
+that you will live to age <strong>75</strong>? <em>(asked if age &lt;
+70)</em></li>
+<li><strong>7.5</strong> … to age <strong>85</strong>? <em>(asked if age
+&lt; 80)</em></li>
+<li><strong>7.6</strong> … to age <strong>95</strong>?</li>
+</ul>
+<p><em>The three answers are combined with life tables in a Gompertz
+model to obtain individual survival curves. Focal answers (0, 50, 100)
+are flagged for robustness analysis.</em></p>
+<h2 id="economic-background">9.3 Economic background</h2>
+<ul>
+<li><strong>7.7</strong> Household income before tax <em>(Stats NZ
+bands)</em>.</li>
+<li><strong>7.8</strong> Roughly how much does your household spend in a
+typical month, excluding rent or mortgage? <em>(bands)</em> (for
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mover><mi>c</mi><mo accent="true">‾</mo></mover><annotation encoding="application/x-tex">\bar c</annotation></semantics></math>)</li>
+<li><strong>7.9</strong> Household net wealth <em>(bands; prefer not to
+say)</em>.</li>
+<li><strong>7.10</strong> Employment status; hours worked.</li>
+<li><strong>7.11</strong> Private health insurance
+<em>(yes/no)</em>.</li>
+<li><strong>7.12</strong> Trust in government to spend money well
+<em>(0–10)</em>.</li>
+<li><strong>7.13</strong> Political orientation <em>(left–right 0–10;
+optional)</em>.</li>
+</ul>
+<hr />
+<h1 id="module-8-debriefing">10 Module 8 · Debriefing</h1>
+<ol type="1">
+<li><strong>8.1 Certainty.</strong> How sure are you that you would
+actually pay the amounts you chose? <em>(0–10)</em></li>
+<li><strong>8.2 Consequentiality.</strong> How likely do you think it is
+that results of this survey will affect government decisions?
+<em>(0–10)</em></li>
+<li><strong>8.3 Protest screening.</strong> <em>(Asked if “No programme”
+was chosen in every Module A task.)</em> Which statement best describes
+why you chose no programme every time?
+<ul>
+<li>I can’t afford it.</li>
+<li>The risk reduction is not worth that much to me.</li>
+<li>The government should pay without extra tax.</li>
+<li>I don’t believe the programme would work.</li>
+<li>It is wrong to put a price on life.</li>
+<li>Other.</li>
+</ul></li>
+<li><strong>8.4 Understanding.</strong> How easy or difficult were the
+risk questions? <em>(1–5)</em></li>
+<li><strong>8.5 Attention.</strong> One instructed-response item,
+embedded in Module 7.</li>
+<li><strong>8.6 Open comments.</strong></li>
+</ol>
+<blockquote>
+<p><strong>Screen 8.7 — Thank you</strong> Thank you for taking part.
+The risks in this survey were illustrative. National figures: [road
+deaths, air pollution-related deaths (HAPINZ 3.0), workplace fatalities,
+bowel cancer deaths; to be inserted with sources at fielding].</p>
+<p>If this survey raised concerns: Need to talk? Free call or text
+<strong>1737</strong>. Healthline <strong>0800 611 116</strong>. For
+questions about the study, contact the research team at
+<strong>[email]</strong>. To raise ethical concerns, contact the
+University of Otago Human Ethics Committee Administrator on
+<strong>[phone/email]</strong>.</p>
+</blockquote>
+<hr />
+<h1 id="data-quality-and-pre-registered-exclusions">11 Data quality and
+pre-registered exclusions</h1>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Rule</th>
+<th>Action</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Failed the instructed-response attention item</td>
+<td>Exclude</td>
+</tr>
+<tr class="even">
+<td>Completion time &lt; one third of the median</td>
+<td>Exclude</td>
+</tr>
+<tr class="odd">
+<td>Failed both the Module A and Module B dominance checks</td>
+<td>Exclude from choice models; keep for descriptive analysis</td>
+</tr>
+<tr class="even">
+<td>Two or more risk-comprehension errors after retraining</td>
+<td>Keep; analyse separately as a robustness check</td>
+</tr>
+<tr class="odd">
+<td>Protest zero (8.3 “government should pay” or “wrong to price
+life”)</td>
+<td>Exclude from WTP estimation; report prevalence by context and
+vehicle</td>
+</tr>
+<tr class="even">
+<td>Non-trading in all Module A tasks for non-protest reasons</td>
+<td>Keep (valid zero WTP)</td>
+</tr>
+<tr class="odd">
+<td>TTO: 55555 valued above 11111</td>
+<td>Exclude from Module C only</td>
+</tr>
+</tbody>
+</table>
+<p>All rules will be registered on OSF before fielding. Primary analyses
+use all non-excluded respondents, weighted to Census margins. Robustness
+analyses are unweighted and apply stricter rules.</p>
+<hr />
+<h1 id="analysis-map-from-questions-to-theory">12 Analysis map: from
+questions to theory</h1>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Theoretical object</th>
+<th>Questions</th>
+<th>Estimator</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Context VSL,
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mtext mathvariant="normal">VSL</mtext><mi>k</mi></msub><annotation encoding="application/x-tex">\text{VSL}_{k}</annotation></semantics></math></td>
+<td>Module A (3.x), by cell</td>
+<td>Mixed logit in WTP space; VSL = WTP ÷ risk reduction × 100,000</td>
+</tr>
+<tr class="even">
+<td>Scope parameter
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>θ</mi><annotation encoding="application/x-tex">\theta</annotation></semantics></math>
+and
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>M</mi><annotation encoding="application/x-tex">M</annotation></semantics></math>
+(Prop. 5)</td>
+<td>Module A, external contrast at 20/100,000 between scope arms;
+internal range</td>
+<td>WTP as
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>β</mi><mi>Δ</mi><msup><mi>p</mi><mi>θ</mi></msup></mrow><annotation encoding="application/x-tex">\beta \Delta p^\theta</annotation></semantics></math>
+in the utility function;
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>M</mi><annotation encoding="application/x-tex">M</annotation></semantics></math>
+evaluated at policy-relevant
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>Δ</mi><msub><mi>p</mi><mn>0</mn></msub></mrow><annotation encoding="application/x-tex">\Delta p_0</annotation></semantics></math></td>
+</tr>
+<tr class="odd">
+<td>Personal DQALE</td>
+<td>Module C weights, Module 7 survival, life tables</td>
+<td>Individual Gompertz survival × own quality weights, discounted at 2%
+(sensitivity analyses at 0% and 3.5%)</td>
+</tr>
+<tr class="even">
+<td><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mi>v</mi><mo>*</mo></msup><annotation encoding="application/x-tex">v^*</annotation></semantics></math>
+and the test of Prop. 1(iii)</td>
+<td>Modules A + B jointly with personal DQALE and QALY gains</td>
+<td>Structural model:
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mtext mathvariant="normal">WTP</mtext><mi>A</mi></msup><mo>=</mo><msub><mi>π</mi><mi>k</mi></msub><mi>M</mi><msup><mi>v</mi><mo>*</mo></msup><mi>Δ</mi><mtext mathvariant="normal">DQALE</mtext></mrow><annotation encoding="application/x-tex">\text{WTP}^A = \pi_k M v^* \Delta\text{DQALE}</annotation></semantics></math>,
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mtext mathvariant="normal">WTP</mtext><mi>B</mi></msup><mo>=</mo><msup><mi>v</mi><mo>*</mo></msup><mi>Δ</mi><mtext mathvariant="normal">QALY</mtext></mrow><annotation encoding="application/x-tex">\text{WTP}^B = v^* \Delta\text{QALY}</annotation></semantics></math>;
+test equality and age invariance (H1–H2)</td>
+</tr>
+<tr class="odd">
+<td><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>σ</mi><annotation encoding="application/x-tex">\sigma</annotation></semantics></math>
+(state dependence)</td>
+<td>Age and health interactions in the structural model</td>
+<td>Bounded below by 1 (Prop. 2); estimated as the residual age gradient
+after controlling for
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>π</mi><annotation encoding="application/x-tex">\pi</annotation></semantics></math>
+and
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>M</mi><annotation encoding="application/x-tex">M</annotation></semantics></math></td>
+</tr>
+<tr class="even">
+<td><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>ω</mi><mi>k</mi></msub><annotation encoding="application/x-tex">\omega_k</annotation></semantics></math>
+(misperception)</td>
+<td>Module 4.1–4.2</td>
+<td>Ratio of perceived to stated risk change; WTP regression on
+perception</td>
+</tr>
+<tr class="odd">
+<td><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>α</mi><mi>k</mi></msub><annotation encoding="application/x-tex">\alpha_k</annotation></semantics></math>
+(anxiety)</td>
+<td>Module 4.3–4.9; age gradient of
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>π</mi><mi>k</mi></msub><annotation encoding="application/x-tex">\pi_k</annotation></semantics></math></td>
+<td>Prop. 4:
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>π</mi><mrow><mi>k</mi><mo>,</mo><mi>a</mi></mrow></msub><mo>−</mo><msub><mi>ω</mi><mi>k</mi></msub><mo>∝</mo><msub><mi>D</mi><mrow><mi>a</mi><mo>,</mo><mi>T</mi></mrow></msub><mi>/</mi><msubsup><mtext mathvariant="normal">VSL</mtext><mi>a</mi><mn>0</mn></msubsup></mrow><annotation encoding="application/x-tex">\pi_{k,a}-\omega_k \propto D_{a,T}/\text{VSL}^0_a</annotation></semantics></math>;
+worry items as instruments</td>
+</tr>
+<tr class="even">
+<td>Payment-vehicle effect (H5)</td>
+<td>Vehicle arm</td>
+<td>Main effect and interactions in Modules A and B</td>
+</tr>
+<tr class="odd">
+<td>Subgroups (Māori, Pasifika, income)</td>
+<td>Boost samples</td>
+<td>Pre-specified heterogeneity; equity analysis</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h1 id="piloting-plan">13 Piloting plan</h1>
+<ol type="1">
+<li><strong>Cognitive interviews (n ≈ 24).</strong> Think-aloud
+interviews in Dunedin, Auckland and one rural area: eight with Māori
+participants (Māori interviewer), eight with Pasifika participants
+(Pasifika interviewer) and eight others. Focus areas:
+<ul>
+<li>understanding of the 100,000-person grid;</li>
+<li>credibility of the payment vehicles;</li>
+<li>acceptability of death and illness scenarios;</li>
+<li>comprehension of the TTO.</li>
+</ul></li>
+<li><strong>Soft launch (n ≈ 300).</strong> Checks length, drop-out by
+screen, non-trading rates and data quality. Provides priors for the
+Bayesian efficient designs. Cost levels are revised if more than 60% or
+fewer than 15% choose the opt-out at the highest cost.</li>
+<li><strong>Final design freeze and OSF registration</strong>, before
+main fieldwork.</li>
+</ol>
+<hr />
+<h1 id="ethical-and-cultural-considerations">14 Ethical and cultural
+considerations</h1>
+<ul>
+<li><strong>Distress.</strong> Scenarios involving death and illness can
+be distressing. Mitigations:
+<ul>
+<li>neutral wording;</li>
+<li>a skip option on every valuation screen;</li>
+<li>support contacts on the opening and closing screens;</li>
+<li>no questions about the deaths of family members.</li>
+</ul></li>
+<li><strong>Te Tiriti o Waitangi.</strong> The project would be
+co-designed with Māori researchers. The Ngāi Tahu Research Consultation
+Committee would be consulted. Data about Māori participants would be
+governed under Māori data sovereignty principles (Te Mana Raraunga).
+Pasifika data would be handled in line with Pacific research guidelines.
+A te reo Māori version would be offered.</li>
+<li><strong>Equity in analysis.</strong> Values estimated separately by
+income or ethnicity are for understanding, not for setting lower values
+for poorer or minority groups. The reporting standard uses a single
+population value of
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mi>v</mi><mo>*</mo></msup><annotation encoding="application/x-tex">v^*</annotation></semantics></math>.</li>
+</ul>
+<hr />
+<p><em>Version history: v0.1 (November 2026), drafted for the research
+team’s review before cognitive testing.</em></p>
+</body>
+</html>
