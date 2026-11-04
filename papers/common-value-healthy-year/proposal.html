@@ -1,0 +1,844 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang xml:lang>
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <meta name="author" content="Austin Henderson, University of Otago, Dunedin, New Zealand" />
+  <title>One Price for a Healthy Year: A Life-Cycle Framework and Empirical Programme for Valuing Health Consistently Across Government</title>
+  <style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+
+ul.task-list[class]{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+font-size: inherit;
+width: 0.8em;
+margin: 0 0.8em 0.2em -1.6em;
+vertical-align: middle;
+}
+
+div.csl-bib-body { }
+div.csl-entry {
+clear: both;
+}
+.hanging-indent div.csl-entry {
+margin-left:2em;
+text-indent:-2em;
+}
+div.csl-left-margin {
+min-width:2em;
+float:left;
+}
+div.csl-right-inline {
+margin-left:2em;
+padding-left:1em;
+}
+div.csl-indent {
+margin-left: 2em;
+} </style>
+  <style type="text/css">@page{size:A4;margin:25mm 22mm}
+body{font-family:"Times New Roman",Times,serif;font-size:11.5pt;line-height:1.6;color:#000;max-width:170mm;margin:auto}
+h1{font-size:14pt;margin:20pt 0 8pt}h2{font-size:12pt;font-style:italic;font-weight:normal;margin:14pt 0 6pt}
+header h1.title{font-size:17pt;line-height:1.3;margin-top:0}p.subtitle{font-style:italic}p.author,p.date{margin:2pt 0}
+table{border-collapse:collapse;width:100%;font-size:9pt;margin:8pt 0;page-break-inside:avoid}th,td{padding:3pt 5pt;vertical-align:top}thead th{border-top:1.2pt solid #000;border-bottom:.6pt solid #000}tbody tr:last-child td{border-bottom:1.2pt solid #000}
+img{max-width:100%}hr{border:0;border-top:.5pt solid #999;margin:14pt 0}.csl-entry{font-size:9.5pt;margin-bottom:3pt;padding-left:2em;text-indent:-2em}.csl-left-margin{display:inline}.csl-right-inline{display:inline}
+code{font-size:9.5pt}a{color:#000}
+</style>
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">One Price for a Healthy Year: A Life-Cycle Framework
+and Empirical Programme for Valuing Health Consistently Across
+Government</h1>
+<p class="subtitle">Research proposal and pre-analysis plan</p>
+<p class="author">Austin Henderson, University of Otago, Dunedin, New
+Zealand</p>
+<p class="date">Draft for author revision · November 2026</p>
+</header>
+<p><strong>Target outlets.</strong> Theory and decomposition:
+<em>Journal of Health Economics</em> or <em>Journal of Benefit-Cost
+Analysis</em>. Empirical valuation study: <em>Journal of Risk and
+Uncertainty</em> or <em>Health Economics</em>. Policy synthesis:
+<em>Applied Health Economics and Health Policy</em> or <em>Policy
+Quarterly</em> (New Zealand).</p>
+<p><strong>Status.</strong> This is a draft proposal for the author’s
+development. Illustrative numbers use published NZ values and simple
+life-table approximations; all hypotheses would be pre-registered before
+data collection.</p>
+<hr />
+<h1 id="abstract">Abstract</h1>
+<p><strong>Problem.</strong> New Zealand’s transport agency values a
+statistical life at NZ$12.5 million. The Treasury’s cost–benefit tool
+values a quality-adjusted life-year (QALY) at about NZ$36,000, and the
+medicines agency works within a fixed budget with no published
+threshold. Spread over a 40-year-old’s discounted, quality-adjusted
+remaining life, the road value implies about NZ$516,000 per QALY,
+roughly 14 times the Treasury value. Inconsistencies of this size mean
+that money moved between agencies could buy substantially more health.
+Yet there is no agreed way to tell which part of the gap reflects
+legitimate differences between decisions and which part is error.</p>
+<p><strong>Proposal.</strong> We propose the <strong>Common Value of a
+Healthy Year (CVHY)</strong>: a single consumption-equivalent value per
+QALY,
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mi>v</mi><mo>*</mo></msup><annotation encoding="application/x-tex">v^*</annotation></semantics></math>,
+derived from life-cycle theory and estimated directly. It comes with two
+published sets of adjustments that every agency would apply
+transparently:</p>
+<ul>
+<li>context multipliers
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>π</mi><mi>k</mi></msub><annotation encoding="application/x-tex">\pi_k</annotation></semantics></math>
+for risk types (for example dread or identified victims), retained only
+where they survive empirical and deliberative tests;</li>
+<li>sector shadow prices of public funds
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>λ</mi><mi>s</mi></msub><annotation encoding="application/x-tex">\lambda_s</annotation></semantics></math>,
+which convert budget-constrained spending into consumption-equivalent
+welfare.</li>
+</ul>
+<p>The framework shows that the observed gap factors exactly into four
+parts: life-table arithmetic, context premia, elicitation artefacts, and
+the shadow price of the health budget. Each part is estimable.</p>
+<p><strong>Empirical programme.</strong> Four linked studies would
+estimate each factor for New Zealand:</p>
+<ol type="1">
+<li>A national stated-preference survey (n ≈ 3,000) in which the same
+respondents value mortality-risk reductions across five contexts,
+morbidity improvements and health states. It includes scope tests and
+payment-vehicle variation.</li>
+<li>Estimates of the marginal productivity of health and transport
+spending, using the population-based funding formula and revealed
+funding decisions.</li>
+<li>Deliberative citizens’ panels to judge which context premia should
+count.</li>
+<li>A re-ranking of real NZ interventions under the unified rule.</li>
+</ol>
+<p><strong>Contribution.</strong> A theoretically grounded, empirically
+calibrated and publicly legitimated value of health that transport,
+health, environment and education agencies could share, with an explicit
+account of when they should still differ.</p>
+<hr />
+<h1 id="motivation">1 Motivation</h1>
+<p>Governments value lives and health in at least three incompatible
+ways.</p>
+<ul>
+<li><strong>Transport and environmental regulators</strong> use a value
+of a statistical life (VSL): the rate at which people trade money for
+small reductions in their own mortality risk, aggregated over a
+population <span class="citation" data-cites="viscusi2018pricing robinson2019global">[<a href="#ref-viscusi2018pricing" role="doc-biblioref">1</a>,<a href="#ref-robinson2019global" role="doc-biblioref">2</a>]</span>. Waka
+Kotahi NZ Transport Agency raised its VSL from NZ$4.88m to NZ$12.5m in
+2023 after replacing a 1991 survey <span class="citation" data-cites="denne2023rr698">[<a href="#ref-denne2023rr698" role="doc-biblioref">3</a>]</span>.</li>
+<li><strong>Health technology assessment</strong> uses a cost per QALY
+threshold. In principle this is the marginal cost at which the health
+system produces health, so it is a supply-side value <span class="citation" data-cites="claxton2015methods">[<a href="#ref-claxton2015methods" role="doc-biblioref">4</a>]</span>. NICE
+has used £20,000–30,000 per QALY since 1999 and moved to £25,000–35,000
+in 2026. New Zealand’s PHARMAC operates a fixed budget with no explicit
+threshold.</li>
+<li><strong>Central agencies</strong> publish yet another value. NZ
+Treasury’s CBAx tool values a QALY at about NZ$36,000, and the UK Green
+Book at about £70,000.</li>
+</ul>
+<p>The disagreement is old. Tengs and colleagues found that the cost per
+life-year of 500 US interventions varied across sectors by more than
+nine orders of magnitude <span class="citation" data-cites="tengs1995five">[<a href="#ref-tengs1995five" role="doc-biblioref">5</a>]</span>. When marginal costs per unit of
+health differ across agencies, reallocating money between them would
+increase total health at no extra cost. A consistent valuation is a
+precondition for spending efficiently.</p>
+<p>Two literatures have studied the gap without closing it.</p>
+<ul>
+<li><strong>Bridging CBA and CEA.</strong> One literature asks when
+cost-effectiveness analysis and cost–benefit analysis coincide. They do
+so under restrictive preference conditions <span class="citation" data-cites="pliskin1980utility bleichrodt1999life dolan2002bridge">[<a href="#ref-pliskin1980utility" role="doc-biblioref">6</a>–<a href="#ref-dolan2002bridge" role="doc-biblioref">8</a>]</span>.</li>
+<li><strong>Estimating WTP per QALY.</strong> The other estimates
+willingness to pay (WTP) per QALY directly, with results spanning more
+than an order of magnitude <span class="citation" data-cites="hirth2000wtp ryen2015wtp mason2009modelling baker2010svq">[<a href="#ref-hirth2000wtp" role="doc-biblioref">9</a>–<a href="#ref-baker2010svq" role="doc-biblioref">12</a>]</span>.</li>
+</ul>
+<p>Neither provides an operational rule that agencies can share, and
+neither separates legitimate from illegitimate sources of difference.
+This proposal does both.</p>
+<h1 id="four-layers-of-disagreement">2 Four layers of disagreement</h1>
+<p>Write the ratio between a road-safety VSL and a health-sector QALY
+value
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>k</mi><annotation encoding="application/x-tex">k</annotation></semantics></math>,
+spread over remaining life expectancy
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>L</mi><msub><mi>E</mi><mi>a</mi></msub></mrow><annotation encoding="application/x-tex">LE_a</annotation></semantics></math>
+at the age
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>a</mi><annotation encoding="application/x-tex">a</annotation></semantics></math>
+of the people at risk, as</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>G</mi><mo>≡</mo><mfrac><mtext mathvariant="normal">VSL</mtext><mrow><mi>k</mi><mo>⋅</mo><mi>L</mi><msub><mi>E</mi><mi>a</mi></msub></mrow></mfrac><mi>.</mi></mrow><annotation encoding="application/x-tex">G \equiv \frac{\text{VSL}}{k \cdot LE_a}.</annotation></semantics></math></p>
+<p>For New Zealand at
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>a</mi><mo>=</mo><mn>40</mn></mrow><annotation encoding="application/x-tex">a = 40</annotation></semantics></math>
+(<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>L</mi><mi>E</mi><mo>≈</mo><mn>43.6</mn></mrow><annotation encoding="application/x-tex">LE \approx 43.6</annotation></semantics></math>
+years), VSL = NZ$12.5m and
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>k</mi><annotation encoding="application/x-tex">k</annotation></semantics></math>
+= NZ$36,000, so
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>G</mi><mo>≈</mo><mn>8.0</mn></mrow><annotation encoding="application/x-tex">G \approx 8.0</annotation></semantics></math>.
+The gap has four sources.</p>
+<ol type="1">
+<li><strong>Arithmetic.</strong> A VSL covers remaining <em>discounted,
+quality-adjusted</em> life. At a 2% discount rate and population health
+norms, a 40-year-old’s 43.6 remaining years are worth about 24.2
+discounted QALYs. Correcting for this <em>raises</em> the implied value
+per QALY (to about NZ$516,000), so the arithmetic widens the gap rather
+than closing it.</li>
+<li><strong>Context.</strong> People pay more to avoid deaths that are
+sudden, involuntary, dreaded or imposed by others than equally early
+deaths from illness <span class="citation" data-cites="chilton2002perceptions hammitt2010children">[<a href="#ref-chilton2002perceptions" role="doc-biblioref">13</a>,<a href="#ref-hammitt2010children" role="doc-biblioref">14</a>]</span>.</li>
+<li><strong>Opportunity cost.</strong> A VSL is a demand-side value in
+private consumption units. A health threshold is a supply-side value:
+what a fixed public budget gives up at the margin <span class="citation" data-cites="claxton2015methods lomas2019marginal">[<a href="#ref-claxton2015methods" role="doc-biblioref">4</a>,<a href="#ref-lomas2019marginal" role="doc-biblioref">15</a>]</span>. The
+two coincide only if the health budget is optimally sized.</li>
+<li><strong>Measurement.</strong> Stated-preference VSLs often fail
+scope tests: WTP rises less than in proportion to risk reductions, which
+inflates implied values <span class="citation" data-cites="johnston2017guidance">[<a href="#ref-johnston2017guidance" role="doc-biblioref">16</a>]</span>. Revealed-preference (wage–risk)
+estimates face their own biases.</li>
+</ol>
+<p>Layer 1 is mechanical and should simply be standardised. Layer 4 is
+error to be removed. Layers 2 and 3 contain real economic content, and
+the framework below makes them explicit, estimable and open to public
+scrutiny.</p>
+<h1 id="theory">3 Theory</h1>
+<h2 id="the-value-of-a-life-year-in-a-life-cycle-model">3.1 The value of
+a life-year in a life-cycle model</h2>
+<p>Consider a person aged
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>a</mi><annotation encoding="application/x-tex">a</annotation></semantics></math>
+with survival function
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>S</mi><mi>a</mi></msub><mrow><mo stretchy="true" form="prefix">(</mo><mi>t</mi><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">S_a(t)</annotation></semantics></math>,
+health
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>h</mi><mi>t</mi></msub><annotation encoding="application/x-tex">h_t</annotation></semantics></math>,
+consumption
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>c</mi><mi>t</mi></msub><annotation encoding="application/x-tex">c_t</annotation></semantics></math>,
+income
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>y</mi><mi>t</mi></msub><annotation encoding="application/x-tex">y_t</annotation></semantics></math>
+and period utility
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>u</mi><mrow><mo stretchy="true" form="prefix">(</mo><msub><mi>c</mi><mi>t</mi></msub><mo>,</mo><msub><mi>h</mi><mi>t</mi></msub><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">u(c_t, h_t)</annotation></semantics></math>,
+discounting at rate
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>r</mi><annotation encoding="application/x-tex">r</annotation></semantics></math>
+with access to fair annuities <span class="citation" data-cites="rosen1988value shepard1984survival">[<a href="#ref-rosen1988value" role="doc-biblioref">17</a>,<a href="#ref-shepard1984survival" role="doc-biblioref">18</a>]</span>.
+Expected lifetime utility is</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>V</mi><mi>a</mi></msub><mo>=</mo><munder><mo>∑</mo><mrow><mi>t</mi><mo>≥</mo><mi>a</mi></mrow></munder><msup><mrow><mo stretchy="true" form="prefix">(</mo><mn>1</mn><mo>+</mo><mi>r</mi><mo stretchy="true" form="postfix">)</mo></mrow><mrow><mo>−</mo><mrow><mo stretchy="true" form="prefix">(</mo><mi>t</mi><mo>−</mo><mi>a</mi><mo stretchy="true" form="postfix">)</mo></mrow></mrow></msup><mspace width="0.167em"></mspace><msub><mi>S</mi><mi>a</mi></msub><mrow><mo stretchy="true" form="prefix">(</mo><mi>t</mi><mo stretchy="true" form="postfix">)</mo></mrow><mspace width="0.167em"></mspace><mi>u</mi><mrow><mo stretchy="true" form="prefix">(</mo><msub><mi>c</mi><mi>t</mi></msub><mo>,</mo><msub><mi>h</mi><mi>t</mi></msub><mo stretchy="true" form="postfix">)</mo></mrow><mi>.</mi></mrow><annotation encoding="application/x-tex">V_a = \sum_{t \ge a} (1+r)^{-(t-a)}\, S_a(t)\, u(c_t, h_t).</annotation></semantics></math></p>
+<p>The marginal rate of substitution between a small reduction in
+mortality risk at age
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>a</mi><annotation encoding="application/x-tex">a</annotation></semantics></math>
+and wealth is <span class="citation" data-cites="murphy2006value">[<a href="#ref-murphy2006value" role="doc-biblioref">19</a>]</span></p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mtext mathvariant="normal">VSL</mtext><mi>a</mi></msub><mo>=</mo><munder><mo>∑</mo><mrow><mi>t</mi><mo>≥</mo><mi>a</mi></mrow></munder><msup><mrow><mo stretchy="true" form="prefix">(</mo><mn>1</mn><mo>+</mo><mi>r</mi><mo stretchy="true" form="postfix">)</mo></mrow><mrow><mo>−</mo><mrow><mo stretchy="true" form="prefix">(</mo><mi>t</mi><mo>−</mo><mi>a</mi><mo stretchy="true" form="postfix">)</mo></mrow></mrow></msup><mspace width="0.167em"></mspace><msub><mi>S</mi><mi>a</mi></msub><mrow><mo stretchy="true" form="prefix">(</mo><mi>t</mi><mo stretchy="true" form="postfix">)</mo></mrow><mspace width="0.167em"></mspace><msub><mi>ν</mi><mi>t</mi></msub><mo>,</mo><mspace width="2.0em"></mspace><msub><mi>ν</mi><mi>t</mi></msub><mo>=</mo><mfrac><mrow><mi>u</mi><mrow><mo stretchy="true" form="prefix">(</mo><msub><mi>c</mi><mi>t</mi></msub><mo>,</mo><msub><mi>h</mi><mi>t</mi></msub><mo stretchy="true" form="postfix">)</mo></mrow></mrow><mi>μ</mi></mfrac><mo>+</mo><mrow><mo stretchy="true" form="prefix">(</mo><msub><mi>y</mi><mi>t</mi></msub><mo>−</mo><msub><mi>c</mi><mi>t</mi></msub><mo stretchy="true" form="postfix">)</mo></mrow><mo>,</mo><mspace width="2.0em"></mspace><mrow><mo stretchy="true" form="prefix">(</mo><mn>1</mn><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">\text{VSL}_a = \sum_{t \ge a} (1+r)^{-(t-a)}\, S_a(t)\, \nu_t, \qquad \nu_t = \frac{u(c_t,h_t)}{\mu} + (y_t - c_t), \qquad (1)</annotation></semantics></math></p>
+<p>Here
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>μ</mi><mo>=</mo><mi>∂</mi><msub><mi>V</mi><mi>a</mi></msub><mi>/</mi><mi>∂</mi><mi>W</mi></mrow><annotation encoding="application/x-tex">\mu = \partial V_a / \partial W</annotation></semantics></math>
+is the marginal utility of lifetime wealth, and
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>ν</mi><mi>t</mi></msub><annotation encoding="application/x-tex">\nu_t</annotation></semantics></math>
+is the value of a life-year at age
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>t</mi><annotation encoding="application/x-tex">t</annotation></semantics></math>.
+It is the consumption equivalent of being alive in that year, plus the
+person’s net contribution to resources. Utility is normalised so that
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>u</mi><mo>=</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">u = 0</annotation></semantics></math>
+corresponds to death.</p>
+<h2 id="when-there-is-one-value-per-qaly">3.2 When there is one value
+per QALY</h2>
+<p>Suppose period utility is multiplicatively separable,
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>u</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>c</mi><mo>,</mo><mi>h</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mi>Q</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>h</mi><mo stretchy="true" form="postfix">)</mo></mrow><mspace width="0.167em"></mspace><mi>w</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>c</mi><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">u(c,h) = Q(h)\, w(c)</annotation></semantics></math>,
+so that health-related quality of life scales the utility of
+consumption. Suppose also that consumption is smooth at
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mover><mi>c</mi><mo accent="true">‾</mo></mover><annotation encoding="application/x-tex">\bar c</annotation></semantics></math>
+and lifetime net saving is zero. These are the conditions under which
+QALY maximisation and cost–benefit analysis agree <span class="citation" data-cites="bleichrodt1999life">[<a href="#ref-bleichrodt1999life" role="doc-biblioref">7</a>]</span>.</p>
+<p><strong>Proposition 1 (common value of a healthy year).</strong>
+Under these conditions,
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>ν</mi><mi>t</mi></msub><mo>=</mo><mi>Q</mi><mrow><mo stretchy="true" form="prefix">(</mo><msub><mi>h</mi><mi>t</mi></msub><mo stretchy="true" form="postfix">)</mo></mrow><mspace width="0.167em"></mspace><msup><mi>v</mi><mo>*</mo></msup></mrow><annotation encoding="application/x-tex">\nu_t = Q(h_t)\, v^*</annotation></semantics></math>
+with
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi>v</mi><mo>*</mo></msup><mo>≡</mo><mi>w</mi><mrow><mo stretchy="true" form="prefix">(</mo><mover><mi>c</mi><mo accent="true">‾</mo></mover><mo stretchy="true" form="postfix">)</mo></mrow><mi>/</mi><mi>μ</mi></mrow><annotation encoding="application/x-tex">v^* \equiv w(\bar c)/\mu</annotation></semantics></math>,
+and</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mtext mathvariant="normal">VSL</mtext><mi>a</mi></msub><mo>=</mo><msup><mi>v</mi><mo>*</mo></msup><mo>⋅</mo><msub><mtext mathvariant="normal">DQALE</mtext><mi>a</mi></msub><mo>,</mo><mspace width="2.0em"></mspace><msub><mtext mathvariant="normal">DQALE</mtext><mi>a</mi></msub><mo>=</mo><munder><mo>∑</mo><mrow><mi>t</mi><mo>≥</mo><mi>a</mi></mrow></munder><msup><mrow><mo stretchy="true" form="prefix">(</mo><mn>1</mn><mo>+</mo><mi>r</mi><mo stretchy="true" form="postfix">)</mo></mrow><mrow><mo>−</mo><mrow><mo stretchy="true" form="prefix">(</mo><mi>t</mi><mo>−</mo><mi>a</mi><mo stretchy="true" form="postfix">)</mo></mrow></mrow></msup><msub><mi>S</mi><mi>a</mi></msub><mrow><mo stretchy="true" form="prefix">(</mo><mi>t</mi><mo stretchy="true" form="postfix">)</mo></mrow><mspace width="0.167em"></mspace><mi>Q</mi><mrow><mo stretchy="true" form="prefix">(</mo><msub><mi>h</mi><mi>t</mi></msub><mo stretchy="true" form="postfix">)</mo></mrow><mi>.</mi></mrow><annotation encoding="application/x-tex">\text{VSL}_a = v^* \cdot \text{DQALE}_a, \qquad \text{DQALE}_a = \sum_{t \ge a}(1+r)^{-(t-a)} S_a(t)\, Q(h_t).</annotation></semantics></math></p>
+<p>The WTP for any morbidity improvement that raises quality by
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>Δ</mi><msub><mi>Q</mi><mi>t</mi></msub></mrow><annotation encoding="application/x-tex">\Delta Q_t</annotation></semantics></math>
+is
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi>v</mi><mo>*</mo></msup><mo>∑</mo><msup><mrow><mo stretchy="true" form="prefix">(</mo><mn>1</mn><mo>+</mo><mi>r</mi><mo stretchy="true" form="postfix">)</mo></mrow><mrow><mo>−</mo><mrow><mo stretchy="true" form="prefix">(</mo><mi>t</mi><mo>−</mo><mi>a</mi><mo stretchy="true" form="postfix">)</mo></mrow></mrow></msup><msub><mi>S</mi><mi>a</mi></msub><mrow><mo stretchy="true" form="prefix">(</mo><mi>t</mi><mo stretchy="true" form="postfix">)</mo></mrow><mi>Δ</mi><msub><mi>Q</mi><mi>t</mi></msub></mrow><annotation encoding="application/x-tex">v^* \sum (1+r)^{-(t-a)} S_a(t) \Delta Q_t</annotation></semantics></math>.</p>
+<p><em>Proof sketch.</em> Substitute
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>u</mi><mo>=</mo><mi>Q</mi><mrow><mo stretchy="true" form="prefix">(</mo><msub><mi>h</mi><mi>t</mi></msub><mo stretchy="true" form="postfix">)</mo></mrow><mspace width="0.167em"></mspace><mi>w</mi><mrow><mo stretchy="true" form="prefix">(</mo><mover><mi>c</mi><mo accent="true">‾</mo></mover><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">u = Q(h_t)\,w(\bar c)</annotation></semantics></math>
+and
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>y</mi><mi>t</mi></msub><mo>=</mo><msub><mi>c</mi><mi>t</mi></msub></mrow><annotation encoding="application/x-tex">y_t = c_t</annotation></semantics></math>
+into (1), giving
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>ν</mi><mi>t</mi></msub><mo>=</mo><mi>Q</mi><mrow><mo stretchy="true" form="prefix">(</mo><msub><mi>h</mi><mi>t</mi></msub><mo stretchy="true" form="postfix">)</mo></mrow><mspace width="0.167em"></mspace><mi>w</mi><mrow><mo stretchy="true" form="prefix">(</mo><mover><mi>c</mi><mo accent="true">‾</mo></mover><mo stretchy="true" form="postfix">)</mo></mrow><mi>/</mi><mi>μ</mi></mrow><annotation encoding="application/x-tex">\nu_t = Q(h_t)\,w(\bar c)/\mu</annotation></semantics></math>.
+For morbidity,
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>∂</mi><msub><mi>V</mi><mi>a</mi></msub><mi>/</mi><mi>∂</mi><msub><mi>Q</mi><mi>t</mi></msub><mo>=</mo><msup><mrow><mo stretchy="true" form="prefix">(</mo><mn>1</mn><mo>+</mo><mi>r</mi><mo stretchy="true" form="postfix">)</mo></mrow><mrow><mo>−</mo><mrow><mo stretchy="true" form="prefix">(</mo><mi>t</mi><mo>−</mo><mi>a</mi><mo stretchy="true" form="postfix">)</mo></mrow></mrow></msup><msub><mi>S</mi><mi>a</mi></msub><mrow><mo stretchy="true" form="prefix">(</mo><mi>t</mi><mo stretchy="true" form="postfix">)</mo></mrow><mspace width="0.167em"></mspace><mi>w</mi><mrow><mo stretchy="true" form="prefix">(</mo><mover><mi>c</mi><mo accent="true">‾</mo></mover><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">\partial V_a/\partial Q_t = (1+r)^{-(t-a)} S_a(t)\, w(\bar c)</annotation></semantics></math>;
+dividing by
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>μ</mi><annotation encoding="application/x-tex">\mu</annotation></semantics></math>
+gives the stated WTP. ∎ Note that the normalisation by
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>μ</mi><annotation encoding="application/x-tex">\mu</annotation></semantics></math>,
+the marginal utility of lifetime wealth, is what makes
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mi>v</mi><mo>*</mo></msup><annotation encoding="application/x-tex">v^*</annotation></semantics></math>
+a value per QALY. Dividing by the period marginal utility of
+consumption,
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>u</mi><mi>c</mi></msub><mo>=</mo><mi>Q</mi><mspace width="0.167em"></mspace><mi>w</mi><mi>′</mi></mrow><annotation encoding="application/x-tex">u_c = Q\,w&#39;</annotation></semantics></math>,
+would cancel
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>Q</mi><annotation encoding="application/x-tex">Q</annotation></semantics></math>
+and lose the quality adjustment.</p>
+<p>So under QALY-consistent preferences, the VSL and the WTP per QALY
+are not rival values. They are the same parameter
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mi>v</mi><mo>*</mo></msup><annotation encoding="application/x-tex">v^*</annotation></semantics></math>,
+multiplied by different quantities of health. We call
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mi>v</mi><mo>*</mo></msup><annotation encoding="application/x-tex">v^*</annotation></semantics></math>
+the <strong>Common Value of a Healthy Year (CVHY)</strong>.</p>
+<p>Proposition 1 is testable. It implies that
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mtext mathvariant="normal">VSL</mtext><mi>a</mi></msub><mi>/</mi><msub><mtext mathvariant="normal">DQALE</mtext><mi>a</mi></msub></mrow><annotation encoding="application/x-tex">\text{VSL}_a / \text{DQALE}_a</annotation></semantics></math>
+is constant across ages and equals WTP per QALY elicited for morbidity.
+Systematic departures identify which assumption fails:</p>
+<ul>
+<li>departures that vary with age point to consumption profiles <span class="citation" data-cites="aldy2008adjusting">[<a href="#ref-aldy2008adjusting" role="doc-biblioref">20</a>]</span>;</li>
+<li>departures that vary with health state point to non-separability
+<span class="citation" data-cites="hammitt2002qalys">[<a href="#ref-hammitt2002qalys" role="doc-biblioref">21</a>]</span>.</li>
+</ul>
+<h2 id="context-premia">3.3 Context premia</h2>
+<p>Let people derive additional disutility from exposure to risk of type
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>k</mi><annotation encoding="application/x-tex">k</annotation></semantics></math>
+(for example anxiety about a dreaded or involuntary hazard) that is not
+captured by the life-years at stake. Writing this as a context-specific
+term in the ex ante utility gives</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mtext mathvariant="normal">WTP</mtext><mi>k</mi></msub><mo>=</mo><msub><mi>π</mi><mi>k</mi></msub><mspace width="0.167em"></mspace><msup><mi>v</mi><mo>*</mo></msup><mspace width="0.167em"></mspace><mi>Δ</mi><mtext mathvariant="normal">DQALE</mtext><mo>,</mo><mspace width="2.0em"></mspace><msub><mi>π</mi><mi>k</mi></msub><mo>≥</mo><mn>1</mn><mo>,</mo></mrow><annotation encoding="application/x-tex">\text{WTP}_k = \pi_k \, v^* \, \Delta \text{DQALE}, \qquad \pi_k \ge 1,</annotation></semantics></math></p>
+<p>where
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>π</mi><mi>k</mi></msub><annotation encoding="application/x-tex">\pi_k</annotation></semantics></math>
+is the <strong>context multiplier</strong> for risk type
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>k</mi><annotation encoding="application/x-tex">k</annotation></semantics></math>.
+Whether policy should honour
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>π</mi><mi>k</mi></msub><annotation encoding="application/x-tex">\pi_k</annotation></semantics></math>
+is a normative question. A premium for fear experienced while exposed is
+a real welfare effect. A premium for identified rather than statistical
+victims, or one that arises from misperceived risk, may not be. The
+framework treats
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>π</mi><mi>k</mi></msub><annotation encoding="application/x-tex">\pi_k</annotation></semantics></math>
+as an estimated parameter that enters appraisal only after deliberative
+endorsement (Study 3).</p>
+<h2 id="public-budgets-and-sector-shadow-prices">3.4 Public budgets and
+sector shadow prices</h2>
+<p>Agencies do not spend private income. Each sector
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>s</mi><annotation encoding="application/x-tex">s</annotation></semantics></math>
+has a budget
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>B</mi><mi>s</mi></msub><annotation encoding="application/x-tex">B_s</annotation></semantics></math>,
+and the social planner solves</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>max</mo><mspace width="0.278em"></mspace><mi>W</mi><mo>=</mo><munder><mo>∑</mo><mi>j</mi></munder><msub><mi>x</mi><mi>j</mi></msub><mo minsize="1.8" maxsize="1.8" stretchy="false" form="prefix">(</mo><msup><mi>v</mi><mo>*</mo></msup><munder><mo>∑</mo><mi>k</mi></munder><msub><mi>π</mi><mi>k</mi></msub><mspace width="0.167em"></mspace><mi>Δ</mi><msub><mi>Q</mi><mrow><mi>j</mi><mi>k</mi></mrow></msub><mo>+</mo><mi>Δ</mi><msub><mi>Y</mi><mi>j</mi></msub><mo minsize="1.8" maxsize="1.8" stretchy="false" form="postfix">)</mo><mspace width="1.0em"></mspace><mtext mathvariant="normal">s.t.</mtext><mspace width="1.0em"></mspace><munder><mo>∑</mo><mrow><mi>j</mi><mo>∈</mo><mi>s</mi></mrow></munder><msub><mi>x</mi><mi>j</mi></msub><mspace width="0.167em"></mspace><mi>Δ</mi><msub><mi>G</mi><mi>j</mi></msub><mo>≤</mo><msub><mi>B</mi><mi>s</mi></msub><mspace width="0.278em"></mspace><mspace width="0.278em"></mspace><mo>∀</mo><mi>s</mi><mo>,</mo></mrow><annotation encoding="application/x-tex">\max \; W = \sum_j x_j \Big( v^* \sum_k \pi_k \, \Delta Q_{jk} + \Delta Y_j \Big) \quad \text{s.t.} \quad \sum_{j \in s} x_j \, \Delta G_j \le B_s \;\; \forall s,</annotation></semantics></math></p>
+<p>where
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>x</mi><mi>j</mi></msub><mo>∈</mo><mo stretchy="false" form="prefix">{</mo><mn>0</mn><mo>,</mo><mn>1</mn><mo stretchy="false" form="postfix">}</mo></mrow><annotation encoding="application/x-tex">x_j \in \{0,1\}</annotation></semantics></math>
+selects project
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>j</mi><annotation encoding="application/x-tex">j</annotation></semantics></math>,
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>Δ</mi><msub><mi>Q</mi><mrow><mi>j</mi><mi>k</mi></mrow></msub></mrow><annotation encoding="application/x-tex">\Delta Q_{jk}</annotation></semantics></math>
+is the project’s discounted QALY gain in context
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>k</mi><annotation encoding="application/x-tex">k</annotation></semantics></math>,
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>Δ</mi><msub><mi>Y</mi><mi>j</mi></msub></mrow><annotation encoding="application/x-tex">\Delta Y_j</annotation></semantics></math>
+is its consumption-equivalent non-health benefit, and
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>Δ</mi><msub><mi>G</mi><mi>j</mi></msub></mrow><annotation encoding="application/x-tex">\Delta G_j</annotation></semantics></math>
+is its cost to the sector budget. The Lagrange multiplier
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>λ</mi><mi>s</mi></msub><annotation encoding="application/x-tex">\lambda_s</annotation></semantics></math>
+on each budget is the welfare value of a marginal dollar in sector
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>s</mi><annotation encoding="application/x-tex">s</annotation></semantics></math>,
+expressed in consumption units.</p>
+<p><strong>Proposition 2 (CVHY decision rule).</strong> Project
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>j</mi><annotation encoding="application/x-tex">j</annotation></semantics></math>
+in sector
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>s</mi><annotation encoding="application/x-tex">s</annotation></semantics></math>
+should be funded if and only if</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi>v</mi><mo>*</mo></msup><munder><mo>∑</mo><mi>k</mi></munder><msub><mi>π</mi><mi>k</mi></msub><mi>Δ</mi><msub><mi>Q</mi><mrow><mi>j</mi><mi>k</mi></mrow></msub><mo>+</mo><mi>Δ</mi><msub><mi>Y</mi><mi>j</mi></msub><mspace width="0.278em"></mspace><mo>≥</mo><mspace width="0.278em"></mspace><msub><mi>λ</mi><mi>s</mi></msub><mspace width="0.167em"></mspace><mi>Δ</mi><msub><mi>G</mi><mi>j</mi></msub><mi>.</mi></mrow><annotation encoding="application/x-tex">v^* \sum_k \pi_k \Delta Q_{jk} + \Delta Y_j \;\ge\; \lambda_s \, \Delta G_j .</annotation></semantics></math></p>
+<p>For a pure health project, this is equivalent to a cost-per-QALY
+threshold of
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>k</mi><mi>s</mi></msub><mo>=</mo><msup><mi>v</mi><mo>*</mo></msup><mi>/</mi><msub><mi>λ</mi><mi>s</mi></msub></mrow><annotation encoding="application/x-tex">k_s = v^*/\lambda_s</annotation></semantics></math>.
+Hence</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>λ</mi><mi>s</mi></msub><mo>=</mo><mfrac><msup><mi>v</mi><mo>*</mo></msup><msub><mi>k</mi><mi>s</mi></msub></mfrac><mi>.</mi></mrow><annotation encoding="application/x-tex">\lambda_s = \frac{v^*}{k_s}.</annotation></semantics></math></p>
+<p>A health agency whose marginal cost per QALY is NZ$36,000 while
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mi>v</mi><mo>*</mo></msup><annotation encoding="application/x-tex">v^*</annotation></semantics></math>
+is, say, NZ$150,000 has
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>λ</mi><mo>≈</mo><mn>4.2</mn></mrow><annotation encoding="application/x-tex">\lambda \approx 4.2</annotation></semantics></math>:
+each dollar in that budget is worth more than four dollars of private
+consumption. Allocative efficiency across government requires that
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>λ</mi><mi>s</mi></msub><annotation encoding="application/x-tex">\lambda_s</annotation></semantics></math>
+be equal across sectors, and equal to the marginal cost of public funds
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>γ</mi><annotation encoding="application/x-tex">\gamma</annotation></semantics></math>
+(typically 1.1–1.3; <span class="citation" data-cites="dahlby2008mcpf">[<a href="#ref-dahlby2008mcpf" role="doc-biblioref">22</a>]</span>). Moving $1 from sector
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>s</mi><annotation encoding="application/x-tex">s</annotation></semantics></math>
+to sector
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>s</mi><mi>′</mi></mrow><annotation encoding="application/x-tex">s&#39;</annotation></semantics></math>
+changes welfare by about
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>λ</mi><mrow><mi>s</mi><mi>′</mi></mrow></msub><mo>−</mo><msub><mi>λ</mi><mi>s</mi></msub></mrow><annotation encoding="application/x-tex">\lambda_{s&#39;} - \lambda_s</annotation></semantics></math>.</p>
+<h2 id="the-exact-decomposition">3.5 The exact decomposition</h2>
+<p>Combining Propositions 1 and 2 with a multiplicative measurement
+artefact
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>M</mi><mi>k</mi></msub><annotation encoding="application/x-tex">M_k</annotation></semantics></math>
+in elicited values
+(<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msubsup><mtext mathvariant="normal">VSL</mtext><mi>k</mi><mtext mathvariant="normal">obs</mtext></msubsup><mo>=</mo><msub><mi>M</mi><mi>k</mi></msub><msub><mi>π</mi><mi>k</mi></msub><msup><mi>v</mi><mo>*</mo></msup><msub><mtext mathvariant="normal">DQALE</mtext><mi>a</mi></msub></mrow><annotation encoding="application/x-tex">\text{VSL}^{\text{obs}}_k = M_k \pi_k v^* \text{DQALE}_a</annotation></semantics></math>)
+gives an identity for the observed gap:</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>ln</mo><mi>G</mi><mo>=</mo><munder><munder><mrow><mo>ln</mo><mfrac><msub><mtext mathvariant="normal">DQALE</mtext><mi>a</mi></msub><mrow><mi>L</mi><msub><mi>E</mi><mi>a</mi></msub></mrow></mfrac></mrow><mo accent="true">⏟</mo></munder><mtext mathvariant="normal">arithmetic</mtext></munder><mo>+</mo><munder><munder><mrow><mo>ln</mo><msub><mi>π</mi><mi>k</mi></msub></mrow><mo accent="true">⏟</mo></munder><mtext mathvariant="normal">context</mtext></munder><mo>+</mo><munder><munder><mrow><mo>ln</mo><msub><mi>M</mi><mi>k</mi></msub></mrow><mo accent="true">⏟</mo></munder><mtext mathvariant="normal">measurement</mtext></munder><mo>+</mo><munder><munder><mrow><mo>ln</mo><msub><mi>λ</mi><mtext mathvariant="normal">health</mtext></msub></mrow><mo accent="true">⏟</mo></munder><mtext mathvariant="normal">opportunity cost</mtext></munder><mi>.</mi><mspace width="2.0em"></mspace><mrow><mo stretchy="true" form="prefix">(</mo><mn>2</mn><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">\ln G = \underbrace{\ln \frac{\text{DQALE}_a}{LE_a}}_{\text{arithmetic}} + \underbrace{\ln \pi_k}_{\text{context}} + \underbrace{\ln M_k}_{\text{measurement}} + \underbrace{\ln \lambda_{\text{health}}}_{\text{opportunity cost}} . \qquad (2)</annotation></semantics></math></p>
+<p>For New Zealand at age 40 and 2% discounting,
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>G</mi><mo>=</mo><mn>7.96</mn></mrow><annotation encoding="application/x-tex">G = 7.96</annotation></semantics></math>
+and the arithmetic term is
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>ln</mo><mrow><mo stretchy="true" form="prefix">(</mo><mn>24.2</mn><mi>/</mi><mn>43.6</mn><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mo>−</mo><mn>0.59</mn></mrow><annotation encoding="application/x-tex">\ln(24.2/43.6) = -0.59</annotation></semantics></math>.
+The remaining three factors must therefore multiply to about 14.3. The
+empirical programme estimates each one. If, for example,
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>π</mi><mtext mathvariant="normal">road</mtext></msub><mo>=</mo><mn>1.3</mn></mrow><annotation encoding="application/x-tex">\pi_{\text{road}} = 1.3</annotation></semantics></math>,
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>M</mi><mo>=</mo><mn>1.5</mn></mrow><annotation encoding="application/x-tex">M = 1.5</annotation></semantics></math>
+and
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>λ</mi><mtext mathvariant="normal">health</mtext></msub><mo>=</mo><mn>7.3</mn></mrow><annotation encoding="application/x-tex">\lambda_{\text{health}} = 7.3</annotation></semantics></math>,
+the transport and health values would be fully reconciled. The policy
+conclusion would then be that the health budget is too small, not that
+the road value is too high.</p>
+<h2 id="the-reporting-standard">3.6 The reporting standard</h2>
+<p>We propose that every agency appraisal report health effects in
+discounted QALYs, by context, and value them using three published
+numbers:</p>
+<ol type="1">
+<li><strong><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mi>v</mi><mo>*</mo></msup><annotation encoding="application/x-tex">v^*</annotation></semantics></math></strong>:
+the Common Value of a Healthy Year, estimated nationally and updated
+with income.</li>
+<li><strong><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>π</mi><mi>k</mi></msub><annotation encoding="application/x-tex">\pi_k</annotation></semantics></math></strong>:
+a short list of endorsed context multipliers (possibly all equal to
+1).</li>
+<li><strong><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>λ</mi><mi>s</mi></msub><annotation encoding="application/x-tex">\lambda_s</annotation></semantics></math></strong>:
+sector shadow prices of public funds, estimated from each sector’s
+marginal productivity.</li>
+</ol>
+<p>Mortality effects enter as
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>Δ</mi><mtext mathvariant="normal">DQALE</mtext></mrow><annotation encoding="application/x-tex">\Delta\text{DQALE}</annotation></semantics></math>
+of the people affected. This replaces a single age-blind VSL with a
+life-table calculation; agencies that prefer an age-invariant value can
+still apply a population-average DQALE. The rule nests current
+practice:</p>
+<ul>
+<li>transport appraisal corresponds to
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>λ</mi><mtext mathvariant="normal">transport</mtext></msub><mo>=</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">\lambda_{\text{transport}} = 1</annotation></semantics></math>,
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>π</mi><mtext mathvariant="normal">road</mtext></msub><annotation encoding="application/x-tex">\pi_{\text{road}}</annotation></semantics></math>
+implicit in the VSL, and a fixed DQALE;</li>
+<li>health technology assessment corresponds to reporting
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>k</mi><mo>=</mo><msup><mi>v</mi><mo>*</mo></msup><mi>/</mi><msub><mi>λ</mi><mtext mathvariant="normal">health</mtext></msub></mrow><annotation encoding="application/x-tex">k = v^*/\lambda_{\text{health}}</annotation></semantics></math>
+without stating either component.</li>
+</ul>
+<h2 id="extensions">3.7 Extensions</h2>
+<ul>
+<li><strong>Distribution.</strong> Equity weights can be added by
+replacing
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mi>v</mi><mo>*</mo></msup><annotation encoding="application/x-tex">v^*</annotation></semantics></math>
+with person-specific values in a prioritarian social welfare function
+<span class="citation" data-cites="adler2014social">[<a href="#ref-adler2014social" role="doc-biblioref">23</a>]</span>.
+Fleurbaey’s equivalent-income approach offers a non-utilitarian
+alternative that respects individual trade-offs <span class="citation" data-cites="fleurbaey2013equivalent">[<a href="#ref-fleurbaey2013equivalent" role="doc-biblioref">24</a>]</span>.</li>
+<li><strong>Wellbeing.</strong> Life-satisfaction (WELLBY) valuations
+provide an independent cross-check on
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mi>v</mi><mo>*</mo></msup><annotation encoding="application/x-tex">v^*</annotation></semantics></math>
+<span class="citation" data-cites="frijters2020happy">[<a href="#ref-frijters2020happy" role="doc-biblioref">25</a>]</span>.</li>
+</ul>
+<h1 id="empirical-programme">4 Empirical programme</h1>
+<h2 id="study-1-national-valuation-survey">4.1 Study 1: National
+valuation survey</h2>
+<p><strong>Aim.</strong> Estimate
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mi>v</mi><mo>*</mo></msup><annotation encoding="application/x-tex">v^*</annotation></semantics></math>,
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>π</mi><mi>k</mi></msub><annotation encoding="application/x-tex">\pi_k</annotation></semantics></math>
+and
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>M</mi><mi>k</mi></msub><annotation encoding="application/x-tex">M_k</annotation></semantics></math>,
+and test Proposition 1, on one sample.</p>
+<p><strong>Sample.</strong> About 3,000 adults from a probability-based
+or high-quality quota online panel, with quotas for age, sex, region and
+education. Māori and Pasifika participants would be oversampled (n ≈ 600
+each) so that subgroup estimates are precise. Data governance would
+follow Te Tiriti o Waitangi principles and Māori data sovereignty
+guidelines, with co-design through the Ngāi Tahu Research Consultation
+Committee.</p>
+<p><strong>Design.</strong> Each respondent completes four modules.</p>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Module</th>
+<th>Task</th>
+<th>Identifies</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>A. Mortality risk</td>
+<td>Discrete choice experiment (DCE): pairs of policies reducing annual
+risk of death in one context, varying risk reduction (scope), latency,
+cost and payment vehicle</td>
+<td>Context-specific VSL; scope elasticity
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>⇒</mo><msub><mi>M</mi><mi>k</mi></msub></mrow><annotation encoding="application/x-tex">\Rightarrow M_k</annotation></semantics></math></td>
+</tr>
+<tr class="even">
+<td>B. Morbidity</td>
+<td>DCE over health-improvement programmes varying EQ-5D-5L dimensions,
+duration and cost <span class="citation" data-cites="cameron2013demand">[<a href="#ref-cameron2013demand" role="doc-biblioref">26</a>]</span></td>
+<td>WTP per QALY from morbidity</td>
+</tr>
+<tr class="odd">
+<td>C. Health states</td>
+<td>Composite time trade-off for 6 EQ-5D-5L states</td>
+<td>Individual quality weights
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>Q</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>h</mi><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">Q(h)</annotation></semantics></math></td>
+</tr>
+<tr class="even">
+<td>D. Background</td>
+<td>Subjective survival expectations, income, consumption, health, risk
+perceptions, numeracy</td>
+<td><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>S</mi><mi>a</mi></msub><mrow><mo stretchy="true" form="prefix">(</mo><mi>t</mi><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">S_a(t)</annotation></semantics></math>,
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mover><mi>c</mi><mo accent="true">‾</mo></mover><annotation encoding="application/x-tex">\bar c</annotation></semantics></math>,
+covariates</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Arms.</strong> Context is randomised between respondents
+across five contexts: road crashes, air pollution, workplace accidents,
+cancer (screening) and hospital care. Payment vehicle (private payment
+vs general taxation) is crossed with context. Within each arm, risk
+reductions vary over a 4:1 range for an internal scope test, and a
+split-sample external scope test is included <span class="citation" data-cites="johnston2017guidance">[<a href="#ref-johnston2017guidance" role="doc-biblioref">16</a>]</span>.</p>
+<p><strong>Estimation.</strong> Each module is estimated by mixed logit
+in WTP space <span class="citation" data-cites="lancsar2008dce">[<a href="#ref-lancsar2008dce" role="doc-biblioref">27</a>]</span>. The
+structural step then estimates
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mi>v</mi><mo>*</mo></msup><annotation encoding="application/x-tex">v^*</annotation></semantics></math>
+from Modules A and B jointly. It imposes
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext mathvariant="normal">WTP</mtext><mo>=</mo><msub><mi>π</mi><mi>k</mi></msub><msup><mi>v</mi><mo>*</mo></msup><mi>Δ</mi><mtext mathvariant="normal">DQALE</mtext></mrow><annotation encoding="application/x-tex">\text{WTP} = \pi_k v^* \Delta\text{DQALE}</annotation></semantics></math>,
+computing
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>Δ</mi><mtext mathvariant="normal">DQALE</mtext></mrow><annotation encoding="application/x-tex">\Delta\text{DQALE}</annotation></semantics></math>
+for each respondent from their own survival expectations and TTO
+weights. The measurement factor
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>M</mi><mi>k</mi></msub><annotation encoding="application/x-tex">M_k</annotation></semantics></math>
+is identified from departures from proportional scope.</p>
+<p><strong>Power.</strong> The main contrast is
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>π</mi><mi>k</mi></msub><annotation encoding="application/x-tex">\pi_k</annotation></semantics></math>
+against road crashes. Log-WTP has a typical standard deviation of about
+1.2 in comparable studies. Detecting
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>π</mi><mo>=</mo><mn>1.25</mn></mrow><annotation encoding="application/x-tex">\pi = 1.25</annotation></semantics></math>
+with 80% power at
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>α</mi><mo>=</mo><mn>0.05</mn></mrow><annotation encoding="application/x-tex">\alpha = 0.05</annotation></semantics></math>
+needs about 450 respondents per context arm; 600 per arm allows for
+exclusions and subgroup analysis. The payment-vehicle effect, with about
+1,500 respondents per vehicle, can detect a 15% difference.
+Simulation-based power for the DCE designs would be completed with
+Bayesian efficient designs before fielding.</p>
+<h2 id="study-2-sector-shadow-prices">4.2 Study 2: Sector shadow
+prices</h2>
+<p><strong>Aim.</strong> Estimate
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>λ</mi><mtext mathvariant="normal">health</mtext></msub><annotation encoding="application/x-tex">\lambda_{\text{health}}</annotation></semantics></math>
+and
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>λ</mi><mtext mathvariant="normal">transport</mtext></msub><annotation encoding="application/x-tex">\lambda_{\text{transport}}</annotation></semantics></math>.</p>
+<p><strong>Health.</strong></p>
+<ul>
+<li><em>Supply-side marginal productivity.</em> Following Claxton and
+colleagues and Lomas et al. <span class="citation" data-cites="claxton2015methods lomas2019marginal">[<a href="#ref-claxton2015methods" role="doc-biblioref">4</a>,<a href="#ref-lomas2019marginal" role="doc-biblioref">15</a>]</span>, we
+would estimate the elasticity of mortality and morbidity outcomes with
+respect to spending across health districts. New Zealand’s
+population-based funding formula allocates money by formula rather than
+outcomes, so it supplies variation in spending that is plausibly
+unrelated to local health shocks. That variation serves as the
+instrument. The cost per QALY at the margin gives
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>k</mi><mtext mathvariant="normal">health</mtext></msub><annotation encoding="application/x-tex">k_{\text{health}}</annotation></semantics></math>,
+and
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>λ</mi><mtext mathvariant="normal">health</mtext></msub><mo>=</mo><msup><mi>v</mi><mo>*</mo></msup><mi>/</mi><msub><mi>k</mi><mtext mathvariant="normal">health</mtext></msub></mrow><annotation encoding="application/x-tex">\lambda_{\text{health}} = v^*/k_{\text{health}}</annotation></semantics></math>.</li>
+<li><em>Revealed preference from PHARMAC.</em> Binary-choice models of
+PHARMAC funding decisions on published cost-effectiveness (“QALYs per $1
+million”) would estimate the implicit threshold <span class="citation" data-cites="devlin2004nice">[<a href="#ref-devlin2004nice" role="doc-biblioref">28</a>]</span>.</li>
+</ul>
+<p><strong>Transport.</strong> The marginal benefit–cost ratio of funded
+National Land Transport Programme projects estimates
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>λ</mi><mtext mathvariant="normal">transport</mtext></msub><annotation encoding="application/x-tex">\lambda_{\text{transport}}</annotation></semantics></math>
+directly, because projects are valued with the VSL.</p>
+<h2 id="study-3-deliberative-validation">4.3 Study 3: Deliberative
+validation</h2>
+<p>Which context premia should count? Four citizens’ panels (about 30
+members each, demographically stratified, with Māori-led and
+Pasifika-led panels among them) would deliberate on whether premia for
+dread, involuntariness, identified victims and children should enter
+public appraisal. Panels would receive Study 1 results and structured
+evidence, then vote on each multiplier with reasons recorded. Only
+multipliers endorsed by a supermajority would be carried into the
+reporting standard. Any others would be reported as sensitivity
+analyses.</p>
+<h2 id="study-4-re-ranking-new-zealand-interventions">4.4 Study 4:
+Re-ranking New Zealand interventions</h2>
+<p>The final study would assemble about 40 recent NZ appraisals with
+published effects: PHARMAC listings, road-safety schemes, air-quality
+rules, school ventilation (linking to the CASCADE framework) and injury
+prevention. Each would be converted to discounted QALYs and consumption
+benefits, then re-ranked under the CVHY rule. The study would
+report:</p>
+<ul>
+<li>which decisions change under the unified rule;</li>
+<li>the health that could be gained by reallocating a fixed total budget
+across sectors;</li>
+<li>uncertainty from all four studies, propagated by probabilistic
+sensitivity analysis.</li>
+</ul>
+<h1 id="pre-registered-hypotheses">5 Pre-registered hypotheses</h1>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th></th>
+<th>Hypothesis</th>
+<th>Test</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>H1</td>
+<td>VSL-implied value per QALY
+(<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mtext mathvariant="normal">VSL</mtext><mi>a</mi></msub><mi>/</mi><msub><mtext mathvariant="normal">DQALE</mtext><mi>a</mi></msub></mrow><annotation encoding="application/x-tex">\text{VSL}_a/\text{DQALE}_a</annotation></semantics></math>)
+is constant in age</td>
+<td>Slope on age in structural model; Proposition 1</td>
+</tr>
+<tr class="even">
+<td>H2</td>
+<td>VSL-implied value per QALY equals morbidity WTP per QALY</td>
+<td>Equality of
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mi>v</mi><mo>*</mo></msup><annotation encoding="application/x-tex">v^*</annotation></semantics></math>
+across Modules A and B</td>
+</tr>
+<tr class="odd">
+<td>H3</td>
+<td>Context multipliers exceed 1 for road, workplace and air pollution
+relative to hospital care</td>
+<td><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>π</mi><mi>k</mi></msub><mo>&gt;</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">\pi_k &gt; 1</annotation></semantics></math>,
+Holm-adjusted</td>
+</tr>
+<tr class="even">
+<td>H4</td>
+<td>Stated WTP is less than proportional to risk reduction</td>
+<td>Scope elasticity &lt; 1;
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>M</mi><mi>k</mi></msub><mo>&gt;</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">M_k &gt; 1</annotation></semantics></math></td>
+</tr>
+<tr class="odd">
+<td>H5</td>
+<td>WTP is lower under the taxation vehicle than under private
+payment</td>
+<td>Vehicle coefficient</td>
+</tr>
+<tr class="even">
+<td>H6</td>
+<td><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>λ</mi><mtext mathvariant="normal">health</mtext></msub><mo>&gt;</mo><msub><mi>λ</mi><mtext mathvariant="normal">transport</mtext></msub></mrow><annotation encoding="application/x-tex">\lambda_{\text{health}} &gt; \lambda_{\text{transport}}</annotation></semantics></math></td>
+<td>Studies 1–2 combined</td>
+</tr>
+<tr class="odd">
+<td>H7</td>
+<td>Reallocation under the CVHY rule increases total discounted QALYs by
+at least 10% at constant total spending</td>
+<td>Study 4</td>
+</tr>
+</tbody>
+</table>
+<h1 id="threats-to-validity">6 Threats to validity</h1>
+<ul>
+<li><strong>Hypothetical bias and protest responses.</strong> Mitigated
+with consequentiality scripts, cheap-talk scripts, debriefing questions
+and pre-specified exclusion rules.</li>
+<li><strong>Separability failure.</strong> If H1 or H2 is rejected,
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mi>v</mi><mo>*</mo></msup><annotation encoding="application/x-tex">v^*</annotation></semantics></math>
+becomes a function
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi>v</mi><mo>*</mo></msup><mrow><mo stretchy="true" form="prefix">(</mo><mi>Q</mi><mo>,</mo><mi>a</mi><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">v^*(Q, a)</annotation></semantics></math>
+estimated from the same data. The decomposition (2) still holds, with
+age- or state-specific terms.</li>
+<li><strong>Instrument validity in Study 2.</strong> Formula components
+could correlate with unobserved need. We would test over-identifying
+restrictions using multiple formula components, and report bounds.</li>
+<li><strong>Normative legitimacy.</strong> Study 3 does not settle
+ethics. It provides transparent public input, and the reporting standard
+keeps every judgement visible as a separate number.</li>
+</ul>
+<h1 id="outputs-timeline-and-resources">7 Outputs, timeline and
+resources</h1>
+<ul>
+<li><strong>Months 1–6:</strong> theory paper (§3); survey co-design and
+cognitive testing; ethics approval (University of Otago Human Ethics
+Committee); pre-registration.</li>
+<li><strong>Months 7–15:</strong> Study 1 fieldwork and analysis; Study
+2 data assembly.</li>
+<li><strong>Months 16–24:</strong> Study 2 estimation; Study 3
+panels.</li>
+<li><strong>Months 25–36:</strong> Study 4; synthesis; draft guidance
+for Treasury CBAx and agency appraisal manuals.</li>
+</ul>
+<p><strong>Indicative budget.</strong> About NZ$1.1m over three years.
+Main items are survey fieldwork (NZ$250k), a research fellow and
+research assistant, panel costs (NZ$120k) and Māori and Pasifika
+partnership roles. Suitable funders include the Marsden Fund (theory and
+Study 1), the Health Research Council (Studies 1–2) and the Ministry of
+Transport and Treasury (Study 4).</p>
+<p><strong>Planned papers.</strong></p>
+<ol type="1">
+<li>“One price for a healthy year: a life-cycle decomposition of the
+VSL–QALY gap” (theory and NZ illustration).</li>
+<li>“Valuing health and life on one scale: a national stated-preference
+study” (Study 1).</li>
+<li>“The marginal productivity of New Zealand health spending” (Study
+2).</li>
+<li>“What should count? Citizens’ panels on context premia” (Study
+3).</li>
+<li>“Rationalising life-saving expenditure across government” (Study
+4).</li>
+</ol>
+<h1 id="why-this-matters">8 Why this matters</h1>
+<p>The framework does not ask transport to adopt health’s numbers, or
+health to adopt transport’s. It asks every agency to use the same value
+of health and to state openly how its circumstances differ. If the
+health budget’s shadow price is several times that of the transport
+budget, the right response is a budget decision made in daylight. Today
+the same question is answered implicitly, by agencies that do not know
+they disagree.</p>
+<hr />
+<h1 id="references">References</h1>
+<div id="refs" class="references csl-bib-body" role="list">
+<div id="ref-viscusi2018pricing" class="csl-entry" role="listitem">
+<div class="csl-left-margin">1. </div><div class="csl-right-inline">Viscusi WK. Pricing lives: Guideposts for a
+safer society. Princeton: Princeton University Press; 2018.</div>
+</div>
+<div id="ref-robinson2019global" class="csl-entry" role="listitem">
+<div class="csl-left-margin">2. </div><div class="csl-right-inline">Robinson LA, Hammitt JK, Cecchini M, Chalkidou
+K, Claxton K, Cropper M, et al. Valuing mortality risk reductions in
+global benefit-cost analysis. Journal of Benefit-Cost Analysis.
+2019;10(S1):15–50. https://doi.org/<a href="https://doi.org/10.1017/bca.2018.26">10.1017/bca.2018.26</a></div>
+</div>
+<div id="ref-denne2023rr698" class="csl-entry" role="listitem">
+<div class="csl-left-margin">3. </div><div class="csl-right-inline">Denne T, Kerr G, et al. Monetised benefits and
+costs manual (<span>MBCM</span>) parameter values. Waka Kotahi NZ
+Transport Agency. 2023. </div>
+</div>
+<div id="ref-claxton2015methods" class="csl-entry" role="listitem">
+<div class="csl-left-margin">4. </div><div class="csl-right-inline">Claxton K, Martin S, Soares M, Rice N, Spackman
+E, Hinde S, et al. Methods for the estimation of the <span class="nocase">National Institute for Health and Care Excellence</span>
+cost-effectiveness threshold. Health Technology Assessment. 2015;19(14).
+https://doi.org/<a href="https://doi.org/10.3310/hta19140">10.3310/hta19140</a></div>
+</div>
+<div id="ref-tengs1995five" class="csl-entry" role="listitem">
+<div class="csl-left-margin">5. </div><div class="csl-right-inline">Tengs TO, Adams ME, Pliskin JS, Safran DG,
+Siegel JE, Weinstein MC, et al. Five-hundred life-saving interventions
+and their cost-effectiveness. Risk Analysis. 1995;15(3):369–390.
+https://doi.org/<a href="https://doi.org/10.1111/j.1539-6924.1995.tb00330.x">10.1111/j.1539-6924.1995.tb00330.x</a></div>
+</div>
+<div id="ref-pliskin1980utility" class="csl-entry" role="listitem">
+<div class="csl-left-margin">6. </div><div class="csl-right-inline">Pliskin JS, Shepard DS, Weinstein MC. Utility
+functions for life years and health status. Operations Research.
+1980;28(1):206–224. https://doi.org/<a href="https://doi.org/10.1287/opre.28.1.206">10.1287/opre.28.1.206</a></div>
+</div>
+<div id="ref-bleichrodt1999life" class="csl-entry" role="listitem">
+<div class="csl-left-margin">7. </div><div class="csl-right-inline">Bleichrodt H, Quiggin J. Life-cycle preferences
+over consumption and health: When is cost-effectiveness analysis
+equivalent to cost–benefit analysis? Journal of Health Economics.
+1999;18(6):681–708. https://doi.org/<a href="https://doi.org/10.1016/S0167-6296(99)00014-4">10.1016/S0167-6296(99)00014-4</a></div>
+</div>
+<div id="ref-dolan2002bridge" class="csl-entry" role="listitem">
+<div class="csl-left-margin">8. </div><div class="csl-right-inline">Dolan P, Edlin R. Is it really possible to
+build a bridge between cost-benefit analysis and cost-effectiveness
+analysis? Journal of Health Economics. 2002;21(5):827–843.
+https://doi.org/<a href="https://doi.org/10.1016/S0167-6296(02)00011-5">10.1016/S0167-6296(02)00011-5</a></div>
+</div>
+<div id="ref-hirth2000wtp" class="csl-entry" role="listitem">
+<div class="csl-left-margin">9. </div><div class="csl-right-inline">Hirth RA, Chernew ME, Miller E, Fendrick AM,
+Weissert WG. Willingness to pay for a quality-adjusted life year: In
+search of a standard. Medical Decision Making. 2000;20(3):332–342.
+https://doi.org/<a href="https://doi.org/10.1177/0272989X0002000310">10.1177/0272989X0002000310</a></div>
+</div>
+<div id="ref-ryen2015wtp" class="csl-entry" role="listitem">
+<div class="csl-left-margin">10. </div><div class="csl-right-inline">Ryen L, Svensson M. The willingness to pay for
+a quality adjusted life year: A review of the empirical literature.
+Health Economics. 2015;24(10):1289–1301. https://doi.org/<a href="https://doi.org/10.1002/hec.3085">10.1002/hec.3085</a></div>
+</div>
+<div id="ref-mason2009modelling" class="csl-entry" role="listitem">
+<div class="csl-left-margin">11. </div><div class="csl-right-inline">Mason H, Jones-Lee M, Donaldson C. Modelling
+the monetary value of a <span>QALY</span>: A new approach based on
+<span>UK</span> data. Health Economics. 2009;18(8):933–950.
+https://doi.org/<a href="https://doi.org/10.1002/hec.1416">10.1002/hec.1416</a></div>
+</div>
+<div id="ref-baker2010svq" class="csl-entry" role="listitem">
+<div class="csl-left-margin">12. </div><div class="csl-right-inline">Baker R, Bateman I, Donaldson C, Jones-Lee M,
+Lancsar E, Loomes G, et al. Weighting and valuing quality-adjusted
+life-years using stated preference methods: Preliminary results from the
+social value of a <span>QALY</span> project. Health Technology
+Assessment. 2010;14(27). https://doi.org/<a href="https://doi.org/10.3310/hta14270">10.3310/hta14270</a></div>
+</div>
+<div id="ref-chilton2002perceptions" class="csl-entry" role="listitem">
+<div class="csl-left-margin">13. </div><div class="csl-right-inline">Chilton S, Covey J, Hopkins L, Jones-Lee M,
+Loomes G, Pidgeon N, et al. Public perceptions of risk and
+preference-based values of safety. Journal of Risk and Uncertainty.
+2002;25(3):211–232. https://doi.org/<a href="https://doi.org/10.1023/A:1020962104810">10.1023/A:1020962104810</a></div>
+</div>
+<div id="ref-hammitt2010children" class="csl-entry" role="listitem">
+<div class="csl-left-margin">14. </div><div class="csl-right-inline">Hammitt JK, Haninger K. Valuing fatal risks to
+children and adults: Effects of disease, latency, and risk aversion.
+Journal of Risk and Uncertainty. 2010;40(1):57–83. https://doi.org/<a href="https://doi.org/10.1007/s11166-009-9086-9">10.1007/s11166-009-9086-9</a></div>
+</div>
+<div id="ref-lomas2019marginal" class="csl-entry" role="listitem">
+<div class="csl-left-margin">15. </div><div class="csl-right-inline">Lomas J, Martin S, Claxton K. Estimating the
+marginal productivity of the <span>English National Health
+Service</span> from 2003 to 2012. Value in Health. 2019;22(9):995–1002.
+https://doi.org/<a href="https://doi.org/10.1016/j.jval.2019.04.1926">10.1016/j.jval.2019.04.1926</a></div>
+</div>
+<div id="ref-johnston2017guidance" class="csl-entry" role="listitem">
+<div class="csl-left-margin">16. </div><div class="csl-right-inline">Johnston RJ, Boyle KJ, Adamowicz W, Bennett J,
+Brouwer R, Cameron TA, et al. Contemporary guidance for stated
+preference studies. Journal of the Association of Environmental and
+Resource Economists. 2017;4(2):319–405. https://doi.org/<a href="https://doi.org/10.1086/691697">10.1086/691697</a></div>
+</div>
+<div id="ref-rosen1988value" class="csl-entry" role="listitem">
+<div class="csl-left-margin">17. </div><div class="csl-right-inline">Rosen S. The value of changes in life
+expectancy. Journal of Risk and Uncertainty. 1988;1(3):285–304.
+https://doi.org/<a href="https://doi.org/10.1007/BF00056139">10.1007/BF00056139</a></div>
+</div>
+<div id="ref-shepard1984survival" class="csl-entry" role="listitem">
+<div class="csl-left-margin">18. </div><div class="csl-right-inline">Shepard DS, Zeckhauser RJ. Survival versus
+consumption. Management Science. 1984;30(4):423–439. https://doi.org/<a href="https://doi.org/10.1287/mnsc.30.4.423">10.1287/mnsc.30.4.423</a></div>
+</div>
+<div id="ref-murphy2006value" class="csl-entry" role="listitem">
+<div class="csl-left-margin">19. </div><div class="csl-right-inline">Murphy KM, Topel RH. The value of health and
+longevity. Journal of Political Economy. 2006;114(5):871–904.
+https://doi.org/<a href="https://doi.org/10.1086/508033">10.1086/508033</a></div>
+</div>
+<div id="ref-aldy2008adjusting" class="csl-entry" role="listitem">
+<div class="csl-left-margin">20. </div><div class="csl-right-inline">Aldy JE, Viscusi WK. Adjusting the value of a
+statistical life for age and cohort effects. Review of Economics and
+Statistics. 2008;90(3):573–581. https://doi.org/<a href="https://doi.org/10.1162/rest.90.3.573">10.1162/rest.90.3.573</a></div>
+</div>
+<div id="ref-hammitt2002qalys" class="csl-entry" role="listitem">
+<div class="csl-left-margin">21. </div><div class="csl-right-inline">Hammitt JK. <span>QALYs</span> versus
+<span>WTP</span>. Risk Analysis. 2002;22(5):985–1001. https://doi.org/<a href="https://doi.org/10.1111/1539-6924.00265">10.1111/1539-6924.00265</a></div>
+</div>
+<div id="ref-dahlby2008mcpf" class="csl-entry" role="listitem">
+<div class="csl-left-margin">22. </div><div class="csl-right-inline">Dahlby B. The marginal cost of public funds:
+Theory and applications. Cambridge, MA: MIT Press; 2008.</div>
+</div>
+<div id="ref-adler2014social" class="csl-entry" role="listitem">
+<div class="csl-left-margin">23. </div><div class="csl-right-inline">Adler MD, Hammitt JK, Treich N. The social
+value of mortality risk reduction: <span>VSL</span> versus the social
+welfare function approach. Journal of Health Economics. 2014;35:82–93.
+https://doi.org/<a href="https://doi.org/10.1016/j.jhealeco.2014.02.001">10.1016/j.jhealeco.2014.02.001</a></div>
+</div>
+<div id="ref-fleurbaey2013equivalent" class="csl-entry" role="listitem">
+<div class="csl-left-margin">24. </div><div class="csl-right-inline">Fleurbaey M, Luchini S, Muller C, Schokkaert E.
+Equivalent income and fair evaluation of health care. Health Economics.
+2013;22(6):711–729. https://doi.org/<a href="https://doi.org/10.1002/hec.2859">10.1002/hec.2859</a></div>
+</div>
+<div id="ref-frijters2020happy" class="csl-entry" role="listitem">
+<div class="csl-left-margin">25. </div><div class="csl-right-inline">Frijters P, Clark AE, Krekel C, Layard R. A
+happy choice: Wellbeing as the goal of government. Behavioural Public
+Policy. 2020;4(2):126–165. https://doi.org/<a href="https://doi.org/10.1017/bpp.2019.39">10.1017/bpp.2019.39</a></div>
+</div>
+<div id="ref-cameron2013demand" class="csl-entry" role="listitem">
+<div class="csl-left-margin">26. </div><div class="csl-right-inline">Cameron TA, DeShazo JR. Demand for health risk
+reductions. Journal of Environmental Economics and Management.
+2013;65(1):87–109. https://doi.org/<a href="https://doi.org/10.1016/j.jeem.2012.04.004">10.1016/j.jeem.2012.04.004</a></div>
+</div>
+<div id="ref-lancsar2008dce" class="csl-entry" role="listitem">
+<div class="csl-left-margin">27. </div><div class="csl-right-inline">Lancsar E, Louviere J. Conducting discrete
+choice experiments to inform healthcare decision making: A user’s guide.
+PharmacoEconomics. 2008;26(8):661–677. https://doi.org/<a href="https://doi.org/10.2165/00019053-200826080-00004">10.2165/00019053-200826080-00004</a></div>
+</div>
+<div id="ref-devlin2004nice" class="csl-entry" role="listitem">
+<div class="csl-left-margin">28. </div><div class="csl-right-inline">Devlin N, Parkin D. Does <span>NICE</span> have
+a cost-effectiveness threshold and what other factors influence its
+decisions? <span>A</span> binary choice analysis. Health Economics.
+2004;13(5):437–452. https://doi.org/<a href="https://doi.org/10.1002/hec.864">10.1002/hec.864</a></div>
+</div>
+</div>
+</body>
+</html>

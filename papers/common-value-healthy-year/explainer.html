@@ -1,0 +1,341 @@
+<title>One Price for a Healthy Year</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,600;1,6..96,400&family=Albert+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: a banknote. Guilloché engraving behind the hero; the argument proceeds like the security features of a note — denomination, serial, exchange board — each section one feature. */
+:root{
+  --paper:#eef2ef; --card:#fbfcfa; --ink:#132b2c; --muted:#4f6262; --line:#c9d4cf; --engrave:#2e6b4f;
+  --blue:#23408e; --gold:#a8812f; --red:#a83a2c; --soft-blue:#dfe5f3; --soft-green:#dcebe2; --soft-gold:#f1e7cf;
+  --display:"Bodoni Moda",Didot,"Times New Roman",serif; --body:"Albert Sans","Segoe UI",system-ui,sans-serif; --mono:"IBM Plex Mono",ui-monospace,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --paper:#0e1716; --card:#142120; --ink:#e3ece8; --muted:#9db0aa; --line:#29403c; --engrave:#5fb08a;
+  --blue:#8ea6ec; --gold:#e1bc6a; --red:#f08a7a; --soft-blue:#1b2540; --soft-green:#173326; --soft-gold:#352a12; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --paper:#0e1716; --card:#142120; --ink:#e3ece8; --muted:#9db0aa; --line:#29403c; --engrave:#5fb08a;
+  --blue:#8ea6ec; --gold:#e1bc6a; --red:#f08a7a; --soft-blue:#1b2540; --soft-green:#173326; --soft-gold:#352a12; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font:16.5px/1.68 var(--body);margin:0}
+.wrap{max-width:1140px;margin:0 auto;padding-block:26px 80px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+h1,h2,h3{font-family:var(--display);font-weight:400;margin:0;line-height:1.05;text-wrap:balance}
+h2{font-size:clamp(34px,4.6vw,54px)}h3{font-size:24px}
+p{margin:0 0 13px;max-width:66ch}
+.kicker{font:500 11.5px/1.4 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.serial{font:500 12px var(--mono);letter-spacing:.2em;color:var(--red)}
+:focus-visible{outline:3px solid var(--gold);outline-offset:3px}
+a{color:var(--blue)}
+/* Hero note */
+.note{position:relative;border:1.5px solid var(--engrave);border-radius:20px;overflow:hidden;background:var(--card);margin:10px 0 30px;min-height:440px;display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr)}
+#guilloche{position:absolute;inset:0;width:100%;height:100%;display:block;opacity:.9}
+.note .face{position:relative;padding:34px 34px 30px;display:flex;flex-direction:column;justify-content:space-between;gap:18px;min-width:0}
+.note h1{font-size:clamp(48px,7.2vw,92px);letter-spacing:-.01em}
+.note h1 em{color:var(--engrave);font-style:italic}
+.note .lead{font-size:18px;color:var(--muted);max-width:44ch;background:color-mix(in srgb,var(--card) 80%,transparent);border-radius:8px}
+.denom{position:relative;align-self:center;justify-self:center;text-align:center;padding:20px}
+.denom .v{font:400 clamp(90px,14vw,170px)/.9 var(--display);font-style:italic;color:var(--ink)}
+.denom .v sup{font-size:.42em;vertical-align:.95em;margin-left:2px}
+.denom .cap{font:500 12px var(--mono);letter-spacing:.16em;text-transform:uppercase;color:var(--muted);background:var(--card);padding:3px 8px;border-radius:4px}
+/* Exchange board */
+.board{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-radius:12px;overflow:hidden;margin-top:18px}
+.cell{background:var(--card);padding:16px 18px}
+.cell .who{font:500 11px var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.cell .px{font:400 34px/1.1 var(--display);margin:6px 0 2px;font-variant-numeric:tabular-nums}
+.cell .ex{font:500 13px var(--mono);color:var(--red)}
+.cell.base .ex{color:var(--engrave)}
+section{margin-top:72px}
+.lede{font-size:18px;color:var(--muted)}
+.two{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:34px;align-items:start}
+.eq{font:400 clamp(26px,3.6vw,40px)/1.3 var(--display);padding:18px 22px;border-left:3px solid var(--engrave);background:var(--card);border-radius:0 12px 12px 0;margin:18px 0}
+.eq i{color:var(--engrave)}
+.eq small{display:block;font:400 14px/1.5 var(--body);color:var(--muted);margin-top:6px}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px}
+.ctl{display:grid;gap:4px;margin-bottom:16px}
+.ctl label{display:flex;justify-content:space-between;gap:12px;font-weight:600;font-size:14px}
+.ctl output{font:500 14px var(--mono);color:var(--blue)}
+.ctl input{width:100%;accent-color:var(--engrave)}
+.ctl small{font-size:12.5px;color:var(--muted);line-height:1.5}
+.figure{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px 12px 8px;overflow-x:auto}
+.figure svg{display:block;width:100%;min-width:560px;height:auto}
+.figure text{font:400 12px var(--mono);fill:var(--muted)}
+.figure .lbl{font:500 13px var(--body);fill:var(--ink)}
+.result{display:flex;flex-wrap:wrap;gap:12px 28px;margin-top:12px}
+.result div span{display:block;font-size:12.5px;color:var(--muted)}
+.result div b{font:400 28px var(--display);font-variant-numeric:tabular-nums}
+.presets{display:flex;flex-wrap:wrap;gap:8px;margin:4px 0 14px}
+.presets button{all:unset;cursor:pointer;border:1px solid var(--line);border-radius:30px;padding:6px 12px;font:500 13px var(--body);background:var(--card);color:var(--ink)}
+.presets button:hover{border-color:var(--engrave)}
+.presets button:focus-visible{outline:3px solid var(--gold)}
+/* Agencies */
+.agencies{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin-top:18px}
+.agency{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px}
+.agency .lam{font:400 44px/1 var(--display);margin:8px 0}
+.agency.t .lam{color:var(--gold)}.agency.e .lam{color:var(--blue)}.agency.h .lam{color:var(--engrave)}
+.agency p{font-size:14px;color:var(--muted);margin:0}
+.move{margin-top:16px}
+/* Studies */
+.studies{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;margin-top:20px;counter-reset:s}
+.study{background:var(--card);border:1px solid var(--line);border-top:4px solid var(--c);border-radius:12px;padding:18px}
+.study .serial{color:var(--c)}
+.study h3{font-size:22px;margin:6px 0 8px}
+.study p{font-size:14px;color:var(--muted);margin:0 0 8px}
+.study .est{font:500 12px var(--mono);color:var(--ink);background:var(--soft-green);padding:3px 7px;border-radius:4px;display:inline-block}
+.timeline{display:grid;grid-template-columns:repeat(36,1fr);gap:2px;margin-top:16px}
+.timeline i{height:10px;border-radius:2px;background:var(--line)}
+.tl-rows{display:grid;gap:6px;margin-top:14px}
+.tl-row{display:grid;grid-template-columns:150px minmax(0,1fr);gap:12px;align-items:center;font-size:13px}
+.tl-bar{position:relative;height:14px;background:var(--line);border-radius:3px}
+.tl-bar b{position:absolute;top:0;bottom:0;border-radius:3px;background:var(--c)}
+.tl-axis{display:grid;grid-template-columns:150px minmax(0,1fr);gap:12px;font:400 11px var(--mono);color:var(--muted)}
+.tl-axis div{display:flex;justify-content:space-between}
+.hyps{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px;margin-top:18px}
+.hyp{border:1px solid var(--line);border-radius:12px;padding:14px 16px;background:var(--card)}
+.hyp b{font:500 13px var(--mono);color:var(--red)}
+.hyp p{margin:6px 0 0;font-size:14.5px}
+.std{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin-top:18px}
+.std div{border:1.5px dashed var(--engrave);border-radius:14px;padding:18px;background:var(--card)}
+.std .sym{font:400 italic 46px/1 var(--display);color:var(--engrave)}
+.std p{font-size:14.5px;color:var(--muted);margin:6px 0 0}
+.refs{font-size:13px;color:var(--muted);columns:2 320px;column-gap:34px;margin-top:44px;border-top:1px solid var(--line);padding-top:16px}
+.refs p{break-inside:avoid;margin-bottom:8px}
+@media(max-width:900px){.note,.two{grid-template-columns:minmax(0,1fr)}.board{grid-template-columns:repeat(2,minmax(0,1fr))}.agencies,.std{grid-template-columns:minmax(0,1fr)}.studies{grid-template-columns:repeat(2,minmax(0,1fr))}.tl-row,.tl-axis{grid-template-columns:96px minmax(0,1fr)}}
+@media(max-width:520px){.studies,.board{grid-template-columns:minmax(0,1fr)}.note .face{padding:24px 20px}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+
+<div class="wrap">
+  <div class="note">
+    <canvas id="guilloche" aria-hidden="true"></canvas>
+    <div class="face">
+      <div><div class="serial">NZ · VSL ⇄ QALY · Nº 0001</div><h1>One price<br>for a <em>healthy</em><br>year</h1></div>
+      <p class="lead">Every agency puts a price on health, and the prices disagree. This research programme proposes a single, theoretically grounded value of a healthy year that every agency could share, plus a transparent account of the few reasons they may still differ.</p>
+    </div>
+    <div class="denom"><div class="v">v<sup>*</sup></div><div class="cap">the common value of a healthy year</div></div>
+  </div>
+
+  <div class="kicker">Today's exchange board · NZ$ per quality-adjusted life-year</div>
+  <div class="board" role="table" aria-label="Implied prices per QALY">
+    <div class="cell" role="row"><div class="who">Transport · NZTA VSL, age 40, 2%</div><div class="px">$516k</div><div class="ex">14.3× Treasury</div></div>
+    <div class="cell" role="row"><div class="who">UK Green Book QALY</div><div class="px">$133k</div><div class="ex">3.7× Treasury</div></div>
+    <div class="cell" role="row"><div class="who">NICE threshold, 2026</div><div class="px">$48–67k</div><div class="ex">1.3–1.8× Treasury</div></div>
+    <div class="cell base" role="row"><div class="who">NZ Treasury CBAx QALY</div><div class="px">$36k</div><div class="ex">base</div></div>
+  </div>
+  <p class="lede" style="margin-top:16px">If these were currencies, an arbitrageur could get rich. Take a dollar out of road safety, where it buys health at $516,000 per QALY, and put it into whatever health spending is valued at $36,000. The same dollar would buy about fourteen times as much health. The question this programme answers is how much of that gap is real.</p>
+
+  <section aria-labelledby="idea-h">
+    <div class="kicker">Feature 1 · The theory</div>
+    <h2 id="idea-h">A VSL is a stack of healthy years</h2>
+    <div class="two">
+      <div>
+        <p class="lede">In the life-cycle model used to derive the value of a statistical life (Rosen 1988; Murphy and Topel 2006), a VSL is the discounted sum of what each remaining year of life is worth to the person.</p>
+        <p>If quality of life scales the enjoyment of consumption, a condition that Bleichrodt and Quiggin showed is needed for QALYs and cost–benefit analysis to agree, then each of those years is worth the same amount <i>per unit of health</i>. Call that amount <b>v*</b>.</p>
+        <div class="eq">VSL<sub>a</sub> = <i>v*</i> × DQALE<sub>a</sub><small>DQALE is discounted quality-adjusted life expectancy at age <i>a</i>. Willingness to pay for any morbidity improvement is <i>v*</i> times the discounted QALYs it adds. The VSL and the "value of a QALY" are then one parameter applied to different quantities of health.</small></div>
+        <p>This gives two tests. If v* computed from the VSL changes with age, or differs from v* computed from willingness to pay for better health, the assumptions fail in an identifiable way, and the data show where.</p>
+      </div>
+      <div class="panel">
+        <div class="ctl"><label for="age">Age of the people at risk <output id="age-o">40</output></label><input id="age" type="range" min="5" max="85" value="40"></div>
+        <div class="ctl"><label for="disc">Discount rate <output id="disc-o">2%</output></label><input id="disc" type="range" min="0" max="6" step="0.5" value="2"></div>
+        <div class="figure" style="padding:6px 4px 0;border:0"><svg id="stack" viewBox="0 0 560 220" role="img" aria-label="Remaining life-years stacked as discounted quality-adjusted years"></svg></div>
+        <div class="result"><div><span>Discounted QALYs remaining</span><b id="dq">—</b></div><div><span>NZTA VSL ÷ DQALE = implied v*</span><b id="vstar">—</b></div></div>
+        <p class="small" style="font-size:12.5px;color:var(--muted);margin:10px 0 0">Life expectancy from approximate NZ period life tables; quality weights are illustrative age norms.</p>
+      </div>
+    </div>
+  </section>
+
+  <section aria-labelledby="prism-h">
+    <div class="kicker">Feature 2 · The decomposition</div>
+    <h2 id="prism-h">Splitting the gap into four parts</h2>
+    <p class="lede">Combining the life-cycle result with a budget-constrained public sector gives an exact identity. The log of the observed gap between a road VSL and a health QALY value is the sum of four terms, and each can be estimated.</p>
+    <div class="eq" style="font-size:clamp(20px,2.6vw,30px)">ln G = ln <span title="arithmetic">(DQALE / LE)</span> + ln <i>π</i> + ln <i>M</i> + ln <i>λ</i><sub>health</sub><small><b>Arithmetic</b>: discounting and quality adjustment of the years at stake. <b>π</b>: the premium people place on avoiding this kind of death (dread, involuntariness). <b>M</b>: measurement artefacts such as insensitivity to the size of the risk. <b>λ</b>: the shadow price of the health budget, which is how much more a health dollar is worth than a private dollar when the budget is too small.</small></div>
+    <div class="two">
+      <div class="panel">
+        <div class="presets" id="presets" role="group" aria-label="Scenarios">
+          <button type="button" data-p="1" data-m="1" data-l="1">All gap unexplained</button>
+          <button type="button" data-p="1.3" data-m="1.5" data-l="7.3">Illustrative reconciliation</button>
+          <button type="button" data-p="1" data-m="3" data-l="3.5">Mostly measurement + budget</button>
+        </div>
+        <div class="ctl"><label for="pi">π · context premium for road deaths <output id="pi-o"></output></label><input id="pi" type="range" min="1" max="3" step="0.05" value="1.3"><small>Stated-preference studies find premia for dread and involuntary risks; the survey (Study 1) estimates it and citizens' panels (Study 3) decide whether it should count.</small></div>
+        <div class="ctl"><label for="m">M · measurement inflation <output id="m-o"></output></label><input id="m" type="range" min="1" max="4" step="0.05" value="1.5"><small>If willingness to pay barely rises when the risk reduction doubles, small-risk questions inflate the implied VSL. Identified by scope tests.</small></div>
+        <div class="ctl"><label for="lam">λ<sub>health</sub> · shadow price of the health budget <output id="lam-o"></output></label><input id="lam" type="range" min="1" max="12" step="0.1" value="7.3"><small>The ratio of the value of health to its marginal cost in the health system. Estimated from health-spending productivity (Study 2).</small></div>
+      </div>
+      <div>
+        <div class="figure"><svg id="prism" viewBox="0 0 600 300" role="img" aria-label="Log decomposition of the VSL–QALY gap"></svg></div>
+        <div class="result"><div><span>Implied common value v*</span><b id="vs2">—</b></div><div><span>Implied health threshold v*/λ</span><b id="k2">—</b></div><div><span>Unexplained</span><b id="res">—</b></div></div>
+      </div>
+    </div>
+  </section>
+
+  <section aria-labelledby="rule-h">
+    <div class="kicker">Feature 3 · The decision rule</div>
+    <h2 id="rule-h">Exchange rates between agencies</h2>
+    <p class="lede">Each agency's budget has its own shadow price λ: the welfare a marginal dollar produces there, in dollars of private consumption. A project should be funded when its health benefits, valued at v* and any endorsed context premium, plus its other benefits, exceed λ times its cost. Spending is efficient across government only when every λ is equal.</p>
+    <div class="eq" style="font-size:clamp(20px,2.6vw,30px)">Fund project <i>j</i> in sector <i>s</i> if &nbsp; <i>v*</i> Σ<sub><i>k</i></sub> <i>π<sub>k</sub></i> ΔQ<sub><i>jk</i></sub> + ΔY<sub><i>j</i></sub> ≥ <i>λ<sub>s</sub></i> ΔG<sub><i>j</i></sub><small>For pure health projects this is a cost-per-QALY threshold of v*/λ<sub>s</sub>. So a health threshold that sits below v* is a sign that the health budget is constrained, not that health is worth less.</small></div>
+    <div class="agencies">
+      <div class="agency t"><div class="kicker">Transport</div><div class="lam">λ = <span id="lt">1.0</span></div><p>Projects are appraised with the full VSL, so funding a project at the margin implies a shadow price near one.</p></div>
+      <div class="agency e"><div class="kicker">Environment</div><div class="lam">λ = <span id="le">1.2</span></div><p>Illustrative: regulation costs fall partly on firms and households, partly on the public purse.</p></div>
+      <div class="agency h"><div class="kicker">Health</div><div class="lam">λ = <span id="lh">—</span></div><p>From the decomposition above: v* divided by the health threshold.</p></div>
+    </div>
+    <div class="panel move">
+      <div class="ctl"><label for="mv">Move money from transport to health <output id="mv-o">NZ$50m</output></label><input id="mv" type="range" min="0" max="500" step="10" value="50"></div>
+      <p id="mv-t" style="margin:0"></p>
+    </div>
+  </section>
+
+  <section aria-labelledby="study-h">
+    <div class="kicker">Feature 4 · The empirical programme</div>
+    <h2 id="study-h">Four studies, one number each</h2>
+    <p class="lede">Each term in the decomposition gets its own study, designed for New Zealand and pre-registered before data collection.</p>
+    <div class="studies">
+      <div class="study" style="--c:var(--engrave)"><div class="serial">Study 1</div><h3>National valuation survey</h3><p>About 3,000 adults, with Māori and Pasifika oversamples. The same people value mortality-risk reductions in five contexts, health improvements, and health states (composite time trade-off). Scope tests and private-versus-tax payment vehicles are built in.</p><span class="est">estimates v*, π, M</span></div>
+      <div class="study" style="--c:var(--blue)"><div class="serial">Study 2</div><h3>Sector shadow prices</h3><p>The marginal productivity of health spending, using the population-based funding formula as a source of variation unrelated to need shocks; revealed thresholds from PHARMAC decisions; marginal benefit–cost ratios of funded transport projects.</p><span class="est">estimates λ by sector</span></div>
+      <div class="study" style="--c:var(--gold)"><div class="serial">Study 3</div><h3>Citizens' panels</h3><p>Four deliberative panels, including Māori-led and Pasifika-led panels, decide which context premia should count in public appraisal. Only those with supermajority endorsement enter the standard.</p><span class="est">legitimates π</span></div>
+      <div class="study" style="--c:var(--red)"><div class="serial">Study 4</div><h3>Re-ranking NZ decisions</h3><p>About 40 recent appraisals (medicines, road safety, air quality, school ventilation) are re-ranked under the common rule, with all uncertainty propagated. How much health would reallocation buy?</p><span class="est">tests the payoff</span></div>
+    </div>
+    <div class="tl-rows" aria-label="Three-year timeline">
+      <div class="tl-axis"><span></span><div><span>Month 1</span><span>12</span><span>24</span><span>36</span></div></div>
+      <div class="tl-row"><span>Theory paper, design</span><div class="tl-bar"><b style="left:0;width:17%;--c:var(--muted);background:var(--muted)"></b></div></div>
+      <div class="tl-row"><span>Study 1 survey</span><div class="tl-bar"><b style="left:17%;width:25%;background:var(--engrave)"></b></div></div>
+      <div class="tl-row"><span>Study 2 shadow prices</span><div class="tl-bar"><b style="left:20%;width:47%;background:var(--blue)"></b></div></div>
+      <div class="tl-row"><span>Study 3 panels</span><div class="tl-bar"><b style="left:44%;width:23%;background:var(--gold)"></b></div></div>
+      <div class="tl-row"><span>Study 4 and guidance</span><div class="tl-bar"><b style="left:67%;width:33%;background:var(--red)"></b></div></div>
+    </div>
+  </section>
+
+  <section aria-labelledby="hyp-h">
+    <div class="kicker">Pre-registered hypotheses</div>
+    <h2 id="hyp-h">What the data could show</h2>
+    <div class="hyps">
+      <div class="hyp"><b>H1</b><p>The VSL-implied value per QALY does not vary with age.</p></div>
+      <div class="hyp"><b>H2</b><p>Willingness to pay per QALY is the same for avoiding death as for improving health.</p></div>
+      <div class="hyp"><b>H3</b><p>Road, workplace and air-pollution deaths carry premia over hospital deaths.</p></div>
+      <div class="hyp"><b>H4</b><p>Stated willingness to pay is less than proportional to the size of the risk reduction.</p></div>
+      <div class="hyp"><b>H5</b><p>People state lower values when paying through taxes than privately.</p></div>
+      <div class="hyp"><b>H6</b><p>The health budget's shadow price exceeds transport's.</p></div>
+      <div class="hyp"><b>H7</b><p>Reallocating a fixed total budget under the common rule raises discounted QALYs by at least 10%.</p></div>
+    </div>
+  </section>
+
+  <section aria-labelledby="std-h">
+    <div class="kicker">The proposed standard</div>
+    <h2 id="std-h">Three published numbers</h2>
+    <p class="lede">Agencies would report health effects in discounted QALYs, by context, and value them with three numbers published centrally. Every judgement stays visible as its own number.</p>
+    <div class="std">
+      <div><div class="sym">v*</div><b>Common value of a healthy year</b><p>One national value, estimated from Study 1 and updated with income.</p></div>
+      <div><div class="sym">π<sub>k</sub></div><b>Endorsed context premia</b><p>A short list, possibly all equal to one, kept only if the evidence and citizens' panels support them.</p></div>
+      <div><div class="sym">λ<sub>s</sub></div><b>Sector shadow prices</b><p>How much a dollar is worth in each budget. Large differences point to a budget allocation problem to be solved in the open.</p></div>
+    </div>
+    <p class="lede" style="margin-top:22px">The standard does not ask transport to adopt health's numbers, or health to adopt transport's. It asks both to use the same value of health and to state openly why their circumstances differ.</p>
+  </section>
+
+  <div class="refs">
+    <p><b>Full proposal.</b> <i>One Price for a Healthy Year</i> (draft, November 2026), in the Research repository at <code>papers/common-value-healthy-year/</code>.</p>
+    <p>Rosen S. The value of changes in life expectancy. <i>J Risk Uncertain</i> 1988;1:285–304.</p>
+    <p>Murphy KM, Topel RH. The value of health and longevity. <i>J Polit Econ</i> 2006;114(5):871–904.</p>
+    <p>Bleichrodt H, Quiggin J. Life-cycle preferences over consumption and health. <i>J Health Econ</i> 1999;18(6):681–708.</p>
+    <p>Dolan P, Edlin R. Is it really possible to build a bridge between cost-benefit analysis and cost-effectiveness analysis? <i>J Health Econ</i> 2002;21(5):827–843.</p>
+    <p>Claxton K, et al. Methods for the estimation of the NICE cost effectiveness threshold. <i>Health Technol Assess</i> 2015;19(14).</p>
+    <p>Chilton S, et al. Public perceptions of risk and preference-based values of safety. <i>J Risk Uncertain</i> 2002;25(3):211–232.</p>
+    <p>Adler MD, Hammitt JK, Treich N. The social value of mortality risk reduction. <i>J Health Econ</i> 2014;35:82–93.</p>
+    <p>Tengs TO, et al. Five-hundred life-saving interventions and their cost-effectiveness. <i>Risk Anal</i> 1995;15(3):369–390.</p>
+    <p><b>Numbers.</b> NZTA VSL NZ$12.5m (MBCM v1.6, 2023); NZ Treasury CBAx QALY ≈ NZ$36k; NICE £25–35k (2026); UK Green Book ≈ £70k. Conversions at about NZ$1.90/£. Illustrative λ for environment and all slider presets are assumptions, not estimates.</p>
+  </div>
+</div>
+
+<script>
+(() => {
+  const $ = id => document.getElementById(id);
+  const css = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+  const fmt = (n, d = 0) => n.toLocaleString('en-NZ', {maximumFractionDigits: d, minimumFractionDigits: d});
+  const money = n => n >= 1e9 ? `$${fmt(n / 1e9, 2)}bn` : n >= 1e6 ? `$${fmt(n / 1e6, 1)}m` : `$${fmt(n / 1e3)}k`;
+  const VSL = 12.5e6, K = 36000;
+  const LE = [[0, 82.5], [5, 77.9], [20, 63.2], [40, 43.6], [60, 25.0], [70, 16.7], [80, 9.6], [90, 4.5], [100, 2.2]];
+  const QN = [[0, .94], [20, .93], [40, .89], [60, .83], [70, .80], [80, .74], [100, .68]];
+  const ip = (t, x) => { for (let i = 1; i < t.length; i++) if (x <= t[i][0]) { const [a, ya] = t[i - 1], [b, yb] = t[i]; return ya + (yb - ya) * (x - a) / (b - a); } return t.at(-1)[1]; };
+  function life(age, r) { const e = ip(LE, age); const yrs = []; let dq = 0;
+    for (let t = 0; t < Math.ceil(e); t++) { const w = Math.min(1, e - t), q = ip(QN, age + t + .5), d = (1 + r) ** -(t + .5); yrs.push({w, q, d}); dq += w * q * d; }
+    return {e, dq, yrs}; }
+
+  // ------------------------------------------------------------ guilloché
+  const gc = $('guilloche'), g = gc.getContext('2d'); let GW, GH, phase = 0;
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function gsize() { const d = Math.min(2, devicePixelRatio || 1), b = gc.getBoundingClientRect(); GW = b.width; GH = b.height; gc.width = GW * d; gc.height = GH * d; g.setTransform(d, 0, 0, d, 0, 0); }
+  function guilloche() {
+    g.clearRect(0, 0, GW, GH);
+    const cx = GW > 900 ? GW * .76 : GW * .5, cy = GH * .5, base = Math.min(GH * .46, GW * .3);
+    const rings = [[css('--engrave'), 1, 12, 7.3, .35], [css('--blue'), .82, 17, 5.1, .28], [css('--gold'), .62, 23, 3.7, .32]];
+    rings.forEach(([c, s, n, k, a], idx) => {
+      g.strokeStyle = c; g.globalAlpha = a; g.lineWidth = .7; g.beginPath();
+      const R = base * s, steps = 2400;
+      for (let i = 0; i <= steps; i++) {
+        const t = i / steps * Math.PI * 2;
+        const r = R * (0.78 + 0.16 * Math.cos(n * t + phase * (idx + 1)) + 0.06 * Math.sin(k * n * t));
+        const x = cx + r * Math.cos(t), y = cy + r * Math.sin(t);
+        i ? g.lineTo(x, y) : g.moveTo(x, y);
+      }
+      g.stroke();
+    });
+    // fine rosette lines
+    g.globalAlpha = .18; g.strokeStyle = css('--engrave');
+    for (let j = 0; j < 36; j++) { const a = j / 36 * Math.PI * 2 + phase * .2; g.beginPath(); g.ellipse(cx, cy, base * 1.05, base * .38, a, 0, Math.PI * 2); g.stroke(); }
+    g.globalAlpha = 1;
+  }
+  function loop() { phase += .0025; guilloche(); if (!reduce) requestAnimationFrame(loop); }
+
+  // ---------------------------------------------------------------- stack
+  function stack() {
+    const age = Number($('age').value), r = Number($('disc').value) / 100, L = life(age, r);
+    $('age-o').textContent = age; $('disc-o').textContent = `${$('disc').value}%`;
+    $('dq').textContent = fmt(L.dq, 1); $('vstar').textContent = money(VSL / L.dq);
+    const W = 560, H = 220, x0 = 30, x1 = 540, n = L.yrs.length, bw = (x1 - x0) / Math.max(1, n);
+    let out = `<path d="M${x0} 180H${x1}" stroke="${css('--line')}"/>`;
+    L.yrs.forEach((y, i) => { const x = x0 + i * bw, hFull = 140 * y.w, hq = hFull * y.q, hd = hq * y.d;
+      out += `<rect x="${x + .5}" y="${180 - hFull}" width="${Math.max(1, bw - 1)}" height="${hFull}" fill="${css('--line')}"/><rect x="${x + .5}" y="${180 - hq}" width="${Math.max(1, bw - 1)}" height="${hq - hd}" fill="${css('--soft-green')}"/><rect x="${x + .5}" y="${180 - hd}" width="${Math.max(1, bw - 1)}" height="${hd}" fill="${css('--engrave')}"/>`; });
+    out += `<text x="${x0}" y="200">age ${age}</text><text x="${x1}" y="200" text-anchor="end">+${fmt(L.e, 0)} years</text>`;
+    out += `<text x="${x0}" y="22" class="lbl">Each column is one remaining year. Grey: full year · pale: quality-adjusted · dark: discounted QALY</text>`;
+    $('stack').innerHTML = out;
+    prism();
+  }
+
+  // ---------------------------------------------------------------- prism
+  function prism() {
+    const age = Number($('age').value), r = Number($('disc').value) / 100, L = life(age, r);
+    const pi = Number($('pi').value), m = Number($('m').value), lam = Number($('lam').value);
+    $('pi-o').textContent = `${fmt(pi, 2)}×`; $('m-o').textContent = `${fmt(m, 2)}×`; $('lam-o').textContent = `${fmt(lam, 1)}×`;
+    const G = VSL / (K * L.e), terms = [['Arithmetic', Math.log(L.dq / L.e), css('--muted')], ['Context π', Math.log(pi), css('--gold')], ['Measurement M', Math.log(m), css('--red')], ['Budget λ', Math.log(lam), css('--engrave')]];
+    const resid = Math.log(G) - terms.reduce((a, t) => a + t[1], 0);
+    terms.push(['Unexplained', resid, css('--blue')]);
+    const W = 600, H = 300, L0 = 150, R0 = 40, T = 30, rowH = 40, lo = -1.5, hi = 4;
+    const X = v => L0 + (v - lo) / (hi - lo) * (W - L0 - R0);
+    let out = `<path d="M${X(0)} ${T - 10}V${T + terms.length * rowH + 8}" stroke="${css('--ink')}" stroke-width="1"/>`;
+    [-1, 0, 1, 2, 3, 4].forEach(v => out += `<text x="${X(v)}" y="${T + terms.length * rowH + 24}" text-anchor="middle">×${fmt(Math.exp(v), v < 1 ? 2 : 0)}</text>`);
+    let cum = 0;
+    terms.forEach(([n, v, c], i) => { const y = T + i * rowH, a = Math.min(cum, cum + v), b = Math.max(cum, cum + v);
+      out += `<rect x="${X(a)}" y="${y}" width="${Math.max(1.5, X(b) - X(a))}" height="24" rx="3" fill="${c}" opacity="${n === 'Unexplained' ? .55 : .9}"/><text class="lbl" x="${L0 - 10}" y="${y + 17}" text-anchor="end">${n}</text><text x="${X(b) + 6}" y="${y + 17}">×${fmt(Math.exp(v), 2)}</text>`;
+      cum += v; });
+    out += `<path d="M${X(Math.log(G))} ${T - 14}V${T + terms.length * rowH}" stroke="${css('--red')}" stroke-dasharray="4 3"/><text x="${X(Math.log(G))}" y="${T - 18}" text-anchor="middle" style="fill:${css('--red')}">observed gap G = ${fmt(G, 1)}</text>`;
+    $('prism').innerHTML = out;
+    const vs = VSL / (pi * m * L.dq);
+    $('vs2').textContent = money(vs); $('k2').textContent = money(vs / lam);
+    $('res').textContent = Math.abs(resid) < .02 ? 'none' : `×${fmt(Math.exp(resid), 2)}`;
+    $('lh').textContent = fmt(lam, 1);
+    move(vs, lam);
+  }
+
+  function move(vs, lam) {
+    const amt = Number($('mv').value) * 1e6, lt = 1.0;
+    $('mv-o').textContent = `NZ$${$('mv').value}m`;
+    const gain = amt * (lam - lt), q = gain / vs;
+    $('mv-t').innerHTML = amt === 0 ? 'Drag the slider to move money between budgets.' : `Moving ${money(amt)} from marginal transport projects (λ = 1.0) to marginal health spending (λ = ${fmt(lam, 1)}) adds about <b>${money(gain)}</b> of consumption-equivalent welfare, roughly <b>${fmt(q, 0)} QALYs</b> valued at v* = ${money(vs)}. This is a first-order approximation: λ falls as a budget grows, so the gains shrink as money moves.`;
+  }
+
+  $('presets').addEventListener('click', e => { const b = e.target.closest('button'); if (!b) return; $('pi').value = b.dataset.p; $('m').value = b.dataset.m; $('lam').value = b.dataset.l; prism(); });
+  ['age', 'disc'].forEach(id => $(id).addEventListener('input', stack));
+  ['pi', 'm', 'lam'].forEach(id => $(id).addEventListener('input', prism));
+  $('mv').addEventListener('input', prism);
+  const redraw = () => { gsize(); guilloche(); stack(); };
+  addEventListener('resize', () => { gsize(); guilloche(); });
+  matchMedia('(prefers-color-scheme: dark)').addEventListener?.('change', redraw);
+  new MutationObserver(redraw).observe(document.documentElement, {attributes: true, attributeFilter: ['data-theme']});
+  gsize(); stack(); loop();
+})();
+</script>
