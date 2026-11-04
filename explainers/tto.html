@@ -1,0 +1,265 @@
+<title>The Time Trade-Off</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&family=Public+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: a valuation-interview booklet. Left page: the health state you build. Right page: the interview. Below: your answer placed among all 243 states. */
+:root{
+  --bg:#f5f3ef; --paper:#fffdf9; --ink:#1d2430; --muted:#5d6573; --line:#dcd8cf;
+  --life:#2f6f8f; --life-soft:#dbe9f0; --state:#9a3b3b; --state-soft:#f3dddb; --gold:#b98a2e;
+  --display:"Newsreader",Georgia,serif; --body:"Public Sans","Segoe UI",system-ui,sans-serif; --mono:"JetBrains Mono",ui-monospace,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#12161c; --paper:#1a1f27; --ink:#e8e6e1; --muted:#a2a9b4; --line:#2e3540;
+  --life:#6fb6d6; --life-soft:#1d3440; --state:#e08a84; --state-soft:#3d2424; --gold:#e0b45c; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#12161c; --paper:#1a1f27; --ink:#e8e6e1; --muted:#a2a9b4; --line:#2e3540;
+  --life:#6fb6d6; --life-soft:#1d3440; --state:#e08a84; --state-soft:#3d2424; --gold:#e0b45c; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font:16px/1.65 var(--body);margin:0}
+.wrap{max-width:1140px;margin:0 auto;padding-block:34px 70px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+h1,h2,h3{font-family:var(--display);font-weight:500;margin:0;text-wrap:balance;line-height:1.08}
+h1{font-size:clamp(46px,7vw,86px);letter-spacing:-.02em}
+h1 em{color:var(--state)}
+h2{font-size:clamp(28px,3.4vw,38px)}h3{font-size:22px}
+p{margin:0 0 12px;max-width:64ch}
+.eyebrow{font:500 12px/1.4 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+:focus-visible{outline:3px solid var(--gold);outline-offset:3px}
+.intro{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:40px;align-items:end;margin-bottom:30px}
+.intro p{color:var(--muted);font-size:17px}
+.book{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);border:1px solid var(--line);border-radius:16px;overflow:hidden;background:var(--paper)}
+.page{padding:26px;min-width:0}
+.page+.page{border-left:1px solid var(--line)}
+.dim{border-top:1px solid var(--line);padding:12px 0}
+.dim:first-of-type{border-top:0}
+.dim h3{font:600 14px var(--body);letter-spacing:.02em;margin-bottom:8px;display:flex;justify-content:space-between}
+.dim h3 span{font:500 12px var(--mono);color:var(--muted)}
+.levels{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}
+.levels button{all:unset;cursor:pointer;border:1px solid var(--line);border-radius:9px;padding:8px 10px;font-size:13px;line-height:1.35;color:var(--muted);min-height:44px;box-sizing:border-box}
+.levels button:hover{border-color:var(--muted)}
+.levels button[aria-pressed="true"]{border-color:var(--state);background:var(--state-soft);color:var(--ink)}
+.levels button:focus-visible{outline:3px solid var(--gold)}
+.code{display:flex;align-items:baseline;justify-content:space-between;gap:16px;margin-top:14px;padding-top:14px;border-top:2px solid var(--ink)}
+.code b{font:500 34px var(--mono);letter-spacing:.12em}
+.code span{font-size:13px;color:var(--muted);text-align:right}
+/* Interview */
+.question{font:400 clamp(22px,2.6vw,28px)/1.35 var(--display);margin:6px 0 18px}
+.lanes{display:grid;gap:14px;margin-bottom:18px}
+.lane{display:grid;grid-template-columns:110px minmax(0,1fr);gap:12px;align-items:center}
+.lane .who{font:600 13px var(--body)}
+.lane .who small{display:block;font-weight:400;color:var(--muted)}
+.track{position:relative;height:38px;border-radius:8px;background:repeating-linear-gradient(90deg,transparent 0 calc(10% - 1px),var(--line) calc(10% - 1px) 10%);border:1px solid var(--line);overflow:hidden}
+.seg{position:absolute;top:0;bottom:0;transition:width .5s cubic-bezier(.2,.7,.2,1),left .5s cubic-bezier(.2,.7,.2,1)}
+.seg.life{background:var(--life)}
+.seg.state{background:repeating-linear-gradient(135deg,var(--state) 0 6px,color-mix(in srgb,var(--state) 70%,var(--paper)) 6px 12px)}
+.seg.dead{background:var(--ink);opacity:.85}
+.seg-label{position:absolute;top:50%;transform:translateY(-50%);font:500 12px var(--mono);color:#fff;padding:0 8px;white-space:nowrap;text-shadow:0 1px 2px #0006}
+.axis{display:flex;justify-content:space-between;font:400 11px var(--mono);color:var(--muted);margin:4px 0 0 122px}
+.choices{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
+.choices button{all:unset;cursor:pointer;text-align:center;border:1px solid var(--ink);border-radius:10px;padding:12px 10px;font:600 14px var(--body);min-height:44px;box-sizing:border-box}
+.choices button.a{background:var(--life);color:#fff;border-color:var(--life)}
+.choices button.b{background:var(--state);color:#fff;border-color:var(--state)}
+.choices button:hover{filter:brightness(1.07)}
+.choices button:focus-visible{outline:3px solid var(--gold)}
+.progress{display:flex;gap:5px;margin:18px 0 6px}
+.progress i{flex:1;height:4px;border-radius:2px;background:var(--line)}
+.progress i.done{background:var(--gold)}
+.small{font-size:13px;color:var(--muted)}
+.result{display:none}
+.result.show{display:block}
+.scores{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:10px 0 16px}
+.score{border:1px solid var(--line);border-radius:12px;padding:12px 14px}
+.score span{display:block;font-size:12px;color:var(--muted)}
+.score b{font:500 32px/1.1 var(--display);font-variant-numeric:tabular-nums}
+.score.you b{color:var(--state)}.score.pop b{color:var(--life)}
+.linkbtn{all:unset;cursor:pointer;color:var(--life);font-weight:600;font-size:14px;text-decoration:underline;text-underline-offset:4px}
+/* Strip */
+section{margin-top:56px}
+.strip-wrap{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:16px 14px 6px;margin-top:16px;overflow-x:auto}
+#strip{display:block;width:100%;min-width:620px;height:auto}
+#strip text{font:400 11px var(--mono);fill:var(--muted)}
+.cols{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:26px;margin-top:22px}
+.cols p{font-size:15px;color:var(--muted)}
+.refs{font-size:13px;color:var(--muted);margin-top:40px;border-top:1px solid var(--line);padding-top:14px}
+@media(max-width:860px){.book,.intro,.cols{grid-template-columns:1fr}.page+.page{border-left:0;border-top:1px solid var(--line)}.scores{grid-template-columns:1fr 1fr}}
+@media(max-width:480px){.levels{grid-template-columns:1fr}.lane{grid-template-columns:1fr}.axis{margin-left:0}.choices{grid-template-columns:1fr}}
+@media(prefers-reduced-motion:reduce){.seg{transition:none}}
+</style>
+
+<div class="wrap">
+  <div class="intro">
+    <div><div class="eyebrow">How a QALY gets its Q</div><h1>The time<br><em>trade-off</em></h1></div>
+    <p>Every quality-adjusted life-year rests on answers to one strange question: how much life would you give up to avoid living in a worse state of health? Build a health state, answer the question the way survey respondents do, and see how your answer compares with the official value.</p>
+  </div>
+
+  <div class="book">
+    <div class="page" aria-labelledby="build-h">
+      <div class="eyebrow">Page 1 · Describe a health state</div>
+      <h2 id="build-h" style="margin:4px 0 10px">Imagine living like this</h2>
+      <div id="dims"></div>
+      <div class="code"><b id="code">11111</b><span id="code-note">Full health. Choose at least one problem to begin.</span></div>
+    </div>
+    <div class="page" aria-labelledby="ask-h">
+      <div class="eyebrow">Page 2 · The interview</div>
+      <div id="interview">
+        <h2 id="ask-h" class="question" style="font-size:inherit"></h2>
+        <div class="lanes" aria-hidden="true">
+          <div class="lane"><div class="who">Life A<small id="a-sub"></small></div><div class="track" id="trackA"></div></div>
+          <div class="lane"><div class="who">Life B<small id="b-sub"></small></div><div class="track" id="trackB"></div></div>
+        </div>
+        <div class="axis" aria-hidden="true"><span>now</span><span>5 years</span><span>10 years</span></div>
+        <div class="progress" id="progress" aria-hidden="true"></div>
+        <div class="choices" id="choices">
+          <button type="button" class="a" data-c="A">I prefer Life A</button>
+          <button type="button" data-c="=">They're about equal</button>
+          <button type="button" class="b" data-c="B">I prefer Life B</button>
+        </div>
+        <p class="small" id="hint" style="margin-top:12px"></p>
+      </div>
+      <div class="result" id="result" aria-live="polite"></div>
+    </div>
+  </div>
+
+  <section aria-labelledby="strip-h">
+    <div class="eyebrow">All 243 states</div>
+    <h2 id="strip-h">Where your state sits</h2>
+    <p class="small">Each tick is one of the 243 states that the five dimensions and three levels can describe, placed at its UK population value. Values below zero mean that, on average, people preferred immediate death to ten years in that state. The red marker (shown once you finish the interview) is the state you built; the gold marker is your own answer.</p>
+    <div class="strip-wrap"><svg id="strip" viewBox="0 0 900 150" role="img" aria-label="All 243 health states on a scale from −0.594 to 1"></svg></div>
+  </section>
+
+  <section aria-labelledby="why-h">
+    <h2 id="why-h">What the exercise shows</h2>
+    <div class="cols">
+      <div><h3>Why "worse than death"?</h3><p>About a third of the 243 states have negative UK values. The figure is an average, so it depends heavily on how negative answers are scaled. In the 1993 UK survey, a respondent who preferred death was asked how many of ten years in that state, followed by full health, would make death and life equal. Those answers were transformed onto a scale bounded at −1, which is why the worst state scores −0.594 rather than −∞.</p></div>
+      <div><h3>Whose values?</h3><p>Official tariffs come from the general public imagining states they mostly have not lived in. Patients living with a condition often rate it higher, partly because they adapt. Using public values is a deliberate choice: taxpayers fund the health system. It means the QALY measures what the public would trade, not necessarily what patients experience.</p></div>
+      <div><h3>From answer to money</h3><p>If a treatment moved someone from your state to full health for ten years, the QALY gain is ten times the gap between 1 and the state's value. Multiply by a threshold to see what a health system would pay: NICE now accepts £25,000–35,000 per QALY. Your own answer and the population's can imply very different prices.</p></div>
+    </div>
+  </section>
+
+  <p class="refs"><b>Values.</b> UK EQ-5D-3L time trade-off tariff: Dolan P. Modeling valuations for EuroQol health states. <i>Medical Care</i> 1997;35(11):1095–1108 (N = 3,395, Measurement and Valuation of Health survey, 1993). Value = 1 − 0.081 (any problem) − dimension decrements − 0.269 (any level-3 problem). Dimension wording on this page is paraphrased, not the licensed EQ-5D questionnaire. Newer EQ-5D-5L value sets differ; NICE adopted a new UK value set in 2026. The interview uses a simplified bisection over whole and half years, not the full survey protocol. Your answers stay in your browser.</p>
+</div>
+
+<script>
+(() => {
+  const $ = id => document.getElementById(id);
+  const DIMS = [
+    {k: 'MO', n: 'Mobility', l: ['Walks about without trouble', 'Some trouble walking about', 'Confined to bed'], d: [0, .069, .314]},
+    {k: 'SC', n: 'Self-care', l: ['Washes and dresses alone', 'Some trouble washing or dressing', 'Cannot wash or dress unaided'], d: [0, .104, .214]},
+    {k: 'UA', n: 'Usual activities', l: ['Work, study, family life as usual', 'Some trouble with usual activities', 'Unable to do usual activities'], d: [0, .036, .094]},
+    {k: 'PD', n: 'Pain or discomfort', l: ['No pain or discomfort', 'Moderate pain or discomfort', 'Extreme pain or discomfort'], d: [0, .123, .386]},
+    {k: 'AD', n: 'Anxiety or depression', l: ['Not anxious or depressed', 'Moderately anxious or depressed', 'Extremely anxious or depressed'], d: [0, .071, .236]}
+  ];
+  const tariff = s => { if (s.every(x => x === 1)) return 1; let v = 1 - .081; s.forEach((x, i) => v -= DIMS[i].d[x - 1]); if (s.some(x => x === 3)) v -= .269; return Math.round(v * 1000) / 1000; };
+  let state = [1, 2, 1, 2, 2];
+  try { const saved = JSON.parse(localStorage.getItem('tto-state') || 'null'); if (Array.isArray(saved) && saved.length === 5) state = saved; } catch {}
+  let iv = null, mine = null;
+
+  function renderDims() {
+    $('dims').innerHTML = DIMS.map((d, i) => `<div class="dim"><h3>${d.n}<span>${d.k}</span></h3><div class="levels" role="group" aria-label="${d.n}">${d.l.map((t, j) =>
+      `<button type="button" data-d="${i}" data-l="${j + 1}" aria-pressed="${state[i] === j + 1}">${t}</button>`).join('')}</div></div>`).join('');
+    const code = state.join(''), v = tariff(state);
+    $('code').textContent = code;
+    $('code-note').textContent = code === '11111' ? 'Full health. Choose at least one problem to begin.' : 'The UK population value is revealed after your interview, so it does not anchor your answers.';
+  }
+  $('dims').addEventListener('click', e => { const b = e.target.closest('button[data-d]'); if (!b) return;
+    state[Number(b.dataset.d)] = Number(b.dataset.l); try { localStorage.setItem('tto-state', JSON.stringify(state)); } catch {}
+    renderDims(); startInterview(); drawStrip(); });
+
+  // ---------------------------------------------------------------- interview
+  // Better-than-death: A = x years full health then death; B = 10 years in state then death. Indifference x → u = x/10.
+  // Worse-than-death: A = immediate death; B = x years in state then (10 − x) full health. Indifference → u = −x/(10 − x), bounded at −1 by Dolan's transform u' = u/(1 − u).
+  function startInterview() {
+    mine = null; $('result').className = 'result'; $('interview').hidden = false;
+    if (state.every(x => x === 1)) { iv = null; $('ask-h').textContent = 'Choose at least one problem on the left to begin the interview.'; $('choices').hidden = true; $('progress').innerHTML = ''; $('trackA').innerHTML = $('trackB').innerHTML = ''; $('hint').textContent = ''; return; }
+    $('choices').hidden = false;
+    iv = {mode: 'first', lo: 0, hi: 10, x: 10, step: 0, max: 7};
+    show();
+  }
+  function seg(cls, from, to, label) { return `<div class="seg ${cls}" style="left:${from * 10}%;width:${(to - from) * 10}%">${label && to - from >= 1.4 ? `<span class="seg-label" style="left:0">${label}</span>` : ''}</div>`; }
+  function show() {
+    const q = $('ask-h'); const x = iv.x;
+    if (iv.mode === 'first' || iv.mode === 'btd') {
+      q.innerHTML = iv.mode === 'first' ? 'Would you rather live 10 years in full health, or 10 years in the state on the left? Both lives end at ten years.' : `Life A is <b>${fmt(x)} years</b> in full health, then death. Life B is <b>10 years</b> in your state, then death. Which would you choose?`;
+      $('a-sub').textContent = `${fmt(x)} years, full health`; $('b-sub').textContent = '10 years, your state';
+      $('trackA').innerHTML = seg('life', 0, x, `${fmt(x)} y full health`) + seg('dead', x, 10, x < 9 ? 'death' : '');
+      $('trackB').innerHTML = seg('state', 0, 10, `10 y in ${state.join('')}`);
+      $('hint').textContent = iv.mode === 'first' ? 'This first choice checks that the state is worse than full health.' : 'Answer quickly and honestly; there are no right answers. The years in Life A will change until the two lives feel equal.';
+    } else if (iv.mode === 'check') {
+      q.innerHTML = 'Would you rather live <b>10 years</b> in this state and then die, or <b>die now</b>?';
+      $('a-sub').textContent = 'die now'; $('b-sub').textContent = '10 years, your state';
+      $('trackA').innerHTML = seg('dead', 0, 10, 'immediate death');
+      $('trackB').innerHTML = seg('state', 0, 10, `10 y in ${state.join('')}`);
+      $('hint').textContent = 'Some people consider severe states worse than death. If you would rather die now, the interview switches to the procedure for worse-than-death states.';
+    } else {
+      q.innerHTML = `Life A is <b>immediate death</b>. Life B is <b>${fmt(x)} years</b> in your state, then <b>${fmt(10 - x)} years</b> in full health. Which would you choose?`;
+      $('a-sub').textContent = 'die now'; $('b-sub').textContent = `${fmt(x)} y state, then full health`;
+      $('trackA').innerHTML = seg('dead', 0, 10, 'immediate death');
+      $('trackB').innerHTML = seg('state', 0, x, `${fmt(x)} y in state`) + seg('life', x, 10, `${fmt(10 - x)} y healthy`);
+      $('hint').textContent = 'The years in your state will change until the two options feel equal.';
+    }
+    $('progress').innerHTML = Array.from({length: iv.max}, (_, i) => `<i class="${i < iv.step ? 'done' : ''}"></i>`).join('');
+  }
+  const fmt = n => Number.isInteger(n) ? String(n) : n.toFixed(1);
+  const snap = v => Math.round(v * 4) / 4;
+  $('choices').addEventListener('click', e => {
+    const b = e.target.closest('button[data-c]'); if (!b || !iv) return; const c = b.dataset.c;
+    iv.step++;
+    if (iv.mode === 'first') {
+      if (c === 'B') { finish(1, 'You preferred the impaired state to full health, so its value is at least 1. Check that the state describes problems you would rather not have.'); return; }
+      if (c === '=') { finish(1); return; }
+      iv.mode = 'check'; show(); return;
+    }
+    if (iv.mode === 'check') {
+      if (c === '=') { finish(0); return; }
+      if (c === 'B') { iv.mode = 'btd'; iv.lo = 0; iv.hi = 10; iv.x = 5; iv.step = 1; show(); return; }
+      iv.mode = 'wtd'; iv.lo = 0; iv.hi = 10; iv.x = 5; iv.step = 1; show(); return;
+    }
+    if (c === '=') return finishFromX();
+    if (iv.mode === 'btd') { if (c === 'A') iv.hi = iv.x; else iv.lo = iv.x; }
+    else { if (c === 'A') iv.hi = iv.x; else iv.lo = iv.x; } // A = death preferred → fewer years in state needed
+    iv.x = snap((iv.lo + iv.hi) / 2);
+    if (iv.step >= iv.max || iv.hi - iv.lo <= .25) return finishFromX();
+    show();
+  });
+  function finishFromX() {
+    const x = iv.x;
+    if (iv.mode === 'btd') finish(x / 10);
+    else finish(-x / 10); // −x/(10 − x), rescaled by u/(1 − u) as in the UK survey, equals −x/10
+  }
+  function finish(u, note) {
+    mine = Math.round(u * 1000) / 1000;
+    const pop = tariff(state), gainYou = 10 * (1 - mine), gainPop = 10 * (1 - pop);
+    $('interview').hidden = true;
+    $('result').className = 'result show';
+    $('result').innerHTML = `<div class="eyebrow">Your valuation of state ${state.join('')}</div>
+      <h2 style="margin:6px 0 4px">${mine < 0 ? 'You rated this state as worse than death.' : mine >= .995 ? 'You would give up no time to avoid it.' : `Ten years like this is worth about ${fmt(Math.round(mine * 10 * 4) / 4)} healthy years to you.`}</h2>
+      ${note ? `<p class="small">${note}</p>` : ''}
+      <div class="scores"><div class="score you"><span>Your value</span><b>${mine.toFixed(2)}</b></div><div class="score pop"><span>UK population value</span><b>${pop.toFixed(2)}</b></div><div class="score"><span>Difference</span><b>${(mine - pop >= 0 ? '+' : '−') + Math.abs(mine - pop).toFixed(2)}</b></div></div>
+      <p>Curing ten years in this state would gain <b>${gainYou.toFixed(1)} QALYs</b> by your values and <b>${gainPop.toFixed(1)}</b> by the population's. At NICE's £25,000–35,000 per QALY, that is <b>£${Math.round(gainYou * 25).toLocaleString()}k–${Math.round(gainYou * 35).toLocaleString()}k</b> by your values, against <b>£${Math.round(gainPop * 25).toLocaleString()}k–${Math.round(gainPop * 35).toLocaleString()}k</b> by the tariff.</p>
+      <p class="small">${Math.abs(mine - pop) < .1 ? 'Your answer is close to the population average.' : mine > pop ? 'You value this state more highly than the average respondent did. Patients who live with a condition often do the same.' : 'You value this state less highly than the average respondent did.'} Real surveys add practice questions, a visual aid and an interviewer, and they ask many people about several states each.</p>
+      <button type="button" class="linkbtn" id="again">Value this state again</button> · <button type="button" class="linkbtn" id="another">Try another state</button>`;
+    $('again').onclick = startInterview;
+    $('another').onclick = () => { state = [1 + Math.floor(Math.random() * 3), 1 + Math.floor(Math.random() * 3), 1 + Math.floor(Math.random() * 3), 1 + Math.floor(Math.random() * 3), 1 + Math.floor(Math.random() * 3)]; if (state.every(s => s === 1)) state[3] = 2; renderDims(); startInterview(); drawStrip(); };
+    drawStrip();
+  }
+
+  // ---------------------------------------------------------------- strip
+  const ALL = []; for (let a = 1; a <= 3; a++) for (let b = 1; b <= 3; b++) for (let c = 1; c <= 3; c++) for (let d = 1; d <= 3; d++) for (let e = 1; e <= 3; e++) ALL.push({s: [a, b, c, d, e], v: tariff([a, b, c, d, e])});
+  function drawStrip() {
+    const css = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+    const W = 900, L = 30, R = 30, lo = -.65, hi = 1, X = v => L + (v - lo) / (hi - lo) * (W - L - R);
+    const neg = ALL.filter(o => o.v < 0).length;
+    let out = `<rect x="${X(lo)}" y="40" width="${X(0) - X(lo)}" height="56" fill="${css('--state-soft')}"/>`;
+    out += ALL.map(o => `<rect x="${X(o.v) - .6}" y="${46 + (o.s.reduce((a, b) => a + b, 0) % 5) * 9}" width="1.4" height="9" fill="${css('--muted')}" opacity=".7"/>`).join('');
+    [-.5, 0, .5, 1].forEach(t => out += `<path d="M${X(t)} 36V100" stroke="${css('--line')}"/><text x="${X(t)}" y="116" text-anchor="middle">${t === 0 ? '0 = dead' : t === 1 ? '1 = full health' : t}</text>`);
+    out += `<text x="${X(-.6)}" y="30">${neg} states valued below 0</text>`;
+    const pv = tariff(state);
+    if (mine !== null) out += `<path d="M${X(pv)} 28V104" stroke="${css('--state')}" stroke-width="3"/><text x="${X(pv)}" y="138" text-anchor="middle" style="fill:${css('--state')}">${state.join('')}: ${pv.toFixed(3)}</text>`;
+    if (mine !== null) { const mx = Math.max(lo, Math.min(hi, mine)); out += `<circle cx="${X(mx)}" cy="20" r="7" fill="${css('--gold')}"/><path d="M${X(mx)} 27V100" stroke="${css('--gold')}" stroke-dasharray="3 3"/><text x="${X(mx) + (mx > .8 ? -12 : 12)}" y="24" text-anchor="${mx > .8 ? 'end' : 'start'}" style="fill:${css('--gold')}">you: ${mine.toFixed(2)}</text>`; }
+    $('strip').innerHTML = out;
+  }
+  matchMedia('(prefers-color-scheme: dark)').addEventListener?.('change', drawStrip);
+  new MutationObserver(drawStrip).observe(document.documentElement, {attributes: true, attributeFilter: ['data-theme']});
+  renderDims(); startInterview(); drawStrip();
+})();
+</script>

@@ -1,0 +1,319 @@
+<title>The Eight Jhānas</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Jost:wght@300;400;500&display=swap">
+<style>
+/* Layout: a night-sky observatory. One luminous field (the canvas) holds the centre; a depth gauge on the left; the text for each state below it. Deliberately single-theme: the subject is light seen with closed eyes. */
+:root{
+  color-scheme:dark;
+  --night:#07081a; --deep:#0e1030; --ink:#ece6d6; --dim:#a7a3b8; --faint:#4a4c6e;
+  --piti:#f0c35c; --sukha:#f4a98c; --calm:#8fd3cf; --still:#f4f1e8; --void:#6c6fa8;
+  --display:"Cormorant","Cormorant Garamond",Georgia,serif;
+  --body:"Jost","Avenir Next","Segoe UI",sans-serif;
+}
+*{box-sizing:border-box}
+html,body{background:var(--night)}
+body{color:var(--ink);font:300 17px/1.7 var(--body);margin:0}
+.wrap{max-width:1180px;margin:0 auto;padding-block:30px 70px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+h1,h2,h3{font-family:var(--display);font-weight:500;margin:0;text-wrap:balance;letter-spacing:.005em}
+h1{font-size:clamp(50px,8.5vw,108px);line-height:.92;font-weight:400}
+h1 i{color:var(--piti);font-weight:400}
+.label{font:400 12px/1.4 var(--body);letter-spacing:.24em;text-transform:uppercase;color:var(--dim)}
+p{margin:0 0 14px;max-width:64ch}
+a{color:var(--calm)}
+:focus-visible{outline:2px solid var(--piti);outline-offset:4px}
+header{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:40px;align-items:end;margin-bottom:28px}
+header p{color:var(--dim);margin:0}
+/* Instrument */
+.instrument{display:grid;grid-template-columns:96px minmax(0,1fr) minmax(0,360px);gap:22px;align-items:stretch}
+.gauge{display:flex;flex-direction:column;gap:4px;position:relative}
+.gauge button{all:unset;cursor:pointer;display:grid;grid-template-columns:22px 1fr;align-items:center;gap:8px;padding:6px 6px;border-radius:8px;font:400 13px/1.2 var(--body);color:var(--dim)}
+.gauge button .n{font:500 18px var(--display);color:var(--faint);text-align:right}
+.gauge button[aria-current="step"]{color:var(--ink);background:#ffffff0d}
+.gauge button[aria-current="step"] .n{color:var(--piti)}
+.gauge button:focus-visible{outline:2px solid var(--piti)}
+.gauge .sep{height:1px;background:var(--faint);margin:6px 4px;opacity:.6}
+.gauge .grp{font:400 10px var(--body);letter-spacing:.2em;text-transform:uppercase;color:var(--faint);padding:2px 6px}
+.field{position:relative;border-radius:18px;overflow:hidden;background:radial-gradient(circle at 50% 50%,var(--deep),var(--night) 75%);min-height:420px;aspect-ratio:1/1;max-height:76vh;width:100%;max-width:100%;justify-self:center}
+#sky{position:absolute;inset:0;width:100%;height:100%;display:block}
+.field .caption{position:absolute;left:18px;bottom:14px;right:18px;display:flex;justify-content:space-between;gap:12px;font:400 12px var(--body);letter-spacing:.12em;text-transform:uppercase;color:var(--dim);pointer-events:none}
+.controls{position:absolute;top:12px;right:12px;display:flex;gap:8px}
+.controls button{all:unset;cursor:pointer;font:400 12px var(--body);letter-spacing:.1em;text-transform:uppercase;color:var(--ink);background:#ffffff14;border:1px solid #ffffff22;padding:7px 11px;border-radius:30px}
+.controls button[aria-pressed="true"]{background:#f0c35c2e;border-color:var(--piti)}
+.controls button:focus-visible{outline:2px solid var(--piti)}
+.side{display:flex;flex-direction:column;gap:18px;min-width:0}
+.factors{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.factor{border:1px solid var(--faint);border-radius:12px;padding:10px 12px;transition:opacity .9s,border-color .9s,background .9s;opacity:.32}
+.factor.on{opacity:1;border-color:var(--c);background:color-mix(in srgb,var(--c) 12%,transparent)}
+.factor b{display:block;font:italic 500 21px/1.1 var(--display);color:var(--c)}
+.factor span{font-size:12.5px;color:var(--dim)}
+.simile{border-left:2px solid var(--piti);padding:4px 0 4px 16px}
+.simile p{font:italic 400 21px/1.45 var(--display);margin:0 0 6px;color:var(--ink)}
+.simile cite{font:400 12px var(--body);letter-spacing:.1em;text-transform:uppercase;color:var(--dim);font-style:normal}
+/* State text */
+.state{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:40px;margin-top:34px;padding-top:28px;border-top:1px solid var(--faint)}
+.state h2{font-size:clamp(40px,5.5vw,64px);line-height:1}
+.state .pali{font:italic 400 24px var(--display);color:var(--piti);margin:4px 0 16px}
+.state .what{color:var(--dim)}
+.state ul{margin:0;padding-left:20px;color:var(--dim)}
+.state li{margin-bottom:6px}
+.nav{display:flex;gap:10px;margin-top:20px}
+.nav button{all:unset;cursor:pointer;border:1px solid var(--faint);border-radius:30px;padding:9px 16px;font:400 14px var(--body);color:var(--ink)}
+.nav button:hover{border-color:var(--ink)}
+.nav button:focus-visible{outline:2px solid var(--piti)}
+.nav button:disabled{opacity:.3;cursor:default}
+section.more{margin-top:70px;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:28px}
+section.more h3{font-size:30px;margin-bottom:10px}
+section.more p{color:var(--dim);font-size:15.5px}
+.ladder{margin-top:60px}
+.ladder h3{font-size:30px;margin-bottom:6px}
+.table-wrap{overflow-x:auto;margin-top:14px}
+table{border-collapse:collapse;width:100%;min-width:640px;font-size:14px}
+th,td{padding:9px 10px;border-bottom:1px solid #ffffff14;text-align:center}
+th:first-child,td:first-child{text-align:left}
+thead th{font:400 11px var(--body);letter-spacing:.14em;text-transform:uppercase;color:var(--dim)}
+td .dot{display:inline-block;width:10px;height:10px;border-radius:50%;background:var(--c)}
+td .gone{display:inline-block;width:10px;height:10px;border-radius:50%;border:1px solid var(--faint)}
+.refs{margin-top:60px;font-size:13.5px;color:var(--dim);columns:2 340px;column-gap:36px}
+.refs p{break-inside:avoid;margin-bottom:10px}
+footer{margin-top:40px;font-size:13px;color:var(--faint)}
+@media(max-width:980px){.instrument{grid-template-columns:1fr;}.gauge{flex-direction:row;flex-wrap:wrap;gap:4px;order:2}.gauge .sep,.gauge .grp{display:none}.gauge button{grid-template-columns:auto;padding:6px 10px;border:1px solid var(--faint)}.gauge button .t{display:none}.field{order:1;max-height:none}.side{order:3}.state,header,section.more{grid-template-columns:1fr;gap:22px}}
+@media(prefers-reduced-motion:reduce){.factor{transition:none}}
+</style>
+
+<div class="wrap">
+  <header>
+    <div>
+      <div class="label">A guided descent · Theravāda meditation</div>
+      <h1>The eight<br><i>jhānas</i></h1>
+    </div>
+    <p>Jhāna (Sanskrit <i>dhyāna</i>) names a series of deeply absorbed meditative states described in the earliest Buddhist texts. Each is defined less by what appears than by what falls away. Step through them below: the field shows an impression of each state, and the panel shows which qualities of mind remain.</p>
+  </header>
+
+  <div class="instrument">
+    <nav class="gauge" aria-label="States of absorption" id="gauge"></nav>
+    <div class="field">
+      <canvas id="sky" role="img" aria-label="Generative impression of the selected meditative state"></canvas>
+      <div class="controls"><button id="breathe" type="button" aria-pressed="false">Breathe with it</button><button id="auto" type="button" aria-pressed="false">Descend slowly</button></div>
+      <div class="caption"><span id="cap-l"></span><span id="cap-r"></span></div>
+    </div>
+    <aside class="side" aria-label="Factors and simile">
+      <div><div class="label" style="margin-bottom:10px">Factors present</div><div class="factors" id="factors"></div></div>
+      <div class="simile" id="simile"></div>
+    </aside>
+  </div>
+
+  <article class="state" aria-live="polite" id="state"></article>
+
+  <section class="ladder" aria-labelledby="ladder-h">
+    <h3 id="ladder-h">What remains at each depth</h3>
+    <p style="color:var(--dim)">The classical analysis lists five factors in the first jhāna. Each later jhāna is reached by letting the coarsest remaining factor go. The four formless attainments keep the stillness of the fourth jhāna and change only the object.</p>
+    <div class="table-wrap" tabindex="0" role="region" aria-label="Factor table"><table id="ftable"></table></div>
+  </section>
+
+  <section class="more">
+    <div><h3>The light</h3><p>Many practitioners report a <i>nimitta</i>, a "sign" that appears as concentration deepens. Buddhaghosa's <i>Visuddhimagga</i> (5th century) says it can look like a star, a cluster of gems, a wreath of flowers or a puff of cotton, and that it differs from person to person. Some lineages make a stable visual nimitta a requirement for jhāna. Others treat it as optional and enter jhāna through a felt sense of pleasure in the body.</p></div>
+    <div><h3>How deep is "deep"?</h3><p>Teachers disagree about the depth the word describes. "Sutta-style" or lighter jhānas allow faint awareness of the body and surroundings. "Visuddhimagga-style" jhānas are so absorbed that sound and bodily sensation drop away. The factor sequence on this page is shared across both readings. What differs is how complete each step must be.</p></div>
+    <div><h3>What scanners see</h3><p>Researchers at Massachusetts General Hospital imaged one highly experienced meditator across 27 jhāna sessions in a 7-tesla scanner. Brain activity shifted in cortical, subcortical, brainstem and cerebellar regions, and tracked the meditator's own ratings of attention, joy, equanimity and sense of self. A 2013 single-subject study had found reward-system activity during the joy of early jhānas. These are single-person case studies and cannot establish general mechanisms.</p></div>
+  </section>
+
+  <section class="refs" aria-label="Sources">
+    <p><b>Factor formula and similes.</b> <i>Sāmaññaphala Sutta</i> (DN 2) and <i>Mahā-Assapura Sutta</i> (MN 39). The bath-powder, spring-fed lake, submerged lotus and white cloth images come from these texts. Translations here are paraphrased.</p>
+    <p><b>Formless attainments.</b> Base of infinite space, infinite consciousness, nothingness and neither-perception-nor-non-perception, e.g. MN 111 (<i>Anupada Sutta</i>), which also lists the factors present in each state. The Buddha's two formless teachers appear in MN 26 (<i>Ariyapariyesanā Sutta</i>). The restless-monkey image is from SN 12.61.</p>
+    <p><b>The nimitta.</b> Buddhaghosa, <i>Visuddhimagga</i> IV and VIII (trans. Ñāṇamoli, <i>The Path of Purification</i>).</p>
+    <p><b>Contemporary accounts.</b> Leigh Brasington, <i>Right Concentration: A Practical Guide to the Jhānas</i> (Shambhala, 2015), compares the textual traditions and the depth debate.</p>
+    <p><b>Neuroimaging.</b> Yang WFZ, Chowdhury A, Bianciardi M, et al. Intensive whole-brain 7T MRI case study of volitional control of brain activity in deep absorptive meditation states. <i>Cerebral Cortex</i> 2024;34(1). Hagerty MR, Isaacs J, Brasington L, et al. Case study of ecstatic meditation: fMRI and EEG evidence of self-stimulating a reward system. <i>Neural Plasticity</i> 2013:653572.</p>
+    <p><b>Difficult experiences.</b> Lindahl JR, Fisher NE, Cooper DJ, et al. The varieties of contemplative experience. <i>PLoS ONE</i> 2017;12(5):e0176239. Intensive practice can bring difficult as well as blissful experiences; a qualified teacher matters.</p>
+  </section>
+  <footer>An impression, not an instruction manual. The visuals are artistic metaphors for first-person reports, not depictions of what anyone literally sees.</footer>
+</div>
+
+<script>
+(() => {
+  const C = getComputedStyle(document.documentElement);
+  const col = n => C.getPropertyValue(n).trim();
+  const FACTORS = [
+    {k: 'vitakka', en: 'directed attention', c: '--calm'},
+    {k: 'vicāra', en: 'sustained attention', c: '--calm'},
+    {k: 'pīti', en: 'rapture, energetic joy', c: '--piti'},
+    {k: 'sukha', en: 'happiness, ease', c: '--sukha'},
+    {k: 'ekaggatā', en: 'one-pointedness', c: '--still'},
+    {k: 'upekkhā', en: 'equanimity', c: '--void'}
+  ];
+  // Factor presence per state: [vitakka, vicara, piti, sukha, ekaggata, upekkha]
+  const S = [
+    {id: 'ordinary', n: '·', t: 'Ordinary mind', pali: 'papañca, the proliferating mind', f: [1, 1, 0, 0, 0, 0],
+      what: 'Attention moves from the breath to a plan, a memory or an itch, and back. Most meditation begins here.',
+      notes: ['Thought runs in the background and pulls attention away.', 'The body feels like a collection of separate sensations.', 'Effort comes and goes.'],
+      sim: ['A monkey swinging through the forest, letting go of one branch only to seize another.', 'SN 12.61, the monkey simile for the restless mind']},
+    {id: 'access', n: '◦', t: 'Access concentration', pali: 'upacāra-samādhi', f: [1, 1, 0.5, 0.5, 0.5, 0],
+      what: 'The five hindrances (sensual desire, ill will, sloth, restlessness and doubt) quieten. Attention rests on its object for long stretches, and a sign or light may appear.',
+      notes: ['The breath grows subtle and may seem to disappear.', 'A nimitta may appear: a glow, a disc or a soft brightness behind closed eyes.', 'Attention is steady but can still slip.'],
+      sim: ['Like a debt repaid, recovery from illness, release from prison: the hindrances fall away, and gladness is born.', 'DN 2, on abandoning the hindrances']},
+    {id: 'j1', n: '1', t: 'The first jhāna', pali: 'paṭhama jhāna', f: [1, 1, 1, 1, 1, 0],
+      what: 'Secluded from sensual pleasures and unwholesome states, the mind enters a rapture and happiness born of seclusion. Attention is still directed to and held on the object.',
+      notes: ['Pīti: energetic waves, tingling, sometimes overwhelming joy.', 'Sukha: a quieter pleasure underneath.', 'Applied and sustained attention keep the mind in place, like a hand that grips and a hand that turns.'],
+      sim: ['As a skilled bath attendant kneads bath powder with water until the ball is soaked through and does not drip, so rapture and happiness pervade the whole body.', 'DN 2 · MN 39']},
+    {id: 'j2', n: '2', t: 'The second jhāna', pali: 'dutiya jhāna', f: [0, 0, 1, 1, 1, 0],
+      what: 'Directed and sustained attention fall away. The mind is unified and confident on its own, filled with rapture and happiness born of concentration.',
+      notes: ['No effort is needed to hold the object.', 'Joy seems to well up from inside rather than being produced.', 'Inner stillness (sampasādana) and unification.'],
+      sim: ['A deep lake fed by a spring from below, with no inflow from east, west, north or south. The cool water wells up and fills the whole lake.', 'DN 2 · MN 39']},
+    {id: 'j3', n: '3', t: 'The third jhāna', pali: 'tatiya jhāna', f: [0, 0, 0, 1, 1, 1],
+      what: 'Rapture fades. The meditator dwells in equanimity, mindful and clearly knowing, still feeling pleasure with the body.',
+      notes: ['The energy of pīti now feels coarse and is set aside.', 'A cool, contented happiness remains.', 'The texts call this "dwelling pleasantly with equanimity and mindfulness".'],
+      sim: ['Lotuses born and grown under water, which never rise above it, drenched with cool water from root to tip.', 'DN 2 · MN 39']},
+    {id: 'j4', n: '4', t: 'The fourth jhāna', pali: 'catuttha jhāna', f: [0, 0, 0, 0, 1, 1],
+      what: 'Pleasure and pain are abandoned. What remains is neither-painful-nor-pleasant feeling and mindfulness made pure by equanimity.',
+      notes: ['Stillness so complete that SN 36.11 describes in-and-out breathing as having ceased.', 'In the suttas, the base from which the further knowledges and the formless attainments are developed.', 'Often described as a bright, clear, imperturbable awareness.'],
+      sim: ['A person sitting wrapped from head to foot in a clean white cloth, so that no part of the body is not covered.', 'DN 2 · MN 39']},
+    {id: 'j5', n: '5', t: 'Infinite space', pali: 'ākāsānañcāyatana', f: [0, 0, 0, 0, 1, 1],
+      what: 'Passing beyond perceptions of form, and paying no attention to perceptions of diversity, the meditator attends to space as boundless.',
+      notes: ['The object is no longer the body, breath or light, but the space they occupied.', 'Boundaries dissolve outward.', 'The factors are those of the fourth jhāna. Only the object changes.'],
+      sim: ['"Space is infinite."', 'The meditation phrase in MN 111']},
+    {id: 'j6', n: '6', t: 'Infinite consciousness', pali: 'viññāṇañcāyatana', f: [0, 0, 0, 0, 1, 1],
+      what: 'Going beyond infinite space, the meditator attends to the consciousness that knew that space, and finds it boundless too.',
+      notes: ['Awareness takes itself as object.', 'Often described as an awareness that pervades everything.', 'Subtler than space, because it is what perceived space.'],
+      sim: ['"Consciousness is infinite."', 'The meditation phrase in MN 111']},
+    {id: 'j7', n: '7', t: 'Nothingness', pali: 'ākiñcaññāyatana', f: [0, 0, 0, 0, 1, 1],
+      what: 'Going beyond infinite consciousness, the meditator attends to the absence of anything at all.',
+      notes: ['Not blankness or sleep: awareness of absence remains.', 'The attainment taught by Āḷāra Kālāma, the Buddha\'s first teacher, according to MN 26.', 'Very quiet and very spacious.'],
+      sim: ['"There is nothing."', 'The meditation phrase in MN 111']},
+    {id: 'j8', n: '8', t: 'Neither perception nor non-perception', pali: 'nevasaññānāsaññāyatana', f: [0, 0, 0, 0, 1, 1],
+      what: 'Perception becomes so subtle that it can be called neither present nor absent. According to MN 26, it was taught by Uddaka Rāmaputta, the Buddha\'s second teacher, and the Buddha left because it did not lead to the end of suffering.',
+      notes: ['Traditionally the peak of the formless attainments.', 'In MN 111, Sāriputta reviews this attainment only after emerging from it, instead of discerning its factors one by one while inside it.', 'Beyond it, the texts describe cessation of perception and feeling (nirodha-samāpatti), which is not a jhāna but the stopping of experience itself.'],
+      sim: ['"This is peaceful, this is sublime."', 'The reflection on emerging, MN 111']}
+  ];
+  const $ = id => document.getElementById(id);
+  let target = 0, cur = 0;
+
+  // Gauge
+  $('gauge').innerHTML = S.map((s, i) => (i === 2 ? '<div class="grp">Form</div>' : i === 6 ? '<div class="sep"></div><div class="grp">Formless</div>' : '') +
+    `<button type="button" data-i="${i}"><span class="n">${s.n}</span><span class="t">${s.t.replace('The ', '').replace(' jhāna', '')}</span></button>`).join('');
+  $('gauge').addEventListener('click', e => { const b = e.target.closest('button'); if (b) go(Number(b.dataset.i)); });
+  $('factors').innerHTML = FACTORS.map((f, i) => `<div class="factor" id="f${i}" style="--c:var(${f.c})"><b>${f.k}</b><span>${f.en}</span></div>`).join('');
+  // Factor table
+  $('ftable').innerHTML = `<thead><tr><th>State</th>${FACTORS.map(f => `<th><i style="font-family:var(--display);font-size:16px;text-transform:none;letter-spacing:0">${f.k}</i></th>`).join('')}</tr></thead><tbody>` +
+    S.slice(2).map(s => `<tr><td>${s.t}</td>${s.f.map((v, i) => `<td>${v ? `<span class="dot" style="--c:var(${FACTORS[i].c})" title="present"></span>` : '<span class="gone" title="absent"></span>'}</td>`).join('')}</tr>`).join('') + '</tbody>';
+
+  function renderText(i) {
+    const s = S[i];
+    document.querySelectorAll('#gauge button').forEach(b => b.setAttribute('aria-current', Number(b.dataset.i) === i ? 'step' : 'false'));
+    FACTORS.forEach((f, k) => $('f' + k).classList.toggle('on', s.f[k] >= 1));
+    $('simile').innerHTML = `<p>${s.sim[0]}</p><cite>${s.sim[1]}</cite>`;
+    $('state').innerHTML = `<div><div class="label">${i < 2 ? 'Before absorption' : i < 6 ? 'Jhāna of form · ' + (i - 1) + ' of 4' : 'Formless attainment · ' + (i - 1) + ' of 8'}</div><h2>${s.t}</h2><div class="pali">${s.pali}</div><p>${s.what}</p>
+      <div class="nav"><button type="button" id="prev" ${i === 0 ? 'disabled' : ''}>← Shallower</button><button type="button" id="next" ${i === S.length - 1 ? 'disabled' : ''}>Deeper →</button></div></div>
+      <div><div class="label" style="margin-bottom:10px">How it is described</div><ul>${s.notes.map(n => `<li>${n}</li>`).join('')}</ul></div>`;
+    $('prev').onclick = () => go(i - 1); $('next').onclick = () => go(i + 1);
+    $('cap-l').textContent = s.t; $('cap-r').textContent = s.pali;
+    try { history.replaceState(null, '', '#' + s.id); } catch {}
+  }
+  function go(i) { target = Math.max(0, Math.min(S.length - 1, i)); renderText(target); }
+
+  // ------------------------------------------------------------------ canvas
+  const cv = $('sky'), g = cv.getContext('2d');
+  let W = 0, H = 0, R = 0, dpr = 1;
+  function resize() { dpr = Math.min(2, devicePixelRatio || 1); const r = cv.getBoundingClientRect(); W = r.width; H = r.height; R = Math.min(W, H) / 2; cv.width = W * dpr; cv.height = H * dpr; g.setTransform(dpr, 0, 0, dpr, 0, 0); }
+  addEventListener('resize', resize);
+  const N = 700, P = Array.from({length: N}, (_, i) => ({i, a: Math.random() * 6.283, b: Math.random(), c: Math.random(), d: Math.random(), x: 0, y: 0}));
+  const thoughts = ['did I lock the door?', 'lunch', 'that email', 'itch', 'am I doing this right?', 'tomorrow', 'breathing in…', 'what time is it'];
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const hexA = (h, a) => { const n = parseInt(h.slice(1), 16); return `rgba(${n >> 16},${(n >> 8) & 255},${n & 255},${a})`; };
+  // Target position of particle p for state k at time t (centre-relative, units of R)
+  function tgt(k, p, t) {
+    const {a, b, c, d, i} = p;
+    switch (k) {
+      case 0: { const x = Math.sin(t * .31 + a * 7) * .6 + Math.sin(t * 1.7 + b * 13) * .25 + (c - .5) * .5, y = Math.cos(t * .27 + b * 9) * .6 + Math.sin(t * 2.1 + d * 11) * .22 + (d - .5) * .5; return [x * .95, y * .95]; }
+      case 1: { const r = .05 + .55 * Math.pow(b, 2.2) * (1 + .08 * Math.sin(t * .8 + a * 5)), th = a + t * (.25 + .6 * (1 - b)); return [r * Math.cos(th), r * Math.sin(th)]; }
+      case 2: { const r = .12 + .55 * Math.pow(b, 1.4) + .06 * Math.sin(t * 9 + i) * c, th = a + t * .15 + .05 * Math.sin(t * 7 + d * 30); return [r * Math.cos(th), r * Math.sin(th)]; }
+      case 3: { const ph = (t * .07 + b) % 1, r = .02 + .78 * ph, th = a + Math.sin(t * .2 + c * 6) * .05; return [r * Math.cos(th), r * Math.sin(th)]; }
+      case 4: { const petals = 5, th = a + t * .03, rr = .72 * Math.pow(Math.abs(Math.cos(petals / 2 * th)), .7) * (.35 + .65 * b) + .03 * Math.sin(t * .6 + c * 6); return [rr * Math.cos(th), rr * Math.sin(th)]; }
+      case 5: { const ring = Math.floor(Math.sqrt(i / N) * 22), k2 = i - Math.round(N * (ring / 22) ** 2), r = .78 * Math.sqrt(i / N), th = a * .02 + i * 2.39996; return [r * Math.cos(th), r * Math.sin(th)]; }
+      case 6: { const s = ((t * .045 + b) % 1), r = .05 * Math.exp(s * 3.6), th = a; return [r * Math.cos(th), r * Math.sin(th)]; }
+      case 7: { const u = a, v = b * 6.283; return [Math.sin(u * 3 + t * .09) * .85 * Math.cos(v * .5 + t * .05), Math.sin(v * 2 + t * .07) * .85 * Math.cos(u)]; }
+      case 8: { const r = 1.25 + b * .5, th = a + t * .01; return [r * Math.cos(th), r * Math.sin(th)]; }
+      default: { const r = .98 + .04 * Math.sin(t * .5 + a * 3), th = a; return [r * Math.cos(th), r * Math.sin(th)]; }
+    }
+  }
+  // Visual parameters per state: [particle colour, alpha, size, glow colour, glow strength, glow radius]
+  const V = () => [
+    [col('--dim'), .55, 1.6, col('--faint'), .08, .4],
+    [col('--calm'), .7, 1.5, col('--still'), .35, .14],
+    [col('--piti'), .9, 1.9, col('--piti'), .55, .42],
+    [col('--sukha'), .8, 1.7, col('--sukha'), .45, .7],
+    [col('--calm'), .65, 1.6, col('--calm'), .4, .8],
+    [col('--still'), .75, 1.4, col('--still'), .6, .85],
+    [col('--still'), .6, 1.2, col('--void'), .18, 1.4],
+    [col('--void'), .5, 1.1, col('--void'), .12, 1.3],
+    [col('--void'), .12, 1.0, col('--night'), 0, .5],
+    [col('--void'), .22, .9, col('--void'), .05, 1.2]
+  ];
+  let VIS = V(), last = performance.now(), t = 0, breathing = false, autoT = null;
+  function frame(now) {
+    const dt = Math.min(.05, (now - last) / 1000); last = now; if (!reduce) t += dt;
+    cur += (target - cur) * Math.min(1, dt * (reduce ? 60 : 1.1));
+    if (Math.abs(target - cur) < .001) cur = target;
+    const k0 = Math.floor(cur), k1 = Math.min(S.length - 1, k0 + 1), w = cur - k0;
+    const mix = (q) => VIS[k0][q] + (VIS[k1][q] - VIS[k0][q]) * w;
+    const cx = W / 2, cy = H / 2;
+    // Background glow
+    g.globalCompositeOperation = 'source-over';
+    g.fillStyle = col('--night'); g.fillRect(0, 0, W, H);
+    const breath = breathing ? .5 - .5 * Math.cos(t * 2 * Math.PI / 11) : .5; // 5.5 breaths/min
+    for (const [k, ww] of [[k0, 1 - w], [k1, w]]) {
+      if (ww <= 0) continue;
+      const [, , , gc, gs, gr] = VIS[k];
+      if (gs <= 0) continue;
+      const rad = R * gr * (breathing ? .88 + .24 * breath : 1);
+      const grd = g.createRadialGradient(cx, cy, 0, cx, cy, rad);
+      grd.addColorStop(0, hexA(gc, gs * ww)); grd.addColorStop(.55, hexA(gc, gs * ww * .35)); grd.addColorStop(1, hexA(gc, 0));
+      g.fillStyle = grd; g.fillRect(0, 0, W, H);
+    }
+    // Ordinary mind: drifting thoughts
+    const wt = Math.max(0, 1 - cur);
+    if (wt > 0.01) {
+      g.font = `italic 400 ${Math.max(14, R * .07)}px ${C.getPropertyValue('--display')}`; g.textAlign = 'center';
+      thoughts.forEach((s, j) => { const ph = (t * .05 + j / thoughts.length) % 1; g.fillStyle = hexA(col('--ink'), wt * .55 * Math.sin(ph * Math.PI));
+        g.fillText(s, cx + Math.sin(j * 2.3 + t * .1) * R * .6, cy + (0.8 - ph * 1.6) * R * .8); });
+    }
+    // Particles
+    g.globalCompositeOperation = 'lighter';
+    const pc0 = VIS[k0][0], pc1 = VIS[k1][0], alpha = mix(1), size = mix(2);
+    for (const p of P) {
+      const [x0, y0] = tgt(k0, p, t), [x1, y1] = w > 0 ? tgt(k1, p, t) : [x0, y0];
+      const bx = (x0 + (x1 - x0) * w) * R, by = (y0 + (y1 - y0) * w) * R;
+      const scale = breathing ? .94 + .12 * breath : 1;
+      const x = cx + bx * scale, y = cy + by * scale;
+      let a = alpha * (.45 + .55 * p.c);
+      if (cur > 1.5 && cur < 2.6) a *= .6 + .4 * Math.abs(Math.sin(t * 6 + p.i)); // pīti sparkle
+      if (cur > 8.5) a *= .5 + .5 * Math.sin(t * .9 + p.i * .37); // flicker at the edge of perception
+      g.fillStyle = hexA(p.i % 2 ? pc0 : pc1, a);
+      g.beginPath(); g.arc(x, y, size * (.6 + p.d), 0, 6.283); g.fill();
+    }
+    // Directed / sustained attention: a cursor that reaches for the object and circles it
+    const wa = Math.max(0, Math.min(1, 2.9 - cur)) * Math.min(1, cur + .4);
+    if (wa > .01) {
+      const reach = (Math.sin(t * .9) * .5 + .5), r = R * (.1 + .25 * (1 - reach) * (cur < 1 ? 1.8 : 1)), th = t * 1.3;
+      g.globalCompositeOperation = 'source-over';
+      g.strokeStyle = hexA(col('--calm'), .35 * wa); g.lineWidth = 1; g.beginPath(); g.arc(cx, cy, r, th, th + 1.6); g.stroke();
+      g.fillStyle = hexA(col('--calm'), .9 * wa); g.beginPath(); g.arc(cx + r * Math.cos(th + 1.6), cy + r * Math.sin(th + 1.6), 3, 0, 6.283); g.fill();
+    }
+    // Nothingness: a single faint ring
+    const wn = Math.max(0, 1 - Math.abs(cur - 8));
+    if (wn > .01) { g.globalCompositeOperation = 'source-over'; g.strokeStyle = hexA(col('--void'), .35 * wn); g.lineWidth = 1; g.beginPath(); g.arc(cx, cy, R * .5, 0, 6.283); g.stroke(); }
+    // Breath guide
+    if (breathing) { g.globalCompositeOperation = 'source-over'; g.font = `400 12px ${C.getPropertyValue('--body')}`; g.textAlign = 'center'; g.fillStyle = hexA(col('--ink'), .6);
+      g.fillText((Math.sin(t * 2 * Math.PI / 11) > 0 ? 'breathe in' : 'breathe out').toUpperCase(), cx, 28); }
+    requestAnimationFrame(frame);
+  }
+  $('breathe').addEventListener('click', e => { breathing = !breathing; e.currentTarget.setAttribute('aria-pressed', String(breathing)); });
+  $('auto').addEventListener('click', e => {
+    const on = !autoT; e.currentTarget.setAttribute('aria-pressed', String(on));
+    if (on) { if (target >= S.length - 1) go(0); autoT = setInterval(() => { if (target >= S.length - 1) { clearInterval(autoT); autoT = null; $('auto').setAttribute('aria-pressed', 'false'); } else go(target + 1); }, 12000); }
+    else { clearInterval(autoT); autoT = null; }
+  });
+  addEventListener('keydown', e => { if (e.target.closest('input,select,textarea')) return; if (e.key === 'ArrowDown' || e.key === 'ArrowRight') go(target + 1); if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') go(target - 1); });
+  const start = Math.max(0, S.findIndex(s => '#' + s.id === location.hash));
+  target = cur = start; renderText(start); resize(); requestAnimationFrame(frame);
+  addEventListener('hashchange', () => { const i = S.findIndex(s => '#' + s.id === location.hash); if (i >= 0 && i !== target) go(i); });
+})();
+</script>
