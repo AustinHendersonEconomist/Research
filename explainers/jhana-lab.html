@@ -1,0 +1,332 @@
+<title>Jhāna Lab</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,400;0,500;1,400&family=Jost:wght@300;400;500&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: a practice journal under a night sky. Left: today's sitting form. Right: what your sittings are telling you. Below: the self-experiment desk and history. Dark-first, with a dawn light theme. */
+:root{
+  --bg:#0b0d1c; --card:#13162b; --ink:#ece6d6; --muted:#a3a1b8; --line:#2a2d4a; --faint:#3b3f63;
+  --piti:#f0c35c; --sukha:#f4a98c; --calm:#8fd3cf; --still:#f4f1e8; --void:#8d90d0; --bad:#ef8f8f; --good:#8fd3a5;
+  --display:"Cormorant",Georgia,serif; --body:"Jost","Avenir Next",system-ui,sans-serif; --mono:"JetBrains Mono",ui-monospace,monospace;
+  color-scheme:dark;
+}
+@media (prefers-color-scheme: light){:root:not([data-theme="dark"]){
+  --bg:#f6f2ea; --card:#fffdf8; --ink:#1f2236; --muted:#5d5f78; --line:#ddd6c8; --faint:#c9c2b2;
+  --piti:#b98510; --sukha:#c0603f; --calm:#2b8a84; --still:#3a3d5c; --void:#5a5ea6; --bad:#b23a3a; --good:#2f7a4a; color-scheme:light}}
+:root[data-theme="light"]{
+  --bg:#f6f2ea; --card:#fffdf8; --ink:#1f2236; --muted:#5d5f78; --line:#ddd6c8; --faint:#c9c2b2;
+  --piti:#b98510; --sukha:#c0603f; --calm:#2b8a84; --still:#3a3d5c; --void:#5a5ea6; --bad:#b23a3a; --good:#2f7a4a; color-scheme:light}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font:300 16.5px/1.65 var(--body);margin:0}
+.wrap{max-width:1180px;margin:0 auto;padding-block:26px 70px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+h1,h2,h3{font-family:var(--display);font-weight:400;margin:0;line-height:1.05;text-wrap:balance}
+h1{font-size:clamp(46px,7vw,84px)}h1 i{color:var(--piti)}
+h2{font-size:clamp(28px,3.6vw,40px)}h3{font-size:24px}
+p{margin:0 0 10px;max-width:64ch}
+.lab{font:400 11.5px/1.4 var(--body);letter-spacing:.22em;text-transform:uppercase;color:var(--muted)}
+:focus-visible{outline:2px solid var(--piti);outline-offset:3px}
+.top{display:flex;justify-content:space-between;align-items:flex-end;gap:20px;flex-wrap:wrap;margin-bottom:18px}
+.status{font:400 13px var(--body);color:var(--muted);border:1px solid var(--line);border-radius:30px;padding:6px 12px;display:inline-flex;gap:8px;align-items:center}
+.status i{width:8px;height:8px;border-radius:50%;background:var(--muted)}
+.status.live i{background:var(--good)}.status.demo i{background:var(--piti)}
+.grid{display:grid;grid-template-columns:minmax(0,400px) minmax(0,1fr);gap:22px;align-items:start}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px 20px}
+form .row{display:grid;grid-template-columns:1fr 1fr;gap:10px 12px}
+form label{display:grid;gap:4px;font:400 13.5px var(--body);color:var(--muted)}
+input[type=number],input[type=datetime-local],select,textarea{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);border-radius:9px;padding:8px 10px;min-height:42px;width:100%}
+textarea{min-height:70px;resize:vertical}
+.depth{display:grid;grid-template-columns:repeat(5,1fr);gap:5px;margin-top:4px}
+.depth button,.chipset button{all:unset;cursor:pointer;text-align:center;border:1px solid var(--line);border-radius:9px;padding:7px 4px;font:400 13px var(--body);color:var(--muted);box-sizing:border-box}
+.depth button[aria-pressed="true"]{border-color:var(--piti);color:var(--ink);background:color-mix(in srgb,var(--piti) 18%,transparent)}
+.chipset{display:flex;flex-wrap:wrap;gap:6px;margin-top:4px}
+.chipset button{padding:6px 10px;border-radius:30px}
+.chipset button[aria-pressed="true"]{border-color:var(--c,var(--calm));color:var(--ink);background:color-mix(in srgb,var(--c,var(--calm)) 18%,transparent)}
+.depth button:focus-visible,.chipset button:focus-visible{outline:2px solid var(--piti)}
+.field{margin-top:12px}
+.field>span{display:block;font:400 13.5px var(--body);color:var(--muted)}
+.save{all:unset;cursor:pointer;margin-top:16px;display:block;text-align:center;background:var(--piti);color:#1a1405;font:500 15px var(--body);border-radius:10px;padding:11px;box-sizing:border-box}
+.save:focus-visible{outline:2px solid var(--ink)}
+.msg{font-size:13.5px;color:var(--muted);margin-top:8px;min-height:1.2em}
+.figure svg{display:block;width:100%;height:auto}
+.figure text{font:11px var(--mono);fill:var(--muted)}
+.insights{display:grid;gap:12px}
+.insight{border-left:2px solid var(--c,var(--calm));padding:4px 0 4px 14px;font-size:15px}
+.forest{display:grid;gap:6px;margin-top:8px}
+.frow{display:grid;grid-template-columns:150px minmax(0,1fr) 92px;gap:10px;align-items:center;font-size:14px}
+.ftrack{position:relative;height:18px}
+.ftrack .zero{position:absolute;left:50%;top:0;bottom:0;width:1px;background:var(--faint)}
+.ftrack .ci{position:absolute;top:8px;height:2px;background:var(--c)}
+.ftrack .pt{position:absolute;top:4px;width:10px;height:10px;border-radius:50%;background:var(--c);transform:translateX(-50%)}
+.frow span:last-child{font:400 12.5px var(--mono);text-align:right;color:var(--muted)}
+section{margin-top:44px}
+.two{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:22px}
+.btn{all:unset;cursor:pointer;border:1px solid var(--line);border-radius:9px;padding:8px 14px;font:400 14px var(--body);color:var(--ink);box-sizing:border-box;min-height:40px;display:inline-flex;align-items:center}
+.btn:hover{border-color:var(--piti)}
+.btn:focus-visible{outline:2px solid var(--piti)}
+.sched{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:4px;margin-top:10px}
+.sched div{border:1px solid var(--line);border-radius:7px;padding:5px;font:400 11.5px var(--body);text-align:center;color:var(--muted)}
+.sched div.a{border-color:var(--calm)}.sched div.b{border-color:var(--sukha)}
+.sched div.today{outline:2px solid var(--piti)}
+.sched div b{display:block;font-weight:500;color:var(--ink)}
+.table{overflow-x:auto;margin-top:10px}
+table{border-collapse:collapse;width:100%;min-width:620px;font-size:14px}
+th,td{padding:7px 8px;border-bottom:1px solid var(--line);text-align:left}
+th{font:400 11px var(--body);letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+td button{all:unset;cursor:pointer;color:var(--muted);font-size:13px}
+.note{font-size:13px;color:var(--muted)}
+@media(max-width:900px){.grid,.two{grid-template-columns:minmax(0,1fr)}.frow{grid-template-columns:110px minmax(0,1fr) 80px}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+
+<div class="wrap">
+  <div class="top">
+    <div><div class="lab">Practice journal · single-person (N-of-1) analysis</div><h1>Jhāna <i>lab</i></h1></div>
+    <span class="status" id="status"><i></i><span id="status-t">Connecting…</span></span>
+  </div>
+  <p class="note" style="max-width:76ch">Log each sitting in a minute. Over time the lab estimates which conditions go with deeper sittings, with honest uncertainty, and helps you run small randomised experiments on yourself. Your journal is private: it is stored in a personal area that other viewers of this page cannot read.</p>
+
+  <div class="grid" style="margin-top:18px">
+    <form class="card" id="form" autocomplete="off">
+      <h3 style="margin-bottom:8px">Today's sitting</h3>
+      <div class="row">
+        <label>When<input type="datetime-local" id="f-when" required></label>
+        <label>Minutes<input type="number" id="f-min" min="1" max="600" value="45" required></label>
+      </div>
+      <div class="field"><span>Deepest state reached</span><div class="depth" id="f-depth" role="group" aria-label="Deepest state reached"></div></div>
+      <div class="field"><span>Factors clearly present</span><div class="chipset" id="f-factors" role="group" aria-label="Factors present"></div></div>
+      <div class="field"><span>Hindrances that showed up</span><div class="chipset" id="f-hind" role="group" aria-label="Hindrances"></div></div>
+      <div class="row field">
+        <label>Nimitta<select id="f-nim"><option value="0">None</option><option value="1">Glimpse</option><option value="2">Stable</option></select></label>
+        <label>Object<select id="f-obj"><option>Breath</option><option>Mettā</option><option>Body / pīti</option><option>Kasiṇa</option><option>Other</option></select></label>
+        <label>Sleep last night (h)<input type="number" id="f-sleep" min="0" max="14" step="0.5" value="7"></label>
+        <label>Mood before (1–5)<input type="number" id="f-mood" min="1" max="5" value="3"></label>
+        <label>Caffeine within 2 h<select id="f-caf"><option value="0">No</option><option value="1">Yes</option></select></label>
+        <label>Exercise today<select id="f-ex"><option value="0">No</option><option value="1">Yes</option></select></label>
+        <label>Alcohol last night<select id="f-alc"><option value="0">No</option><option value="1">Yes</option></select></label>
+        <label>Retreat day<select id="f-ret"><option value="0">No</option><option value="1">Yes</option></select></label>
+      </div>
+      <label class="field">Notes<textarea id="f-notes" placeholder="What helped, what got in the way"></textarea></label>
+      <button class="save" type="submit" id="f-save">Save sitting</button>
+      <div class="msg" id="f-msg" role="status"></div>
+    </form>
+
+    <div class="insights-col">
+      <div class="card">
+        <div class="lab" id="data-lab">Your sittings</div>
+        <div class="figure"><svg id="trend" viewBox="0 0 640 220" role="img" aria-label="Depth of each sitting over time with a rolling average"></svg></div>
+        <div class="insights" id="insights" style="margin-top:10px"></div>
+      </div>
+      <div class="card" style="margin-top:16px">
+        <h3>What goes with deeper sittings</h3>
+        <p class="note">A Bayesian regression of depth on the conditions you log. Dots show the most likely effect on depth (in states, where 1 = one state deeper), and lines show the 90% credible interval. Shrinkage towards zero keeps small samples honest. These are associations, unless they come from an experiment below.</p>
+        <div class="forest" id="forest"></div>
+      </div>
+    </div>
+  </div>
+
+  <section class="two">
+    <div class="card">
+      <h3>Factor map</h3>
+      <p class="note">The last 30 sittings, oldest on the left. Each row is a factor or hindrance; a filled cell means it was present.</p>
+      <div class="figure"><svg id="fmap" viewBox="0 0 640 260" role="img" aria-label="Presence of factors and hindrances across recent sittings"></svg></div>
+    </div>
+    <div class="card" id="exp">
+      <h3>Self-experiment</h3>
+      <p class="note">Randomise one condition across days, so the comparison is causal for you. The lab makes a balanced random schedule; log sittings as usual.</p>
+      <div id="exp-body"></div>
+    </div>
+  </section>
+
+  <section class="card">
+    <div style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:center"><h3>History</h3><span><button class="btn" id="export" type="button">Export CSV</button></span></div>
+    <div class="table" tabindex="0" role="region" aria-label="Sitting history"><table><thead><tr><th>Date</th><th>Min</th><th>Depth</th><th>Factors</th><th>Hindrances</th><th>Sleep</th><th>Notes</th><th></th></tr></thead><tbody id="hist"></tbody></table></div>
+  </section>
+  <p class="note" style="margin-top:30px">Depth scale: 0 ordinary mind · 1 access · 2–5 the first to fourth jhāna · 6–9 the formless attainments. Self-reports are noisy, and the same word means different depths to different teachers. Use this to notice patterns in your practice, not to grade it.</p>
+</div>
+
+<script>
+(() => {
+  const $ = id => document.getElementById(id);
+  const css = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+  const fmt = (n, d = 1) => Number.isFinite(n) ? n.toLocaleString('en-NZ', {maximumFractionDigits: d, minimumFractionDigits: d}) : '—';
+  const DEPTH = ['Ordinary', 'Access', 'J1', 'J2', 'J3', 'J4', 'Space', 'Consc.', 'Nothing', 'NPNP'];
+  const FACT = [['piti', 'pīti', '--piti'], ['sukha', 'sukha', '--sukha'], ['ekaggata', 'ekaggatā', '--still'], ['upekkha', 'upekkhā', '--void'], ['quiet', 'thinking quietened', '--calm']];
+  const HIND = [['desire', 'sense desire'], ['illwill', 'ill will'], ['sloth', 'sloth/torpor'], ['restless', 'restlessness'], ['doubt', 'doubt']];
+  let depth = 1, factors = new Set(), hind = new Set();
+  let sessions = [], demo = true, db = null, uid = null, col = null, expRef = null, experiment = null;
+
+  // ------------------------------------------------------------- form
+  $('f-depth').innerHTML = DEPTH.map((d, i) => `<button type="button" data-v="${i}" aria-pressed="${i === depth}">${d}</button>`).join('');
+  $('f-factors').innerHTML = FACT.map(([k, n, c]) => `<button type="button" data-k="${k}" aria-pressed="false" style="--c:var(${c})">${n}</button>`).join('');
+  $('f-hind').innerHTML = HIND.map(([k, n]) => `<button type="button" data-k="${k}" aria-pressed="false" style="--c:var(--bad)">${n}</button>`).join('');
+  $('f-depth').onclick = e => { const b = e.target.closest('button'); if (!b) return; depth = +b.dataset.v; [...$('f-depth').children].forEach(x => x.setAttribute('aria-pressed', String(+x.dataset.v === depth))); };
+  const toggle = (set, el) => e => { const b = e.target.closest('button'); if (!b) return; set.has(b.dataset.k) ? set.delete(b.dataset.k) : set.add(b.dataset.k); b.setAttribute('aria-pressed', String(set.has(b.dataset.k))); };
+  $('f-factors').onclick = toggle(factors); $('f-hind').onclick = toggle(hind);
+  const pad = n => String(n).padStart(2, '0'), now = new Date();
+  $('f-when').value = `${now.getFullYear()}-${pad(now.getMonth() + 1)}-${pad(now.getDate())}T${pad(now.getHours())}:${pad(now.getMinutes())}`;
+
+  $('form').addEventListener('submit', async e => {
+    e.preventDefault();
+    const s = {when: new Date($('f-when').value).toISOString(), minutes: +$('f-min').value, depth, factors: [...factors], hindrances: [...hind],
+      nimitta: +$('f-nim').value, object: $('f-obj').value, sleep: +$('f-sleep').value, mood: +$('f-mood').value, caffeine: +$('f-caf').value,
+      exercise: +$('f-ex').value, alcohol: +$('f-alc').value, retreat: +$('f-ret').value, notes: $('f-notes').value.slice(0, 2000), arm: todaysArm()};
+    if (!(s.minutes > 0) || isNaN(Date.parse(s.when))) { $('f-msg').textContent = 'Enter a valid time and duration.'; return; }
+    $('f-save').textContent = 'Saving…';
+    try {
+      if (col) await col.doc('s' + Date.parse(s.when)).set(s);
+      else { if (demo) { sessions = []; demo = false; } sessions.push({id: 's' + Date.parse(s.when), ...s}); saveLocal(); renderAll(); }
+      $('f-msg').textContent = 'Saved. Thank you for sitting.';
+      $('f-notes').value = ''; factors.clear(); hind.clear(); document.querySelectorAll('#f-factors button,#f-hind button').forEach(b => b.setAttribute('aria-pressed', 'false'));
+    } catch (err) { $('f-msg').textContent = `Could not save (${err?.code || 'error'}). Your entry is still in the form; try again.`; }
+    $('f-save').textContent = 'Save sitting';
+  });
+
+  // ------------------------------------------------------------- demo data (never saved)
+  function demoData() {
+    let seed = 42; const r = () => (seed = (seed * 16807) % 2147483647) / 2147483647, out = [];
+    for (let d = 0; d < 42; d++) {
+      const t = new Date(Date.now() - (42 - d) * 864e5); t.setHours(r() < .6 ? 6 : 19, 30);
+      const sleep = 5.5 + r() * 3, caf = r() < .35 ? 1 : 0, ex = r() < .4 ? 1 : 0, alc = r() < .15 ? 1 : 0, ret = d > 30 && d < 36 ? 1 : 0, mins = [30, 45, 45, 60][Math.floor(r() * 4)];
+      let z = 1.2 + .45 * (sleep - 7) + .012 * (mins - 45) + .5 * (t.getHours() < 12) - .5 * caf - .8 * alc + 1.4 * ret + .02 * d + (r() - .5) * 1.6;
+      const dep = Math.max(0, Math.min(6, Math.round(z)));
+      out.push({id: 'demo' + d, when: t.toISOString(), minutes: mins, depth: dep, factors: dep >= 2 ? ['piti', 'sukha', 'ekaggata', ...(dep >= 3 ? ['quiet'] : []), ...(dep >= 4 ? ['upekkha'] : [])].filter(f => !(dep >= 4 && f === 'piti')) : [],
+        hindrances: [r() < .4 ? 'restless' : '', sleep < 6.2 ? 'sloth' : '', r() < .15 ? 'doubt' : ''].filter(Boolean), nimitta: dep >= 3 ? 2 : dep >= 1 && r() < .5 ? 1 : 0, object: 'Breath', sleep: Math.round(sleep * 2) / 2, mood: 3, caffeine: caf, exercise: ex, alcohol: alc, retreat: ret, notes: ''});
+    }
+    return out;
+  }
+
+  // ------------------------------------------------------------- analysis
+  const COV = [['sleep', 'Sleep (+1 h)', s => s.sleep, 1], ['minutes', 'Duration (+15 min)', s => s.minutes, 15], ['morning', 'Morning sitting', s => new Date(s.when).getHours() < 12 ? 1 : 0, 1], ['caffeine', 'Caffeine within 2 h', s => s.caffeine, 1],
+    ['exercise', 'Exercise that day', s => s.exercise, 1], ['alcohol', 'Alcohol the night before', s => s.alcohol, 1], ['retreat', 'Retreat day', s => s.retreat, 1], ['mood', 'Mood before (+1)', s => s.mood, 1]];
+  function solve(A, b) { const n = b.length, M = A.map((r, i) => [...r, b[i]]);
+    for (let c = 0; c < n; c++) { let p = c; for (let r = c + 1; r < n; r++) if (Math.abs(M[r][c]) > Math.abs(M[p][c])) p = r; [M[c], M[p]] = [M[p], M[c]];
+      for (let r = 0; r < n; r++) if (r !== c) { const f = M[r][c] / M[c][c]; for (let k = c; k <= n; k++) M[r][k] -= f * M[c][k]; } }
+    return M.map((r, i) => r[n] / r[i]); }
+  function inv(A) { const n = A.length; return A.map((_, j) => solve(A, A.map((_, i) => i === j ? 1 : 0))).reduce((acc, colv, j) => { colv.forEach((v, i) => { acc[i][j] = v; }); return acc; }, A.map(() => Array(n).fill(0))); }
+  const Phi = x => .5 * (1 + Math.sign(x) * Math.sqrt(1 - Math.exp(-2 * x * x / Math.PI)));
+  function regress(S) {
+    const covs = COV.filter(([, , f]) => { const v = S.map(f); return Math.max(...v) > Math.min(...v); });
+    const n = S.length, p = covs.length; if (n < 10 || !p) return null;
+    const X = S.map(s => covs.map(([, , f]) => f(s))), y = S.map(s => s.depth);
+    const mx = covs.map((_, j) => X.reduce((a, r) => a + r[j], 0) / n), sx = covs.map((_, j) => Math.sqrt(X.reduce((a, r) => a + (r[j] - mx[j]) ** 2, 0) / n) || 1), my = y.reduce((a, b) => a + b, 0) / n;
+    const Z = X.map(r => r.map((v, j) => (v - mx[j]) / sx[j])), yc = y.map(v => v - my);
+    let s2 = yc.reduce((a, v) => a + v * v, 0) / n || 1, mu = Array(p).fill(0), Sig = null; const tau2 = .5 ** 2; // prior: ±0.5 states per SD
+    for (let it = 0; it < 8; it++) {
+      const A = Array.from({length: p}, (_, i) => Array.from({length: p}, (_, j) => Z.reduce((a, r) => a + r[i] * r[j], 0) / s2 + (i === j ? 1 / tau2 : 0)));
+      Sig = inv(A); const b = Array.from({length: p}, (_, i) => Z.reduce((a, r, k) => a + r[i] * yc[k], 0) / s2);
+      mu = Sig.map(row => row.reduce((a, v, j) => a + v * b[j], 0));
+      const rss = Z.reduce((a, r, k) => a + (yc[k] - r.reduce((s, v, j) => s + v * mu[j], 0)) ** 2, 0);
+      s2 = Math.max(.05, rss / Math.max(1, n - p));
+    }
+    return covs.map(([k, label, , unit], j) => { const m = mu[j] / sx[j] * unit, sd = Math.sqrt(Sig[j][j]) / sx[j] * unit; return {k, label, m, lo: m - 1.645 * sd, hi: m + 1.645 * sd, pPos: Phi(m / sd)}; });
+  }
+
+  // ------------------------------------------------------------- render
+  function renderAll() {
+    const S = [...sessions].sort((a, b) => Date.parse(a.when) - Date.parse(b.when));
+    $('data-lab').textContent = demo ? 'Example data · not yours · log a sitting to begin' : `Your sittings · ${S.length}`;
+    // trend
+    const W = 640, H = 220, L = 66, R = 12, T = 12, B = 28, n = S.length;
+    const X = i => L + (n < 2 ? .5 : i / (n - 1)) * (W - L - R), Y = d => T + (1 - d / 9) * (H - T - B);
+    let out = [0, 1, 2, 5, 9].map(d => `<path d="M${L} ${Y(d)}H${W - R}" stroke="${css('--line')}"/><text x="${L - 6}" y="${Y(d) + 4}" text-anchor="end">${DEPTH[d]}</text>`).join('');
+    S.forEach((s, i) => out += `<circle cx="${X(i)}" cy="${Y(s.depth)}" r="4" fill="${css(s.retreat ? '--sukha' : '--calm')}" opacity=".85"><title>${new Date(s.when).toLocaleDateString()} · ${DEPTH[s.depth]}</title></circle>`);
+    if (n >= 3) { const roll = S.map((_, i) => { const w = S.slice(Math.max(0, i - 6), i + 1); return w.reduce((a, s) => a + s.depth, 0) / w.length; });
+      out += `<path d="${roll.map((v, i) => `${i ? 'L' : 'M'}${X(i)},${Y(v)}`).join('')}" fill="none" stroke="${css('--piti')}" stroke-width="2.4"/>`; }
+    if (!n) out += `<text x="${W / 2}" y="${H / 2}" text-anchor="middle">No sittings yet. Your first entry will appear here.</text>`;
+    $('trend').innerHTML = out;
+    // insights
+    const ins = [];
+    if (n) {
+      const last7 = S.slice(-7), prev7 = S.slice(-14, -7), avg = a => a.reduce((x, s) => x + s.depth, 0) / (a.length || 1);
+      const mins = S.reduce((a, s) => a + s.minutes, 0);
+      ins.push(['--calm', `${n} sittings, ${fmt(mins / 60, 1)} hours in total. Average depth over the last seven: <b>${fmt(avg(last7))}</b>${prev7.length ? ` (previous seven: ${fmt(avg(prev7))})` : ''}.`]);
+      const hcount = Object.fromEntries(HIND.map(([k]) => [k, S.filter(s => s.hindrances.includes(k)).length]));
+      const topH = Object.entries(hcount).sort((a, b) => b[1] - a[1])[0];
+      if (topH && topH[1]) ins.push(['--bad', `The most frequent hindrance is <b>${HIND.find(h => h[0] === topH[0])[1]}</b>, present in ${Math.round(topH[1] / n * 100)}% of sittings. When it appears, average depth is ${fmt(avg(S.filter(s => s.hindrances.includes(topH[0]))))}, against ${fmt(avg(S.filter(s => !s.hindrances.includes(topH[0]))))} without it.`]);
+      const nim = S.filter(s => s.nimitta === 2);
+      if (nim.length) ins.push(['--piti', `A stable nimitta appeared in ${nim.length} sittings, with an average depth of ${fmt(avg(nim))}.`]);
+    }
+    $('insights').innerHTML = ins.map(([c, t]) => `<div class="insight" style="--c:var(${c})">${t}</div>`).join('');
+    // forest
+    const reg = regress(S);
+    if (!reg) $('forest').innerHTML = `<p class="note">At least 10 sittings with some variation in conditions are needed (${n} so far).</p>`;
+    else { const span = Math.max(1.5, ...reg.map(r => Math.max(Math.abs(r.lo), Math.abs(r.hi)))), P = v => 50 + v / span * 50;
+      $('forest').innerHTML = reg.sort((a, b) => b.m - a.m).map(r => { const c = r.pPos > .9 ? '--good' : r.pPos < .1 ? '--bad' : '--muted';
+        return `<div class="frow"><span>${r.label}</span><span class="ftrack" style="--c:var(${c})"><i class="zero"></i><i class="ci" style="left:${P(r.lo)}%;width:${P(r.hi) - P(r.lo)}%"></i><i class="pt" style="left:${P(r.m)}%"></i></span><span>${r.m >= 0 ? '+' : ''}${fmt(r.m, 2)} · ${Math.round(r.pPos * 100)}%↑</span></div>`; }).join('') + `<p class="note" style="margin-top:6px">"%↑" is the probability that the condition goes with deeper sittings.</p>`; }
+    // factor map
+    const last = S.slice(-30), rows = [...FACT.map(([k, nm, c]) => [k, nm, c, 'factors']), ...HIND.map(([k, nm]) => [k, nm, '--bad', 'hindrances'])];
+    const FW = 640, FL = 140, FT = 8, rh = 24, cw = (FW - FL - 8) / Math.max(1, last.length);
+    let fm = '';
+    rows.forEach(([k, nm, c, f], j) => { fm += `<text x="${FL - 8}" y="${FT + j * rh + 15}" text-anchor="end">${nm}</text>`;
+      last.forEach((s, i) => { const on = s[f].includes(k); fm += `<rect x="${FL + i * cw + 1}" y="${FT + j * rh + 3}" width="${Math.max(2, cw - 2)}" height="${rh - 6}" rx="3" fill="${on ? css(c) : css('--line')}" opacity="${on ? .9 : .5}"/>`; }); });
+    $('fmap').innerHTML = fm || '<text x="320" y="130" text-anchor="middle">No sittings yet</text>';
+    // history
+    $('hist').innerHTML = [...S].reverse().slice(0, 60).map(s => `<tr><td>${new Date(s.when).toLocaleString('en-NZ', {dateStyle: 'medium', timeStyle: 'short'})}</td><td>${s.minutes}</td><td>${DEPTH[s.depth]}</td><td>${s.factors.map(k => FACT.find(f => f[0] === k)?.[1]).join(', ')}</td><td>${s.hindrances.map(k => HIND.find(h => h[0] === k)?.[1]).join(', ')}</td><td>${s.sleep}</td><td>${(s.notes || '').replace(/[<>&]/g, '')}</td><td>${demo ? '' : `<button type="button" data-del="${s.id}" aria-label="Delete sitting">Delete</button>`}</td></tr>`).join('') || '<tr><td colspan="8" class="note">No sittings yet.</td></tr>';
+    renderExp(S);
+  }
+  $('hist').addEventListener('click', async e => { const b = e.target.closest('[data-del]'); if (!b) return;
+    if (b.dataset.confirm !== '1') { b.dataset.confirm = '1'; b.textContent = 'Confirm delete'; return; }
+    if (col) await col.doc(b.dataset.del).delete().catch(() => {}); else { sessions = sessions.filter(s => s.id !== b.dataset.del); saveLocal(); renderAll(); } });
+
+  // ------------------------------------------------------------- experiment
+  const EXPS = {time: ['Morning (before 9 am)', 'Evening (after 6 pm)'], caffeine: ['No caffeine before sitting', 'Usual caffeine'], length: ['30 minutes', '60 minutes'], walk: ['10 min walking meditation first', 'Sit straight away']};
+  const dayKey = d => `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
+  function todaysArm() { if (!experiment) return null; const i = experiment.days.indexOf(dayKey(new Date())); return i >= 0 ? experiment.arms[i] : null; }
+  function renderExp(S) {
+    const body = $('exp-body');
+    if (!experiment) {
+      body.innerHTML = `<div class="row" style="display:grid;grid-template-columns:1fr 1fr;gap:10px"><label class="note">Compare<select id="e-kind">${Object.entries(EXPS).map(([k, v]) => `<option value="${k}">${v[0]} vs ${v[1].toLowerCase()}</option>`).join('')}</select></label><label class="note">Days<select id="e-days"><option>14</option><option selected>20</option><option>28</option></select></label></div><button class="btn" id="e-start" type="button" style="margin-top:10px">Start a randomised experiment</button>${demo ? '<p class="note" style="margin-top:8px">Experiments save to your journal, so they start once you log your first real sitting.</p>' : ''}`;
+      $('e-start').onclick = async () => { if (demo && !col) { $('f-msg').textContent = 'Log a real sitting first, then start an experiment.'; return; }
+        const days = +$('e-days').value, kind = $('e-kind').value, arms = Array.from({length: days}, (_, i) => i % 2); for (let i = arms.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [arms[i], arms[j]] = [arms[j], arms[i]]; }
+        const start = new Date(); experiment = {kind, arms, days: Array.from({length: days}, (_, i) => dayKey(new Date(start.getTime() + i * 864e5))), started: start.toISOString()};
+        if (expRef) await expRef.set(experiment).catch(() => {}); else saveLocal(); renderAll(); };
+      return;
+    }
+    const [A, B] = EXPS[experiment.kind], today = dayKey(new Date());
+    const inExp = S.filter(s => s.arm === 0 || s.arm === 1), a = inExp.filter(s => s.arm === 0).map(s => s.depth), b = inExp.filter(s => s.arm === 1).map(s => s.depth);
+    const mean = v => v.reduce((x, y) => x + y, 0) / (v.length || 1), varr = v => v.length > 1 ? v.reduce((x, y) => x + (y - mean(v)) ** 2, 0) / (v.length - 1) : 1;
+    let result = `<p class="note">${a.length + b.length} of ${experiment.days.length} days logged so far.</p>`;
+    if (a.length >= 3 && b.length >= 3) {
+      const diff = mean(a) - mean(b), se = Math.sqrt(varr(a) / a.length + varr(b) / b.length);
+      const all = [...a, ...b]; let extreme = 0; for (let k = 0; k < 2000; k++) { const sh = [...all].sort(() => Math.random() - .5); if (Math.abs(mean(sh.slice(0, a.length)) - mean(sh.slice(a.length))) >= Math.abs(diff) - 1e-9) extreme++; }
+      result = `<div class="insight" style="--c:var(--piti);margin-top:10px">${A}: average depth <b>${fmt(mean(a))}</b> (${a.length} days). ${B}: <b>${fmt(mean(b))}</b> (${b.length} days). Difference ${diff >= 0 ? '+' : ''}${fmt(diff, 2)} states, 90% interval ${fmt(diff - 1.645 * se, 2)} to ${fmt(diff + 1.645 * se, 2)}. Randomisation test p ≈ ${fmt(extreme / 2000, 2)}.</div>`;
+    }
+    body.innerHTML = `<p style="margin:0 0 4px"><b>${A}</b> <span class="note">vs</span> <b>${B}</b></p><p class="note">Today: <b style="color:var(--piti)">${todaysArm() === null ? 'not an experiment day' : todaysArm() === 0 ? A : B}</b></p>
+      <div class="sched">${experiment.days.map((d, i) => `<div class="${experiment.arms[i] ? 'b' : 'a'} ${d === today ? 'today' : ''}"><b>${d.slice(8)}</b>${experiment.arms[i] ? 'B' : 'A'}</div>`).join('')}</div>${result}
+      <button class="btn" id="e-stop" type="button" style="margin-top:10px">End experiment</button>`;
+    $('e-stop').onclick = async e => { if (e.currentTarget.dataset.c !== '1') { e.currentTarget.dataset.c = '1'; e.currentTarget.textContent = 'Confirm: end experiment'; return; } experiment = null; if (expRef) await expRef.delete().catch(() => {}); else saveLocal(); renderAll(); };
+  }
+
+  // ------------------------------------------------------------- storage
+  function saveLocal() { try { localStorage.setItem('jhana-lab', JSON.stringify({sessions: demo ? [] : sessions, experiment})); } catch {} }
+  function loadLocal() { try { const d = JSON.parse(localStorage.getItem('jhana-lab') || 'null'); if (d) { if (d.sessions?.length) { sessions = d.sessions; demo = false; } experiment = d.experiment || null; } } catch {} }
+  function setStatus(kind, text) { $('status').className = `status ${kind}`; $('status-t').textContent = text; }
+
+  // ------------------------------------------------------------- export
+  $('export').onclick = async () => {
+    if (demo) { $('f-msg').textContent = 'Nothing to export yet: the chart shows example data.'; return; }
+    const keys = ['when', 'minutes', 'depth', 'factors', 'hindrances', 'nimitta', 'object', 'sleep', 'mood', 'caffeine', 'exercise', 'alcohol', 'retreat', 'arm', 'notes'];
+    const csv = [keys.join(','), ...sessions.map(s => keys.map(k => `"${String(Array.isArray(s[k]) ? s[k].join(' ') : s[k] ?? '').replace(/"/g, '""')}"`).join(','))].join('\n');
+    const dl = await window.claude?.use?.('downloads').catch(() => null);
+    if (!dl) { $('f-msg').textContent = 'Export is not available in this view.'; return; }
+    try { await dl.save({filename: 'jhana-lab.csv', data: csv}); } catch { $('f-msg').textContent = 'Export cancelled.'; }
+  };
+
+  // ------------------------------------------------------------- boot
+  sessions = demoData(); renderAll(); setStatus('demo', 'Showing example data');
+  const timer = setTimeout(() => { if (!col) { loadLocal(); setStatus(demo ? 'demo' : 'live', demo ? 'Example data · saving in this browser only' : 'Saved in this browser only'); renderAll(); } }, 10000);
+  (async () => {
+    const use = window.claude?.use; if (!use) { clearTimeout(timer); loadLocal(); setStatus(demo ? 'demo' : 'live', demo ? 'Example data · saving in this browser only' : 'Saved in this browser only'); renderAll(); return; }
+    const [dbns, user] = await Promise.all([use('db'), use('user')]);
+    uid = user ? await user.id() : null;
+    if (!dbns || !uid) { clearTimeout(timer); loadLocal(); setStatus(demo ? 'demo' : 'live', 'Private storage unavailable · saving in this browser only'); renderAll(); return; }
+    db = dbns; col = db.collection('data/users/' + uid); expRef = db.doc('data/users/' + uid + '/experiment');
+    expRef.onSnapshot(s => { experiment = s.exists ? s.data() : null; renderAll(); }, () => {});
+    col.onSnapshot(snap => { clearTimeout(timer);
+      const docs = snap.docs.filter(d => d.id !== 'experiment').map(d => ({id: d.id, ...d.data()}));
+      if (docs.length) { sessions = docs; demo = false; setStatus('live', 'Private journal · synced'); }
+      else { sessions = demoData(); demo = true; setStatus('demo', 'Private journal ready · showing example data until you log'); }
+      renderAll(); }, err => { setStatus('demo', `Journal unavailable (${err?.code || 'error'})`); });
+  })();
+})();
+</script>

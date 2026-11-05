@@ -16,3 +16,4 @@ These files are artifact page bodies: the artifact host wraps them in `<html>/<h
 
 The CVHY research proposal and its explainer live in `papers/common-value-healthy-year/` (explainer artifact: https://claude.ai/artifact/VcYZDa9sShgEJqRVXD92cV).
 | `otepoti-cellar.html` | The Ōtepoti Cellar: southern NZ ferments field book | https://claude.ai/artifact/PbEi8GR87mJHEqngaJKFjr |
+| `jhana-lab.html` | Jhāna Lab: private practice journal with N-of-1 analysis (uses db + user capabilities) | https://claude.ai/artifact/317RSjDoX1PzaRBTLBH3KQ |
