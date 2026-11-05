@@ -1,0 +1,342 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>Two Prices of a Life</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@500;700;800&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: a road sign meets a prescription label. Two "worlds" (road safety, health budgets) run in parallel columns that converge on one chart. */
+:root{
+  --bg:#eef0ec; --surface:#fbfcfa; --ink:#16191d; --muted:#525a62; --line:#cfd5cf;
+  --road:#e2a400; --road-ink:#6b4c00; --rx:#0b7a64; --rx-soft:#d6ebe4; --road-soft:#f6e7bd; --warn:#b3431f;
+  --display:"Big Shoulders Display","Arial Narrow",Impact,sans-serif;
+  --body:"IBM Plex Sans","Segoe UI",system-ui,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#14171a; --surface:#1c2024; --ink:#e9ece8; --muted:#a3abb2; --line:#323940;
+  --road:#f2b705; --road-ink:#f6d36b; --rx:#3cc4a3; --rx-soft:#163a32; --road-soft:#3a2f10; --warn:#ff8a65; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#14171a; --surface:#1c2024; --ink:#e9ece8; --muted:#a3abb2; --line:#323940;
+  --road:#f2b705; --road-ink:#f6d36b; --rx:#3cc4a3; --rx-soft:#163a32; --road-soft:#3a2f10; --warn:#ff8a65; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font:16px/1.65 var(--body);margin:0}
+.wrap{max-width:1120px;margin:0 auto;padding-block:28px 64px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+h1,h2,h3{font-family:var(--display);font-weight:800;line-height:.98;letter-spacing:.005em;margin:0;text-wrap:balance;text-transform:uppercase}
+h2{font-size:clamp(34px,5vw,54px)}h3{font-size:24px;font-weight:700}
+p{margin:0 0 14px;max-width:66ch}
+.kicker{font:500 12px/1.4 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+a{color:var(--rx)}
+:focus-visible{outline:3px solid var(--road);outline-offset:3px}
+/* Hero */
+.hero{display:grid;grid-template-columns:1fr 1fr;gap:0;border:2px solid var(--ink);border-radius:14px;overflow:hidden;margin:18px 0 26px}
+.sign{padding:28px 28px 26px;min-width:0}
+.sign.road{background:var(--road);color:#16191d}
+.sign.rx{background:var(--surface);border-left:2px solid var(--ink)}
+.sign .kicker{color:inherit;opacity:.8}
+.big{font:800 clamp(64px,11vw,132px)/.86 var(--display);letter-spacing:-.01em;margin:16px 0 10px;font-variant-numeric:tabular-nums}
+.sign.rx .big{color:var(--rx)}
+.sign p{font-size:15px;max-width:40ch;margin:0}
+.title-band{display:flex;justify-content:space-between;align-items:flex-end;gap:20px;flex-wrap:wrap}
+.title-band h1{font-size:clamp(48px,9vw,104px)}
+.title-band p{max-width:46ch;color:var(--muted);margin:0}
+.equation{display:flex;flex-wrap:wrap;align-items:baseline;gap:10px 16px;font:500 clamp(18px,2.4vw,24px)/1.3 var(--mono);padding:18px 0 6px;border-bottom:1px solid var(--line)}
+.equation strong{font:800 clamp(40px,6vw,64px)/1 var(--display);color:var(--warn)}
+section{padding-top:56px}
+.lede{font-size:18px;color:var(--muted)}
+/* Converter */
+.converter{display:grid;grid-template-columns:minmax(0,320px) minmax(0,1fr);gap:28px;margin-top:22px;align-items:start}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:20px}
+.ctl{display:grid;gap:6px;margin-bottom:18px}
+.ctl label{font-weight:600;font-size:14px;display:flex;justify-content:space-between;gap:12px}
+.ctl output{font:500 14px var(--mono);color:var(--rx)}
+.ctl input[type=range]{width:100%;accent-color:var(--rx)}
+.ctl select{width:100%;max-width:100%;font:inherit;padding:8px 10px;border:1px solid var(--line);border-radius:8px;background:var(--surface);color:var(--ink);min-height:42px}
+.ctl small{color:var(--muted);font-size:12.5px;line-height:1.5}
+.steps{display:grid;gap:10px}
+.step{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:4px 16px;align-items:baseline;padding:14px 16px;border-radius:10px;background:var(--surface);border:1px solid var(--line)}
+.step b{font:700 22px/1.1 var(--display);text-transform:uppercase;letter-spacing:.02em}
+.step .val{font:500 20px/1.2 var(--mono);font-variant-numeric:tabular-nums;text-align:right}
+.step p{grid-column:1/-1;margin:0;font-size:14px;color:var(--muted)}
+.step.final{background:var(--rx-soft);border-color:var(--rx)}
+.step.final .val{color:var(--rx)}
+.step.gap{background:var(--road-soft);border-color:var(--road)}
+.step.gap .val{color:var(--warn);font-size:28px}
+.lifeline{margin:6px 0 2px}
+.lifeline svg{width:100%;height:auto;display:block}
+.lifeline text{font:11px var(--mono);fill:var(--muted)}
+/* Reasons */
+.reasons{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;margin-top:24px}
+.reason{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:22px;display:grid;gap:10px;align-content:start}
+.reason .tag{justify-self:start;font:500 11px var(--mono);letter-spacing:.1em;text-transform:uppercase;padding:4px 8px;border-radius:4px}
+.tag.real{background:var(--rx-soft);color:var(--rx)}
+.tag.arte{background:var(--road-soft);color:var(--road-ink)}
+.reason p{margin:0;font-size:15px}
+.reason .viz{height:84px}
+.reason canvas{width:100%;height:84px;display:block}
+/* Ladder */
+.ladder-wrap{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:16px 12px 8px;margin-top:22px;overflow-x:auto}
+#ladder{display:block;min-width:640px;width:100%;height:auto}
+#ladder text{font-family:var(--mono);font-size:12px;fill:var(--muted)}
+#ladder .lbl{font-family:var(--body);font-size:13px;fill:var(--ink)}
+.legend{display:flex;gap:18px;flex-wrap:wrap;font-size:13px;color:var(--muted);margin:10px 4px 0}
+.legend i{display:inline-block;width:12px;height:12px;border-radius:2px;vertical-align:-1px;margin-right:6px}
+/* Budget game */
+.budget{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;margin-top:22px}
+.bucket{border:2px solid var(--ink);border-radius:12px;padding:20px;background:var(--surface)}
+.bucket.road{border-color:var(--road)}.bucket.rx{border-color:var(--rx)}
+.bucket .big{font-size:clamp(48px,7vw,76px);margin:6px 0}
+.bucket.road .big{color:var(--road-ink)}.bucket.rx .big{color:var(--rx)}
+.dots{display:flex;flex-wrap:wrap;gap:3px;margin-top:10px;min-height:20px}
+.dots i{width:9px;height:9px;border-radius:50%;background:var(--rx);display:block}
+.bucket.road .dots i{background:var(--road)}
+.note{font-size:13px;color:var(--muted)}
+.refs{font-size:13.5px;color:var(--muted);columns:2 320px;column-gap:32px;margin-top:16px}
+.refs p{break-inside:avoid;margin-bottom:10px}
+footer{margin-top:48px;padding-top:16px;border-top:1px solid var(--line);font-size:13px;color:var(--muted)}
+@media(max-width:760px){.hero,.converter,.reasons,.budget{grid-template-columns:1fr}.sign.rx{border-left:0;border-top:2px solid var(--ink)}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+
+</head><body><nav style="position:sticky;top:0;z-index:20;display:flex;justify-content:space-between;gap:12px;padding:8px max(16px,env(safe-area-inset-left,0px));background:color-mix(in srgb,var(--bg,#fff) 92%,transparent);backdrop-filter:blur(6px);border-bottom:1px solid var(--line,#ddd);font:500 13px system-ui,sans-serif"><a href="./" style="color:inherit;text-decoration:none">← Health Economics, Interactive</a><span style="opacity:.7">Chapter 6 of 8</span></nav><div class="wrap">
+  <div class="title-band">
+    <h1>Two prices<br>of a life</h1>
+    <p>New Zealand's transport agency and its Treasury put very different values on keeping people alive and well. This page converts one into the other and explains why the gap remains.</p>
+  </div>
+
+  <div class="hero" role="group" aria-label="The two official values">
+    <div class="sign road">
+      <div class="kicker">Road safety · NZTA, 2023</div>
+      <div class="big">$12.5m</div>
+      <p>The value of a statistical life used to appraise New Zealand transport projects (NZ dollars).</p>
+    </div>
+    <div class="sign rx">
+      <div class="kicker">Public spending · Treasury CBAx</div>
+      <div class="big">$36k</div>
+      <p>The value of one quality-adjusted life-year (QALY), a year in full health, used in NZ Treasury cost–benefit analysis (central value, 2022 dollars).</p>
+    </div>
+  </div>
+  <div class="equation" aria-label="12.5 million divided by 36 thousand equals 347 healthy years">
+    <span>$12,500,000 ÷ $36,000 =</span><strong>347</strong><span>healthy years per life saved</span>
+  </div>
+  <p class="lede" style="margin-top:14px">Nobody has 347 healthy years left to lose. If the two numbers measured the same thing, a road death would have to cost several lifetimes. So either the arithmetic is unfair, or the numbers measure different things. In fact both are true.</p>
+
+  <section aria-labelledby="convert-h">
+    <div class="kicker">Step 1 · Compare like with like</div>
+    <h2 id="convert-h">Turn a statistical life into a price per QALY</h2>
+    <p class="lede">A statistical life is a <em>whole remaining lifetime</em>, valued in advance by the people who face a small risk. Before comparing it with a QALY, spread it over the years actually at stake, adjust those years for health, and discount them in the same way.</p>
+    <div class="converter">
+      <div class="panel" aria-label="Assumptions">
+        <div class="ctl"><label for="vsl">Value of a statistical life</label>
+          <select id="vsl">
+            <option value="12.5">NZTA 2023 · NZ$12.5m</option>
+            <option value="4.88">NZ pre-2023 (1991 study, indexed) · NZ$4.88m</option>
+            <option value="23.1">US HHS 2025 · US$13.6m ≈ NZ$23.1m</option>
+          </select>
+          <small>Converted at an approximate NZ$1.70 per US$. Exchange rates, not purchasing-power parity.</small></div>
+        <div class="ctl"><label for="age">Age of the person at risk <output id="age-o">40</output></label>
+          <input id="age" type="range" min="5" max="85" step="1" value="40">
+          <small>A VSL is an average over the people at risk. Road deaths skew younger than deaths from most diseases.</small></div>
+        <div class="ctl"><label for="disc">Discount rate <output id="disc-o">2%</output></label>
+          <input id="disc" type="range" min="0" max="8" step="0.5" value="2">
+          <small>NZ Treasury's central public-sector rate is 2% real. Discounting shrinks future years, which <em>raises</em> the price per year.</small></div>
+        <div class="ctl"><label for="hrq">Quality adjustment</label>
+          <select id="hrq"><option value="norm" selected>Population norms (declining with age)</option><option value="full">Full health (1.0 every year)</option></select>
+          <small>Illustrative EQ-5D-style norms, falling from about 0.93 to 0.74 with age.</small></div>
+        <div class="ctl"><label for="qaly">QALY value to compare against</label>
+          <select id="qaly">
+            <option value="36000" selected>NZ Treasury CBAx · NZ$36k</option>
+            <option value="66000">NICE 2026 upper bound · £35k ≈ NZ$66k</option>
+            <option value="133000">UK Green Book · £70k ≈ NZ$133k</option>
+            <option value="24600">NHS opportunity cost (Claxton et al. 2015) · £12.9k ≈ NZ$24.6k</option>
+          </select>
+          <small>Approximately NZ$1.90 per £.</small></div>
+      </div>
+      <div>
+        <div class="lifeline" aria-hidden="true"><svg id="lifeline" viewBox="0 0 720 110"></svg></div>
+        <div class="steps" id="steps" aria-live="polite"></div>
+      </div>
+    </div>
+  </section>
+
+  <section aria-labelledby="why-h">
+    <div class="kicker">Step 2 · Why a gap remains</div>
+    <h2 id="why-h">Six reasons the numbers disagree</h2>
+    <p class="lede">Once the arithmetic is fair, the road-safety value per QALY is still several times the health value. Some of the remaining gap reflects real differences between the questions being asked. The rest is measurement noise and history that a consistent government might want to remove.</p>
+    <div class="reasons">
+      <article class="reason"><span class="tag real">A real difference</span><h3>Whose money is it?</h3><canvas data-viz="money" aria-hidden="true"></canvas><p>A VSL asks what people would pay from their <em>own</em> incomes for safety: a demand-side value. A health threshold asks what a fixed public budget gives up elsewhere when it funds one more treatment: a supply-side value. The second is usually far lower. Claxton and colleagues estimated that the NHS spent about £12,936 to produce one QALY at the margin, well below what people say a healthy year is worth to them.</p></article>
+      <article class="reason"><span class="tag real">A real difference</span><h3>What is being bought</h3><canvas data-viz="risk" aria-hidden="true"></canvas><p>A VSL prices tiny risk reductions spread across millions of people: one in 100,000 fewer deaths for each of 100,000 drivers is one statistical life. Nobody knows in advance whose life it is. A QALY threshold prices health for known patients, often small gains for people who are already ill. People value preventing sudden, early, involuntary death more than adding months at the end of an illness.</p></article>
+      <article class="reason"><span class="tag real">A real difference</span><h3>How the death happens</h3><canvas data-viz="dread" aria-hidden="true"></canvas><p>Stated-preference studies find that people pay more to avoid deaths that are sudden, violent, imposed by others or feared ("dread" risks) than deaths of the same age from illness. Transport and environmental deaths carry those features. Whether policy should honour that premium is a value judgement, not a technical fix.</p></article>
+      <article class="reason"><span class="tag arte">Partly measurement</span><h3>How it is measured</h3><canvas data-viz="scope" aria-hidden="true"></canvas><p>VSLs come from wage premiums for risky jobs or from surveys. Survey answers often show <em>scope insensitivity</em>: willingness to pay barely rises when the risk reduction doubles, which inflates the implied value of each life. NZ's value rose from $4.88m to $12.5m in 2023 largely because the 1991 survey was replaced with a new study.</p></article>
+      <article class="reason"><span class="tag arte">Partly measurement</span><h3>Age, health and life expectancy</h3><canvas data-viz="age" aria-hidden="true"></canvas><p>A single VSL is applied whatever the victim's age. The QALY approach counts the years that remain, so it values saving a child over saving a 90-year-old. Converting at one age (above) hides this. Move the age slider and the implied price per QALY changes several-fold.</p></article>
+      <article class="reason"><span class="tag arte">Partly institutional</span><h3>Different agencies, different histories</h3><canvas data-viz="silo" aria-hidden="true"></canvas><p>Transport, environment and health agencies set their values separately, often decades apart, with different discount rates and price bases. Tengs and colleagues catalogued 500 US life-saving interventions. Costs per life-year saved ran from cost-saving to more than $10 billion, and the median differed greatly by sector: about $19,000 for medicine against $2.8 million for toxin control.</p></article>
+    </div>
+  </section>
+
+  <section aria-labelledby="ladder-h">
+    <div class="kicker">Step 3 · The whole ladder</div>
+    <h2 id="ladder-h">Every value on one scale</h2>
+    <p class="lede">Each bar is an official or widely cited value per healthy life-year, converted to NZ dollars. Road-safety VSLs are converted with the settings from Step 1. The scale is logarithmic: each gridline is ten times the one before.</p>
+    <div class="ladder-wrap"><svg id="ladder" viewBox="0 0 900 430" role="img" aria-labelledby="ladder-t"><title id="ladder-t">Values per QALY or life-year on a log scale, NZ dollars</title></svg></div>
+    <div class="legend"><span><i style="background:var(--rx)"></i>Health budgets (supply side)</span><span><i style="background:var(--road)"></i>Willingness to pay (demand side)</span></div>
+  </section>
+
+  <section aria-labelledby="budget-h">
+    <div class="kicker">Step 4 · Why consistency matters</div>
+    <h2 id="budget-h">One million dollars, two rulebooks</h2>
+    <p class="lede">If money moves between sectors, inconsistent values cost lives. Suppose NZ$1 million could be spent either on a road-safety scheme justified exactly at the road value, or on health care bought at exactly the health threshold.</p>
+    <div class="budget">
+      <div class="bucket road"><div class="kicker">Road scheme at break-even</div><div class="big" id="b-road">—</div><p class="note" id="b-road-n"></p><div class="dots" id="d-road" aria-hidden="true"></div></div>
+      <div class="bucket rx"><div class="kicker">Health care at the threshold</div><div class="big" id="b-rx">—</div><p class="note" id="b-rx-n"></p><div class="dots" id="d-rx" aria-hidden="true"></div></div>
+    </div>
+    <p class="note" style="margin-top:14px" id="b-sum"></p>
+  </section>
+
+  <section aria-labelledby="refs-h">
+    <div class="kicker">Sources and caveats</div>
+    <h2 id="refs-h" style="font-size:32px">Where the numbers come from</h2>
+    <div class="refs">
+      <p><b>NZTA VSL, NZ$12.5m.</b> Waka Kotahi NZ Transport Agency, <i>Monetised Benefits and Costs Manual</i> v1.6 (April 2023), based on Denne, Kerr et al., NZTA Research Report 698 (2023). The previous value of NZ$4.88m indexed a 1991 survey.</p>
+      <p><b>NZ Treasury QALY, about NZ$36k.</b> The central QALY value in the CBAx tool, as reported by secondary sources (2022 dollars). Earlier versions used about NZ$33–38k. Check the current CBAx spreadsheet before citing.</p>
+      <p><b>NICE thresholds.</b> £20,000–30,000 per QALY from 1999, raised to £25,000–35,000 for technology appraisals from April 2026. Highly specialised technologies use £100,000–300,000.</p>
+      <p><b>UK Green Book.</b> HM Treasury guidance values a QALY at about £70,000 (the price base varies by source; some cite £60,000).</p>
+      <p><b>Supply-side estimate.</b> Claxton K, Martin S, Soares M, et al. Methods for the estimation of the NICE cost effectiveness threshold. <i>Health Technology Assessment</i> 2015;19(14).</p>
+      <p><b>US HHS VSL.</b> Office of the Assistant Secretary for Planning and Evaluation, <i>Standard Values for Regulatory Analysis</i> (2025): US$13.6m, 2024 dollars.</p>
+      <p><b>Cost per life-year across sectors.</b> Tengs TO, Adams ME, Pliskin JS, et al. Five-hundred life-saving interventions and their cost-effectiveness. <i>Risk Analysis</i> 1995;15(3):369–390.</p>
+      <p><b>Life expectancy and quality norms.</b> Remaining life expectancy is interpolated from approximate NZ period life tables (life expectancy at birth about 82.5 years). Quality weights are illustrative age norms, not a NZ value set. Exchange rates are approximate (NZ$1.70/US$, NZ$1.90/£).</p>
+      <p><b>What this page is not.</b> It is a teaching tool, not guidance. VSLs and QALY thresholds answer different questions, and agencies may defensibly use different values. The point is to make the differences visible.</p>
+    </div>
+  </section>
+  <footer>Built for teaching health economics. Values are illustrative conversions of published figures; check primary sources before citing.</footer>
+</div>
+
+<script>
+(() => {
+  const $ = id => document.getElementById(id);
+  const fmt = (n, d = 0) => n.toLocaleString('en-NZ', {maximumFractionDigits: d, minimumFractionDigits: d});
+  const money = n => n >= 1e6 ? `$${fmt(n / 1e6, n >= 1e7 ? 1 : 2)}m` : n >= 1e4 ? `$${fmt(n / 1e3)}k` : `$${fmt(n)}`;
+  const css = name => getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+  // Approximate NZ remaining life expectancy e(x) and illustrative quality norms.
+  const LE = [[0, 82.5], [5, 77.9], [20, 63.2], [40, 43.6], [60, 25.0], [70, 16.7], [80, 9.6], [90, 4.5], [100, 2.2]];
+  const QN = [[0, .94], [20, .93], [40, .89], [60, .83], [70, .80], [80, .74], [100, .68]];
+  const interp = (t, x) => { for (let i = 1; i < t.length; i++) if (x <= t[i][0]) { const [a, ya] = t[i - 1], [b, yb] = t[i]; return ya + (yb - ya) * (x - a) / (b - a); } return t.at(-1)[1]; };
+  function lifeYears(age, r, quality) {
+    const e = interp(LE, age); let undisc = 0, disc = 0, q = 0, qd = 0;
+    for (let t = 0; t < Math.ceil(e); t++) {
+      const w = Math.min(1, e - t), qual = quality === 'full' ? 1 : interp(QN, age + t + .5), d = (1 + r) ** -(t + .5);
+      undisc += w; disc += w * d; q += w * qual; qd += w * qual * d;
+    }
+    return {e, undisc, disc, q, qd};
+  }
+  function compute() {
+    const vsl = Number($('vsl').value) * 1e6, age = Number($('age').value), r = Number($('disc').value) / 100;
+    const ly = lifeYears(age, r, $('hrq').value), qv = Number($('qaly').value);
+    return {vsl, age, r, ly, qv, perYear: vsl / ly.undisc, perDiscYear: vsl / ly.disc, perQaly: vsl / ly.qd, ratio: vsl / ly.qd / qv};
+  }
+  function drawLifeline(c) {
+    const W = 720, x0 = 20, x1 = 700, maxAge = 100, X = a => x0 + (a - 0) / maxAge * (x1 - x0), end = Math.min(maxAge, c.age + c.ly.e);
+    let bars = '';
+    for (let a = Math.floor(c.age); a < end; a++) {
+      const w = Math.min(1, end - a), q = $('hrq').value === 'full' ? 1 : interp(QN, a + .5), d = (1 + c.r) ** -(a - c.age + .5);
+      bars += `<rect x="${X(a)}" y="${70 - 46 * q * d}" width="${Math.max(0.5, (X(a + w) - X(a)) - 1)}" height="${46 * q * d}" fill="${css('--rx')}" opacity="${0.35 + 0.65 * q}"/>`;
+    }
+    const ticks = [0, 20, 40, 60, 80, 100].map(a => `<text x="${X(a)}" y="92" text-anchor="middle">${a}</text>`).join('');
+    $('lifeline').innerHTML = `<rect x="${x0}" y="70" width="${x1 - x0}" height="1" fill="${css('--line')}"/>
+      <rect x="${x0}" y="58" width="${X(c.age) - x0}" height="12" fill="${css('--line')}"/>${bars}
+      <path d="M${X(c.age)} 14V74" stroke="${css('--road')}" stroke-width="3"/>
+      <text x="${X(c.age) + 6}" y="20" style="fill:${css('--ink')}">age ${c.age}: ${fmt(c.ly.e, 1)} years left</text>${ticks}
+      <text x="${x1}" y="106" text-anchor="end">bar height = quality × discount factor of each remaining year</text>`;
+  }
+  function renderSteps(c) {
+    const rows = [
+      ['A statistical life', money(c.vsl), 'What the agency will spend to prevent one expected death.'],
+      ['Per remaining year', money(c.perYear), `Spread over ${fmt(c.ly.undisc, 1)} years of remaining life expectancy at age ${c.age}.`],
+      ['Per discounted year', money(c.perDiscYear), `At ${fmt(c.r * 100, 1)}%, those years are worth ${fmt(c.ly.disc, 1)} years today, so each one carries more of the value.`],
+      ['Per discounted QALY', money(c.perQaly), `Adjusting for health leaves ${fmt(c.ly.qd, 1)} discounted QALYs. This is the road value expressed in health-budget units.`, 'final'],
+      ['Health value per QALY', money(c.qv), 'The comparator chosen above.'],
+      ['Remaining gap', `${fmt(c.ratio, 1)}×`, c.ratio > 1.05 ? `Even after a fair conversion, the road value of a healthy year is ${fmt(c.ratio, 1)} times the health value. The reasons below explain why.` : 'At these settings the two values roughly agree.', 'gap']
+    ];
+    $('steps').innerHTML = rows.map(([b, v, p, cls]) => `<div class="step ${cls || ''}"><b>${b}</b><span class="val">${v}</span><p>${p}</p></div>`).join('');
+  }
+  function renderLadder(c) {
+    const items = [
+      {l: 'NHS opportunity cost (Claxton 2015)', v: [24600], k: 'rx'},
+      {l: 'NZ Treasury CBAx QALY', v: [36000], k: 'rx'},
+      {l: 'NICE threshold, 2026', v: [47500, 66500], k: 'rx'},
+      {l: 'UK Green Book QALY', v: [133000], k: 'road'},
+      {l: 'NICE ultra-rare (HST)', v: [190000, 570000], k: 'rx'},
+      {l: 'NZ road VSL, pre-2023, per QALY', v: [4.88e6 / c.ly.qd], k: 'road'},
+      {l: 'NZTA road VSL 2023, per QALY', v: [12.5e6 / c.ly.qd], k: 'road'},
+      {l: 'US HHS VSL 2025, per QALY', v: [23.1e6 / c.ly.qd], k: 'road'}
+    ];
+    const W = 900, L = 270, R = 30, T = 30, rowH = 44, lo = 1e4, hi = 1e7;
+    const X = v => L + (Math.log10(Math.min(hi, Math.max(lo, v))) - Math.log10(lo)) / (Math.log10(hi) - Math.log10(lo)) * (W - L - R);
+    const grid = [1e4, 1e5, 1e6, 1e7].map(g => `<path d="M${X(g)} ${T - 8}V${T + items.length * rowH}" stroke="${css('--line')}"/><text x="${X(g)}" y="${T - 12}" text-anchor="middle">${money(g)}</text>`).join('');
+    const rows = items.map((it, i) => {
+      const y = T + i * rowH + 12, col = css(it.k === 'rx' ? '--rx' : '--road');
+      const [a, b] = [it.v[0], it.v[1] ?? it.v[0]];
+      const bar = `<rect x="${L}" y="${y}" width="${X(b) - L}" height="18" rx="3" fill="${col}" opacity=".9"/>` + (it.v[1] ? `<rect x="${X(a)}" y="${y - 3}" width="2" height="24" fill="${css('--ink')}"/>` : '');
+      return `${bar}<text class="lbl" x="${L - 10}" y="${y + 14}" text-anchor="end">${it.l}</text><text x="${X(b) + 6}" y="${y + 14}">${it.v[1] ? money(a) + '–' + money(b) : money(a)}</text>`;
+    }).join('');
+    $('ladder').innerHTML = `<title id="ladder-t">Values per QALY or life-year on a log scale, NZ dollars</title>${grid}${rows}<text x="${L}" y="${T + items.length * rowH + 16}">NZ$ per QALY, log scale · road values converted at age ${c.age}, ${fmt(c.r * 100, 1)}% discounting</text>`;
+  }
+  function renderBudget(c) {
+    const lives = 1e6 / c.vsl, roadQ = lives * c.ly.qd, rxQ = 1e6 / c.qv;
+    $('b-road').textContent = `${fmt(roadQ, 1)} QALYs`;
+    $('b-road-n').textContent = `${fmt(lives, 3)} statistical lives at age ${c.age}, each worth ${fmt(c.ly.qd, 1)} discounted QALYs.`;
+    $('b-rx').textContent = `${fmt(rxQ, 1)} QALYs`;
+    $('b-rx-n').textContent = `NZ$1 million at ${money(c.qv)} per QALY.`;
+    const dot = n => Array.from({length: Math.min(200, Math.round(n))}, () => '<i></i>').join('') + (n > 200 ? ' …' : '');
+    $('d-road').innerHTML = dot(roadQ); $('d-rx').innerHTML = dot(rxQ);
+    $('b-sum').textContent = rxQ > roadQ ? `Each marginal dollar moved from road schemes justified at the road value to health care at the threshold would buy about ${fmt(rxQ / roadQ, 1)} times as many QALYs, if money could move freely and both values were right. Budgets are separate in practice, but the comparison shows what the inconsistency costs.` : 'At these settings the road scheme buys at least as many QALYs as the health budget.';
+  }
+  // Small ambient diagrams for the six reasons.
+  function drawViz() {
+    document.querySelectorAll('canvas[data-viz]').forEach(cv => {
+      const dpr = devicePixelRatio || 1, w = cv.clientWidth || 300, h = 84;
+      cv.width = w * dpr; cv.height = h * dpr; const g = cv.getContext('2d'); g.scale(dpr, dpr);
+      const rx = css('--rx'), road = css('--road'), ink = css('--ink'), muted = css('--muted'), line = css('--line');
+      g.font = `11px ${css('--mono')}`; g.fillStyle = muted;
+      const kind = cv.dataset.viz;
+      if (kind === 'money') { // own wallet vs fixed budget pie
+        g.fillStyle = road; g.beginPath(); g.arc(46, 42, 30, 0, 6.283); g.fill();
+        g.fillStyle = ink; g.fillText('your income', 84, 38); g.fillStyle = muted; g.fillText('pay for safety', 84, 54);
+        const cx = w - 60; g.strokeStyle = line; g.lineWidth = 2; g.beginPath(); g.arc(cx, 42, 30, 0, 6.283); g.stroke();
+        g.fillStyle = rx; g.beginPath(); g.moveTo(cx, 42); g.arc(cx, 42, 30, -1.57, -1.57 + 0.5); g.closePath(); g.fill();
+        g.fillStyle = muted; g.textAlign = 'right'; g.fillText('fixed budget: a new drug', cx - 38, 38); g.fillText('displaces other care', cx - 38, 54); g.textAlign = 'left';
+      } else if (kind === 'risk') { // 1 in N dots
+        const n = Math.floor((w - 10) / 7) * 9;
+        for (let i = 0; i < n; i++) { const x = 6 + (i % Math.floor((w - 10) / 7)) * 7, y = 8 + Math.floor(i / Math.floor((w - 10) / 7)) * 8; g.fillStyle = i === 137 ? road : line; g.beginPath(); g.arc(x, y, i === 137 ? 3 : 2, 0, 6.283); g.fill(); }
+      } else if (kind === 'dread') { // bars: premium by context
+        const d = [['illness', .45, rx], ['workplace', .6, muted], ['road', .75, road], ['terror/disaster', .95, ink]];
+        d.forEach(([l, v, c], i) => { const y = 6 + i * 19; g.fillStyle = c; g.fillRect(110, y, (w - 120) * v, 12); g.fillStyle = muted; g.fillText(l, 4, y + 10); });
+      } else if (kind === 'scope') { // WTP flat vs risk reduction
+        g.strokeStyle = line; g.beginPath(); g.moveTo(30, 74); g.lineTo(w - 10, 74); g.moveTo(30, 74); g.lineTo(30, 6); g.stroke();
+        g.strokeStyle = rx; g.setLineDash([4, 4]); g.beginPath(); g.moveTo(30, 74); g.lineTo(w - 10, 10); g.stroke(); g.setLineDash([]);
+        g.strokeStyle = road; g.lineWidth = 3; g.beginPath(); g.moveTo(30, 74); g.quadraticCurveTo(70, 34, w - 10, 30); g.stroke(); g.lineWidth = 1;
+        g.fillStyle = muted; g.fillText('expected', w - 70, 14); g.fillText('stated WTP', w - 82, 46); g.fillText('risk reduction →', 40, 70);
+      } else if (kind === 'age') { // value per QALY by age
+        const ages = Array.from({length: 18}, (_, i) => 5 + i * 5), r = Number($('disc').value) / 100;
+        const vals = ages.map(a => 12.5e6 / lifeYears(a, r, $('hrq').value).qd), mx = Math.log10(Math.max(...vals)), mn = Math.log10(Math.min(...vals));
+        g.strokeStyle = road; g.lineWidth = 2.5; g.beginPath();
+        ages.forEach((a, i) => { const x = 30 + i / (ages.length - 1) * (w - 50), y = 74 - (Math.log10(vals[i]) - mn) / (mx - mn || 1) * 62; i ? g.lineTo(x, y) : g.moveTo(x, y); }); g.stroke(); g.lineWidth = 1;
+        g.fillStyle = muted; g.fillText('age 5', 24, 82); g.textAlign = 'right'; g.fillText('age 90', w - 16, 82); g.fillText(`${money(Math.max(...vals))}/QALY`, w - 16, 12); g.textAlign = 'left';
+      } else if (kind === 'silo') { // log spread of cost per life-year
+        g.strokeStyle = line; g.beginPath(); g.moveTo(10, 44); g.lineTo(w - 10, 44); g.stroke();
+        let seed = 7; const rnd = () => (seed = (seed * 16807) % 2147483647) / 2147483647;
+        for (let i = 0; i < 120; i++) { const x = 10 + Math.min(1, Math.max(0, .5 + (rnd() + rnd() + rnd() - 1.5) * .45)) * (w - 20); g.fillStyle = [rx, road, muted][i % 3]; g.globalAlpha = .7; g.beginPath(); g.arc(x, 44 + (rnd() - .5) * 40, 2.5, 0, 6.283); g.fill(); }
+        g.globalAlpha = 1; g.fillStyle = muted; g.fillText('$0 / life-year', 10, 82); g.textAlign = 'right'; g.fillText('$10bn+', w - 10, 82); g.textAlign = 'left';
+      }
+    });
+  }
+  function update() {
+    $('age-o').textContent = $('age').value; $('disc-o').textContent = `${$('disc').value}%`;
+    const c = compute(); drawLifeline(c); renderSteps(c); renderLadder(c); renderBudget(c); drawViz();
+  }
+  ['vsl', 'age', 'disc', 'hrq', 'qaly'].forEach(id => $(id).addEventListener('input', update));
+  addEventListener('resize', drawViz);
+  matchMedia('(prefers-color-scheme: dark)').addEventListener?.('change', update);
+  new MutationObserver(update).observe(document.documentElement, {attributes: true, attributeFilter: ['data-theme']});
+  update();
+})();
+</script>
+</body></html>

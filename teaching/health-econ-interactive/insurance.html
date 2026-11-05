@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Insurance and Moral Hazard</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Young+Serif&family=Public+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="course.css"><style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}</style></head>
+<body><div class="wrap">
+<div class="crumb"><a href="./">← Health Economics, Interactive</a><span class="lab">Chapter 3 of 8</span></div>
+<div class="chapter-head"><div class="numeral">3</div><div><div class="lab">Arrow and Pauly</div><h1>Insurance and moral hazard</h1></div></div>
+<p class="lede">Insurance protects people from financial risk, which is worth a lot to risk-averse people. But insurance also lowers the price of care at the point of use, so people use more care than they would if they paid in full. The best coinsurance rate balances those two forces.</p>
+
+<div class="grid2">
+  <div>
+    <div class="panel">
+      <div class="ctl"><label for="c">Coinsurance: share of the bill you pay <output id="c-o"></output></label><input id="c" type="range" min="0" max="1" step="0.01" value="0.25"></div>
+      <div class="ctl"><label for="el">Price elasticity of demand for care <output id="el-o"></output></label><input id="el" type="range" min="0" max="0.6" step="0.01" value="0.2"><small>The RAND Health Insurance Experiment found about −0.2.</small></div>
+      <div class="ctl"><label for="ra">Risk aversion (coefficient of relative risk aversion) <output id="ra-o"></output></label><input id="ra" type="range" min="0" max="6" step="0.1" value="2"></div>
+      <div class="ctl"><label for="p">Chance of falling ill this year <output id="p-o"></output></label><input id="p" type="range" min="0.02" max="0.5" step="0.01" value="0.1"></div>
+    </div>
+    <div class="callout">Setup: income NZ$60,000. If ill, care costs NZ$20,000 at full price. Demand responds to the out-of-pocket price with constant elasticity. Premiums are actuarially fair. Welfare is measured as a certainty equivalent in dollars.</div>
+  </div>
+  <div>
+    <div class="figure"><svg id="fig" viewBox="0 0 560 300" role="img" aria-label="Risk-protection gain, moral hazard loss and net welfare by coinsurance rate"></svg></div>
+    <div class="stats"><div><span>Risk-protection value</span><b id="rp">—</b></div><div><span>Moral hazard deadweight loss</span><b id="dwl">—</b></div><div><span>Best coinsurance</span><b id="best">—</b></div></div>
+    <div class="callout" id="note"></div>
+  </div>
+</div>
+<section>
+  <h2>What to notice</h2>
+  <div class="grid2">
+    <div class="panel"><h3>With no demand response, full insurance is best</h3><p>Set the elasticity to zero. Insurance then does not change behaviour, so the optimum is 0% coinsurance: Arrow's 1963 result.</p></div>
+    <div class="panel"><h3>The deadweight loss is a triangle</h3><p>When insured people pay only a share of the cost, they buy care that is worth less to them than it costs (Pauly 1968). The loss grows roughly with the square of the price cut.</p></div>
+    <div class="panel"><h3>Risk aversion pushes towards more cover</h3><p>Raise risk aversion and the optimal coinsurance falls: protection becomes worth more than the waste it causes.</p></div>
+    <div class="panel"><h3>Beyond the model</h3><p>Not all extra care is waste. If illness itself makes care more valuable, or people under-use effective care because of liquidity constraints, the triangle overstates the loss (Nyman 1999).</p></div>
+  </div>
+</section>
+<p class="lab" style="margin-top:40px">Readings: Arrow KJ. Uncertainty and the welfare economics of medical care. <i>AER</i> 1963;53(5):941–973. Pauly MV. The economics of moral hazard. <i>AER</i> 1968;58(3):531–537. Manning WG, et al. Health insurance and the demand for medical care: evidence from a randomized experiment. <i>AER</i> 1987;77(3):251–277.</p>
+</div>
+<script>
+(() => {
+  const $ = id => document.getElementById(id), css = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+  const fmt = (n, d = 0) => n.toLocaleString('en-NZ', {maximumFractionDigits: d, minimumFractionDigits: d});
+  const Y = 60000, L0 = 20000;
+  function welfare(c, el, ra, p) {
+    // demand: care m = L0 * c^(-el) relative to full price (c=1); capped at 2.5x
+    const m = Math.min(L0 * Math.pow(Math.max(c, .02), -el), L0 * 2.5);
+    // consumer value of care: area under inverse demand from 0 to m; value of the "extra" care beyond L0 at full price
+    // inverse demand price P(q) = (q/L0)^(-1/el) for q > L0 (per unit relative price); value of extra care = ∫_{L0}^{m} P(q) dq (in $ per $ of cost units)
+    let extraValue = 0;
+    if (el > 0 && m > L0) { const n = 200; for (let i = 0; i < n; i++) { const q = L0 + (m - L0) * (i + .5) / n; extraValue += Math.pow(q / L0, -1 / el) * (m - L0) / n; } }
+    const extraCost = m - L0;
+    const premium = p * (1 - c) * m;
+    const ill = Y - premium - c * m + extraValue, well = Y - premium;
+    const u = x => ra === 1 ? Math.log(x) : (Math.pow(x, 1 - ra) - 1) / (1 - ra), uinv = v => ra === 1 ? Math.exp(v) : Math.pow(v * (1 - ra) + 1, 1 / (1 - ra));
+    const ce = ra === 0 ? p * ill + (1 - p) * well : uinv(p * u(ill) + (1 - p) * u(well));
+    const ev = p * ill + (1 - p) * well;
+    return {ce, ev, dwl: p * (extraCost - extraValue), m};
+  }
+  function run() {
+    const c = +$('c').value, el = +$('el').value, ra = +$('ra').value, p = +$('p').value;
+    $('c-o').textContent = `${fmt(c * 100)}%`; $('el-o').textContent = `−${fmt(el, 2)}`; $('ra-o').textContent = fmt(ra, 1); $('p-o').textContent = `${fmt(p * 100)}%`;
+    const none = welfare(1, el, ra, p), grid = Array.from({length: 101}, (_, i) => i / 100).map(cc => { const w = welfare(cc, el, ra, p); return {c: cc, gain: w.ce - none.ce, dwl: w.dwl, rp: w.ce - none.ce + w.dwl}; });
+    const best = grid.reduce((a, b) => b.gain > a.gain ? b : a), cur = grid[Math.round(c * 100)];
+    const W = 560, H = 300, L = 60, R = 16, T = 18, B = 36, mx = Math.max(...grid.map(g => Math.max(g.rp, g.dwl, g.gain))) * 1.1 || 1, mn = Math.min(0, ...grid.map(g => g.gain)) * 1.1;
+    const X = cc => L + cc * (W - L - R), YY = v => T + (mx - v) / (mx - mn) * (H - T - B);
+    const line = (k, col, dash) => `<path d="${grid.map((g, i) => `${i ? 'L' : 'M'}${X(g.c)},${YY(g[k])}`).join('')}" fill="none" stroke="${css(col)}" stroke-width="${k === 'gain' ? 3.2 : 2}" ${dash ? 'stroke-dasharray="6 4"' : ''}/>`;
+    let out = `<path d="M${L} ${YY(0)}H${W - R}" stroke="${css('--line')}"/>` + [0, .25, .5, .75, 1].map(cc => `<text x="${X(cc)}" y="${H - 12}" text-anchor="middle">${cc * 100}%</text>`).join('');
+    out += line('rp', '--good', true) + line('dwl', '--bad', true) + line('gain', '--accent');
+    out += `<path d="M${X(c)} ${T}V${H - B}" stroke="${css('--ink')}" stroke-dasharray="2 4"/><circle cx="${X(best.c)}" cy="${YY(best.gain)}" r="6" fill="${css('--accent2')}"/>`;
+    out += `<text x="${L + 4}" y="${T + 8}" style="fill:${css('--good')}">risk protection</text><text x="${L + 4}" y="${T + 24}" style="fill:${css('--bad')}">moral hazard loss</text><text x="${L + 4}" y="${T + 40}" style="fill:${css('--accent')}">net welfare gain</text><text x="${(L + W - R) / 2}" y="${H - 0}" text-anchor="middle">coinsurance rate</text>`;
+    $('fig').innerHTML = out;
+    $('rp').textContent = `$${fmt(cur.rp)}`; $('dwl').textContent = `$${fmt(cur.dwl)}`; $('best').textContent = `${fmt(best.c * 100)}%`;
+    $('note').innerHTML = `At ${fmt(c * 100)}% coinsurance, insurance is worth <b>$${fmt(cur.gain)}</b> a year to this person compared with no insurance. The best coinsurance rate here is <b>${fmt(best.c * 100)}%</b>, worth $${fmt(best.gain)}.`;
+  }
+  document.querySelectorAll('input').forEach(i => i.addEventListener('input', run));
+  matchMedia('(prefers-color-scheme: dark)').addEventListener?.('change', run);
+  run();
+})();
+</script></body></html>

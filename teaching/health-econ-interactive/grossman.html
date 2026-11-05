@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Health as Capital</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Young+Serif&family=Public+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="course.css"><style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}</style></head>
+<body><div class="wrap">
+<div class="crumb"><a href="./">← Health Economics, Interactive</a><span class="lab">Chapter 2 of 8</span></div>
+<div class="chapter-head"><div class="numeral">2</div><div><div class="lab">The demand for health</div><h1>Health as capital</h1></div></div>
+<p class="lede">Michael Grossman's 1972 model treats health as a stock that people inherit, that wears out with age, and that they rebuild by investing medical care and their own time. People demand medical care because they want health, not because they want care. In the pure-investment version shown here, health is valued for the healthy time it produces.</p>
+
+<div class="grid2">
+  <div>
+    <div class="eq">MEC(H<sub>t</sub>) = r + δ<sub>t</sub></div>
+    <p>Each year the person holds the health stock at which the marginal efficiency of health capital (MEC), the return on one more unit of health in healthy days earned, equals the user cost of capital. The user cost is the interest rate plus the depreciation rate. As depreciation rises with age, the optimal stock falls. When it would have to fall below a minimum, death occurs.</p>
+    <div class="panel">
+      <div class="ctl"><label for="w">Wage (value of healthy time) <output id="w-o"></output></label><input id="w" type="range" min="0.5" max="2" step="0.05" value="1"><small>Higher wages raise the return on healthy days.</small></div>
+      <div class="ctl"><label for="e">Education (efficiency of health production) <output id="e-o"></output></label><input id="e" type="range" min="0.6" max="1.6" step="0.05" value="1"><small>In Grossman's model, education makes a person a more efficient producer of health, which lowers the cost of investment.</small></div>
+      <div class="ctl"><label for="d0">Depreciation at age 20 <output id="d0-o"></output></label><input id="d0" type="range" min="0.02" max="0.08" step="0.005" value="0.04"></div>
+      <div class="ctl"><label for="dg">Rate at which depreciation rises with age <output id="dg-o"></output></label><input id="dg" type="range" min="0.01" max="0.06" step="0.002" value="0.035"></div>
+      <div class="ctl"><label for="r">Interest rate <output id="r-o"></output></label><input id="r" type="range" min="0.01" max="0.08" step="0.005" value="0.03"></div>
+    </div>
+  </div>
+  <div>
+    <div class="figure"><svg id="fig" viewBox="0 0 560 300" role="img" aria-label="Optimal health stock and investment by age"></svg></div>
+    <div class="stats"><div><span>Age at death</span><b id="death">—</b></div><div><span>Health at 40 (index)</span><b id="h40">—</b></div><div><span>Investment at 70 vs 30</span><b id="inv">—</b></div></div>
+    <div class="callout" id="note"></div>
+  </div>
+</div>
+
+<section>
+  <h2>Three predictions to test against data</h2>
+  <div class="grid2">
+    <div class="panel"><h3>Health falls with age, but spending on care rises</h3><p>Rising depreciation lowers the optimal stock, yet replacing the faster-wearing capital takes more investment. Move the "rate at which depreciation rises" slider and watch the two lines diverge.</p></div>
+    <div class="panel"><h3>Education improves health</h3><p>More efficient producers hold more health and live longer. This is one of the model's best-supported predictions, though how much of the education–health correlation is causal is still debated.</p></div>
+    <div class="panel"><h3>Higher wages raise the demand for health</h3><p>Healthy time is worth more to higher earners, so the optimal stock rises with the wage.</p></div>
+    <div class="panel"><h3>A known weakness</h3><p>Real people with poor health use <i>more</i> care, while the simple model links high investment with high health. Later work adds uncertainty and adjustment costs to reconcile the two.</p></div>
+  </div>
+</section>
+<p class="lab" style="margin-top:40px">Reading: Grossman M. On the concept of health capital and the demand for health. <i>Journal of Political Economy</i> 1972;80(2):223–255. The model here is a stylised pure-investment version with MEC(H) = A·w·e·H<sup>−γ</sup>, γ = 0.5, and an illustrative minimum stock.</p>
+</div>
+<script>
+(() => {
+  const $ = id => document.getElementById(id), css = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+  const fmt = (n, d = 0) => n.toLocaleString('en-NZ', {maximumFractionDigits: d, minimumFractionDigits: d});
+  const G = .5, A = .6, HMIN = 28;
+  function run() {
+    const w = +$('w').value, e = +$('e').value, d0 = +$('d0').value, dg = +$('dg').value, r = +$('r').value;
+    $('w-o').textContent = `${fmt(w, 2)}×`; $('e-o').textContent = `${fmt(e, 2)}×`; $('d0-o').textContent = `${fmt(d0 * 100, 1)}%`; $('dg-o').textContent = `${fmt(dg * 100, 1)}% a year`; $('r-o').textContent = `${fmt(r * 100, 1)}%`;
+    const H = [], I = [], D = [];
+    let death = 110;
+    for (let a = 20; a <= 110; a++) {
+      const delta = Math.min(.95, d0 * Math.exp(dg * (a - 20)));
+      const h = Math.pow(A * w * e / (r + delta), 1 / G) * 10;
+      D.push(delta); H.push(h);
+      if (h < HMIN && death === 110) death = a;
+    }
+    for (let i = 0; i < H.length - 1; i++) I.push(Math.max(0, (H[i + 1] - (1 - D[i]) * H[i]) / e));
+    const W = 560, Hh = 300, L = 46, R = 46, T = 18, B = 34, ages = 90, maxH = Math.max(...H.slice(0, 20)) * 1.1, maxI = Math.max(...I.slice(0, Math.max(1, death - 20))) * 1.15;
+    const X = a => L + (a - 20) / ages * (W - L - R), YH = h => T + (1 - Math.min(h, maxH) / maxH) * (Hh - T - B), YI = v => T + (1 - Math.min(v, maxI) / maxI) * (Hh - T - B);
+    const upto = Math.min(death, 110) - 20;
+    let out = [20, 40, 60, 80, 100].map(a => `<text x="${X(a)}" y="${Hh - 12}" text-anchor="middle">${a}</text>`).join('');
+    out += `<path d="M${L} ${YH(HMIN)}H${W - R}" stroke="${css('--bad')}" stroke-dasharray="4 4"/><text x="${L + 4}" y="${YH(HMIN) - 5}" style="fill:${css('--bad')}">minimum health stock</text>`;
+    out += `<path d="${H.slice(0, upto + 1).map((h, i) => `${i ? 'L' : 'M'}${X(20 + i)},${YH(h)}`).join('')}" fill="none" stroke="${css('--accent')}" stroke-width="3"/>`;
+    out += `<path d="${I.slice(0, upto).map((v, i) => `${i ? 'L' : 'M'}${X(20 + i)},${YI(v)}`).join('')}" fill="none" stroke="${css('--accent2')}" stroke-width="2.4" stroke-dasharray="6 3"/>`;
+    out += `<text x="${L + 4}" y="${T + 6}" style="fill:${css('--accent')}">health stock H*</text><text x="${L + 4}" y="${T + 22}" style="fill:${css('--accent2')}">gross investment (care)</text>`;
+    out += death < 110 ? `<path d="M${X(death)} ${T}V${Hh - B}" stroke="${css('--ink')}"/><text x="${X(death) - 4}" y="${Hh - B - 6}" text-anchor="end">death at ${death}</text>` : '';
+    $('fig').innerHTML = out;
+    $('death').textContent = death < 110 ? death : '110+'; $('h40').textContent = fmt(H[20], 1);
+    $('inv').textContent = I[50] && I[10] ? `${fmt(I[50] / I[10], 1)}×` : '—';
+    $('note').innerHTML = `With these settings, the optimal health stock peaks early and declines as depreciation accelerates. Investment in care at 70 is <b>${I[50] && I[10] ? fmt(I[50] / I[10], 1) : '—'} times</b> its level at 30. Raise education and see death move later: the efficient producer holds more health at every age.`;
+  }
+  document.querySelectorAll('input').forEach(i => i.addEventListener('input', run));
+  matchMedia('(prefers-color-scheme: dark)').addEventListener?.('change', run);
+  run();
+})();
+</script></body></html>

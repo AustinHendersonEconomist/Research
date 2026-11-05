@@ -1,0 +1,49 @@
+/* Health Economics, Interactive · shared course styles.
+   Layout: a university reader — chapter number as a large numeral, a two-column "model | play" grid, quiz cards with instant feedback. */
+:root{
+  --bg:#f4f5f1; --card:#ffffff; --ink:#1c2321; --muted:#57625e; --line:#d8ddd7;
+  --accent:#1e5d74; --accent2:#b2532d; --good:#2f7a4a; --bad:#b23a3a; --soft:#e6eff2; --soft2:#f6e6dd;
+  --display:"Young Serif",Georgia,serif; --body:"Public Sans","Segoe UI",system-ui,sans-serif; --mono:"JetBrains Mono",ui-monospace,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#131817; --card:#1a201f; --ink:#e6ebe9; --muted:#9daaa5; --line:#2c3633;
+  --accent:#7cc0d9; --accent2:#ee9a72; --good:#73c793; --bad:#f08a8a; --soft:#1a2e35; --soft2:#3a2419; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#131817; --card:#1a201f; --ink:#e6ebe9; --muted:#9daaa5; --line:#2c3633;
+  --accent:#7cc0d9; --accent2:#ee9a72; --good:#73c793; --bad:#f08a8a; --soft:#1a2e35; --soft2:#3a2419; color-scheme:dark}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{background:var(--bg);color:var(--ink);font:16.5px/1.65 var(--body);margin:0}
+.wrap{max-width:1120px;margin:0 auto;padding-block:26px 70px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+h1,h2,h3{font-family:var(--display);font-weight:400;margin:0;line-height:1.1;text-wrap:balance}
+h1{font-size:clamp(40px,6.5vw,72px)}h2{font-size:clamp(26px,3.4vw,36px)}h3{font-size:21px}
+p{margin:0 0 12px;max-width:66ch}
+a{color:var(--accent)}
+:focus-visible{outline:3px solid var(--accent2);outline-offset:3px}
+.lab{font:500 11.5px/1.4 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.crumb{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;font:500 13px var(--body);margin-bottom:22px}
+.crumb a{text-decoration:none}
+.chapter-head{display:grid;grid-template-columns:auto minmax(0,1fr);gap:24px;align-items:end;margin-bottom:22px}
+.numeral{font:400 clamp(80px,12vw,150px)/.8 var(--display);color:var(--accent)}
+.lede{font-size:18px;color:var(--muted)}
+.grid2{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);gap:26px;align-items:start;margin-top:22px}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px 20px}
+.ctl{display:grid;gap:3px;margin-bottom:13px}
+.ctl label{display:flex;justify-content:space-between;gap:10px;font-weight:600;font-size:14px}
+.ctl output{font:500 13.5px var(--mono);color:var(--accent)}
+.ctl input,.ctl select{width:100%;accent-color:var(--accent)}
+.ctl small{font-size:12.5px;color:var(--muted);line-height:1.5}
+.figure{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px 10px 6px;overflow-x:auto}
+.figure svg{display:block;width:100%;min-width:480px;height:auto}
+.figure text{font:11.5px var(--mono);fill:var(--muted)}
+.stats{display:flex;flex-wrap:wrap;gap:12px 26px;margin-top:12px}
+.stats div span{display:block;font-size:12.5px;color:var(--muted)}
+.stats div b{font:400 26px var(--display);font-variant-numeric:tabular-nums}
+.eq{font:italic 400 22px/1.4 Georgia,serif;background:var(--soft);border-radius:10px;padding:12px 16px;margin:12px 0}
+.callout{border-left:3px solid var(--accent2);background:var(--soft2);padding:12px 16px;border-radius:0 10px 10px 0;margin:14px 0;font-size:15px}
+button.btn{all:unset;cursor:pointer;border:1px solid var(--ink);border-radius:9px;padding:9px 15px;font:600 14px var(--body);min-height:42px;box-sizing:border-box;display:inline-flex;align-items:center;gap:8px}
+button.btn.primary{background:var(--accent);border-color:var(--accent);color:var(--card)}
+button.btn:focus-visible{outline:3px solid var(--accent2)}
+section{margin-top:52px}
+@media(max-width:860px){.grid2{grid-template-columns:minmax(0,1fr)}.chapter-head{grid-template-columns:minmax(0,1fr)}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}

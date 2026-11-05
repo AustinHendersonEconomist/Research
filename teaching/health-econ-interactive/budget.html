@@ -1,0 +1,224 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>The Budget Holder</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Young+Serif&family=Work+Sans:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: a committee ledger. Proposals are ruled ledger rows; a budget meter runs across the top like a fuel gauge; decisions are rubber stamps. */
+:root{
+  --bg:#eef1ea; --paper:#fbfcf8; --ink:#1e2a24; --muted:#5b6a62; --line:#cfd8cf; --rule:#e3e9e2;
+  --fund:#1f6b4f; --fund-soft:#d9ece2; --stamp:#b0342b; --stamp-soft:#f6dcd8; --amber:#b77b12; --amber-soft:#f5e7c8;
+  --display:"Young Serif",Georgia,serif; --body:"Work Sans","Segoe UI",system-ui,sans-serif; --mono:"DM Mono",ui-monospace,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#121815; --paper:#18201c; --ink:#e4ebe6; --muted:#9fb0a7; --line:#2c3832; --rule:#222c27;
+  --fund:#5cc79b; --fund-soft:#1c3a2d; --stamp:#f07b70; --stamp-soft:#3b211f; --amber:#e6b450; --amber-soft:#3a2f17; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#121815; --paper:#18201c; --ink:#e4ebe6; --muted:#9fb0a7; --line:#2c3832; --rule:#222c27;
+  --fund:#5cc79b; --fund-soft:#1c3a2d; --stamp:#f07b70; --stamp-soft:#3b211f; --amber:#e6b450; --amber-soft:#3a2f17; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font:15.5px/1.6 var(--body);margin:0}
+.wrap{max-width:1160px;margin:0 auto;padding-block:30px 70px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+h1,h2,h3{font-family:var(--display);font-weight:400;margin:0;line-height:1.08;text-wrap:balance}
+h1{font-size:clamp(44px,7vw,82px)}h2{font-size:clamp(28px,3.5vw,40px)}h3{font-size:19px}
+p{margin:0 0 12px;max-width:66ch}
+.tag{font:500 11.5px/1.4 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+:focus-visible{outline:3px solid var(--amber);outline-offset:3px}
+.top{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:40px;align-items:end;margin-bottom:22px}
+.top p{color:var(--muted);font-size:16.5px}
+/* Sticky dashboard */
+.dash{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);padding:12px 0 14px;border-bottom:1px solid var(--line)}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
+.meter{position:relative;height:26px;border-radius:7px;background:var(--paper);border:1px solid var(--line);overflow:hidden}
+.meter .fill{position:absolute;inset:0 auto 0 0;background:var(--fund);transition:width .35s}
+.meter.over .fill{background:var(--stamp)}
+.meter .opt{position:absolute;top:-2px;bottom:-2px;width:2px;background:var(--amber)}
+.meter span{position:absolute;right:6px;top:50%;transform:translateY(-50%);font:500 12px var(--mono);color:var(--ink);background:var(--paper);padding:1px 7px;border-radius:4px}
+.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-top:10px}
+.stat span{display:block;font-size:12px;color:var(--muted)}
+.stat b{font:400 24px/1.15 var(--display);font-variant-numeric:tabular-nums}
+.stat.good b{color:var(--fund)}.stat.bad b{color:var(--stamp)}
+.controls{display:flex;flex-wrap:wrap;gap:10px 18px;align-items:center;margin:14px 0 4px}
+.controls label{display:flex;align-items:center;gap:8px;font-size:14px}
+.controls input[type=checkbox]{width:18px;height:18px;accent-color:var(--fund)}
+.controls input[type=range]{accent-color:var(--fund)}
+.btn{all:unset;cursor:pointer;border:1px solid var(--ink);border-radius:8px;padding:8px 14px;font:600 13.5px var(--body);min-height:40px;box-sizing:border-box;display:inline-flex;align-items:center}
+.btn.primary{background:var(--ink);color:var(--paper)}
+.btn:focus-visible{outline:3px solid var(--amber)}
+/* Ledger */
+.ledger{margin-top:16px;background:var(--paper);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.row{display:grid;grid-template-columns:minmax(0,1fr) 110px 110px 120px 108px;gap:12px;align-items:center;padding:14px 16px;border-top:1px solid var(--rule);position:relative}
+.row:first-child{border-top:0}
+.row.head{background:var(--rule);font:500 11px var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--muted);padding-block:9px}
+.row .name b{font-weight:600}
+.row .name p{margin:2px 0 0;font-size:13px;color:var(--muted)}
+.row .num{font:500 14px var(--mono);text-align:right;font-variant-numeric:tabular-nums}
+.row .icer{font:500 14px var(--mono);text-align:right}
+.chip{display:inline-block;font:500 10.5px var(--mono);letter-spacing:.05em;text-transform:uppercase;padding:2px 6px;border-radius:4px;margin-left:6px;vertical-align:1px}
+.chip.sev{background:var(--amber-soft);color:var(--amber)}
+.chip.rescue{background:var(--stamp-soft);color:var(--stamp)}
+.chip.opt{background:var(--fund-soft);color:var(--fund)}
+.stampbtn{all:unset;cursor:pointer;justify-self:end;border:2px solid var(--muted);color:var(--muted);border-radius:6px;padding:6px 10px;font:700 12px var(--mono);letter-spacing:.12em;text-transform:uppercase;transform:rotate(-2deg);min-height:36px;box-sizing:border-box;display:inline-flex;align-items:center}
+.stampbtn[aria-pressed="true"]{border-color:var(--fund);color:var(--fund);background:var(--fund-soft);transform:rotate(-4deg)}
+.stampbtn:focus-visible{outline:3px solid var(--amber)}
+.row.funded{background:color-mix(in srgb,var(--fund-soft) 45%,transparent)}
+.row.showopt.inopt::before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--amber)}
+/* League */
+section{margin-top:56px}
+.lede{color:var(--muted);font-size:16.5px}
+.chart{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:14px 10px 6px;margin-top:14px;overflow-x:auto}
+#league{display:block;width:100%;min-width:640px;height:auto}
+#league text{font:400 11px var(--mono);fill:var(--muted)}
+.verdict{border:2px solid var(--ink);border-radius:12px;padding:20px 22px;margin-top:18px;background:var(--paper)}
+.verdict h3{font-size:26px;margin-bottom:8px}
+.cols{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px;margin-top:18px}
+.cols p{font-size:14.5px;color:var(--muted)}
+.foot{font-size:13px;color:var(--muted);margin-top:36px;border-top:1px solid var(--line);padding-top:14px}
+@media(max-width:860px){.top,.cols{grid-template-columns:1fr}.stats{grid-template-columns:1fr 1fr}.row{grid-template-columns:minmax(0,1fr) auto;gap:6px 12px}.row.head{display:none}.row .num,.row .icer{text-align:left;font-size:12.5px}.row .num::before,.row .icer::before{content:attr(data-l);color:var(--muted);margin-right:6px}.row .stampbtn{grid-row:1;grid-column:2}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+
+</head><body><nav style="position:sticky;top:0;z-index:20;display:flex;justify-content:space-between;gap:12px;padding:8px max(16px,env(safe-area-inset-left,0px));background:color-mix(in srgb,var(--bg,#fff) 92%,transparent);backdrop-filter:blur(6px);border-bottom:1px solid var(--line,#ddd);font:500 13px system-ui,sans-serif"><a href="./" style="color:inherit;text-decoration:none">← Health Economics, Interactive</a><span style="opacity:.7">Chapter 5 of 8</span></nav><div class="wrap">
+  <div class="top">
+    <div><div class="tag">A health budget game · hypothetical proposals</div><h1>The budget<br>holder</h1></div>
+    <p>You sit on the committee for a national medicines and health-technology budget. Fourteen proposals are on the table and the money cannot cover them all. Stamp the ones you would fund. Then see how much health your choices buy compared with the best possible portfolio, and what cost-effectiveness threshold your decisions imply. The ledger opens with four example choices already stamped.</p>
+  </div>
+
+  <div class="dash" aria-live="polite">
+    <div class="meter" id="meter"><div class="fill" id="fill"></div><div class="opt" id="optmark" hidden></div><span id="meter-t"></span></div>
+    <div class="stats">
+      <div class="stat"><span>Budget used</span><b id="s-spend">—</b></div>
+      <div class="stat good"><span>Health gained (QALYs a year)</span><b id="s-q">—</b></div>
+      <div class="stat"><span>Best possible within budget</span><b id="s-best">—</b></div>
+      <div class="stat bad"><span>Health forgone vs best</span><b id="s-lost">—</b></div>
+    </div>
+    <div class="controls">
+      <label for="budget">Budget <input id="budget" type="range" min="40" max="200" step="5" value="100"> <b id="budget-o" style="font-family:var(--mono)">NZ$100m</b></label>
+      <label><input type="checkbox" id="severity"> Weight QALYs for severity</label>
+      <button type="button" class="btn" id="showopt">Show the best portfolio</button>
+      <button type="button" class="btn primary" id="fundbest">Fund the best portfolio</button>
+      <button type="button" class="btn" id="clear">Clear</button>
+    </div>
+  </div>
+
+  <div class="ledger" role="table" aria-label="Funding proposals" id="ledger"></div>
+
+  <section aria-labelledby="league-h">
+    <div class="tag">The league table</div>
+    <h2 id="league-h">Ranked by cost per QALY</h2>
+    <p class="lede">Each bar's width is the proposal's annual cost; its height is the cost per QALY gained. Funding from the left until the money runs out maximises health. The height at which the money runs out is the threshold that the budget implies.</p>
+    <div class="chart"><svg id="league" viewBox="0 0 900 300" role="img" aria-label="Proposals ranked by cost per QALY, widths proportional to cost"></svg></div>
+    <div class="verdict" id="verdict"></div>
+  </section>
+
+  <section aria-labelledby="lessons-h">
+    <h2 id="lessons-h">What the game is about</h2>
+    <div class="cols">
+      <div><h3>The threshold is a shadow price</h3><p>Nobody needs to announce a cost-effectiveness threshold for one to exist. With a fixed budget, the last proposal funded sets it: anything less cost-effective would displace more health than it adds. This is the supply-side view of the threshold, which Claxton and colleagues estimated for the NHS at about £13,000 per QALY. New Zealand's PHARMAC works this way, with a fixed budget and no published threshold.</p></div>
+      <div><h3>The rule of rescue</h3><p>The enzyme replacement therapy helps six identified children with a fatal disease. It costs far more per QALY than anything else on the list. Funding it is a coherent choice only if you believe identified, severe need deserves more than its QALYs. The game shows exactly how much health elsewhere that belief costs.</p></div>
+      <div><h3>Severity weights</h3><p>The toggle mimics NICE's severity modifier, which since 2022 multiplies QALYs by 1.2 or 1.7 for conditions with large proportional or absolute shortfalls in expected health. Weighting changes which proposals win. The money and the unweighted health gained stay the same.</p></div>
+    </div>
+  </section>
+
+  <p class="foot">All fourteen proposals, their costs and their QALY gains are invented for teaching; they are loosely shaped like real decisions but describe no actual product or submission. "Classroom HEPA filtration" echoes the CASCADE school clean-air project, with an assumed effect. Costs are annual, in NZ dollars; QALYs are annual gains with no discounting. The best portfolio is solved exactly (0/1 knapsack).</p>
+</div>
+
+<script>
+(() => {
+  const $ = id => document.getElementById(id);
+  const fmt = (n, d = 0) => n.toLocaleString('en-NZ', {maximumFractionDigits: d, minimumFractionDigits: d});
+  const money = n => n >= 1e6 ? `$${fmt(n / 1e6, n >= 1e7 ? 0 : 1)}m` : `$${fmt(n / 1e3)}k`;
+  // cost NZ$m per year, QALYs per year, severity weight (NICE-style 1, 1.2, 1.7)
+  const P = [
+    {id: 'hepc', n: 'Hepatitis C cure, widened access', d: 'Eight-week oral course for people not yet eligible.', c: 18, q: 1500, w: 1},
+    {id: 'smoke', n: 'Smoking cessation programme', d: 'Free nicotine replacement and quit support in pharmacies.', c: 6, q: 700, w: 1},
+    {id: 'asthma', n: 'Combination inhalers for childhood asthma', d: 'Switch from reliever-only treatment.', c: 9, q: 420, w: 1},
+    {id: 'bowel', n: 'Bowel screening from age 50', d: 'Extend the programme down from age 60.', c: 22, q: 950, w: 1.2},
+    {id: 'hip', n: 'Hip and knee replacement backlog', d: 'Extra surgical lists for people waiting over a year.', c: 25, q: 900, w: 1},
+    {id: 'cgm', n: 'Glucose monitors for type 1 diabetes', d: 'Continuous monitors for all ages.', c: 30, q: 600, w: 1},
+    {id: 'hepa', n: 'Classroom HEPA filtration', d: 'Two portable units in every primary classroom.', c: 14, q: 210, w: 1},
+    {id: 'mh', n: 'Youth mental health early intervention', d: 'Brief therapy in schools and primary care.', c: 16, q: 520, w: 1.2},
+    {id: 'immuno', n: 'Immunotherapy for advanced lung cancer', d: 'First-line treatment for eligible patients.', c: 40, q: 380, w: 1.7},
+    {id: 'anticoag', n: 'Newer oral anticoagulant', d: 'Replace warfarin for atrial fibrillation.', c: 12, q: 300, w: 1},
+    {id: 'psoriasis', n: 'Second biologic for severe psoriasis', d: 'For people whose first biologic failed.', c: 11, q: 140, w: 1},
+    {id: 'hearing', n: 'Hearing aids for older adults', d: 'Fully subsidised for people over 65.', c: 15, q: 330, w: 1},
+    {id: 'ert', n: 'Enzyme replacement for an ultra-rare disease', d: 'Six identified children; without treatment the disease is fatal.', c: 9, q: 6, w: 1.7, rescue: true},
+    {id: 'dementia', n: 'New antibody for early Alzheimer\'s', d: 'Slows decline modestly; needs regular scans.', c: 35, q: 90, w: 1.2}
+  ];
+  let budget = 100, sev = false, showOpt = false;
+  const funded = new Set();
+  try { JSON.parse(localStorage.getItem('budget-holder') || '[]').forEach(id => funded.add(id)); } catch {}
+  const save = () => { try { localStorage.setItem('budget-holder', JSON.stringify([...funded])); } catch {} };
+  const qOf = p => p.q * (sev ? p.w : 1);
+  const icer = p => p.c * 1e6 / qOf(p);
+  function best(B) { // exact 0/1 knapsack in $0.5m units
+    const U = Math.round(B * 2), n = P.length, dp = Array.from({length: n + 1}, () => new Float64Array(U + 1));
+    for (let i = 1; i <= n; i++) { const w = Math.round(P[i - 1].c * 2), v = qOf(P[i - 1]);
+      for (let u = 0; u <= U; u++) dp[i][u] = Math.max(dp[i - 1][u], u >= w ? dp[i - 1][u - w] + v : -1); }
+    const set = new Set(); let u = U;
+    for (let i = n; i >= 1; i--) if (dp[i][u] !== dp[i - 1][u]) { set.add(P[i - 1].id); u -= Math.round(P[i - 1].c * 2); }
+    return {set, q: dp[n][U]};
+  }
+  function render() {
+    const opt = best(budget), spend = P.filter(p => funded.has(p.id)).reduce((a, p) => a + p.c, 0), q = P.filter(p => funded.has(p.id)).reduce((a, p) => a + qOf(p), 0);
+    const over = spend > budget;
+    $('fill').style.width = `${Math.min(100, spend / budget * 100)}%`; $('meter').classList.toggle('over', over);
+    $('meter-t').textContent = over ? `Over budget by NZ$${fmt(spend - budget, 1)}m` : `NZ$${fmt(budget - spend, 1)}m left`;
+    $('s-spend').textContent = `$${fmt(spend, 1)}m / $${budget}m`;
+    $('s-q').textContent = fmt(q);
+    $('s-best').textContent = fmt(opt.q);
+    $('s-lost').textContent = over ? 'over budget' : `${fmt(Math.max(0, opt.q - q))} (${fmt(opt.q ? Math.max(0, opt.q - q) / opt.q * 100 : 0)}%)`;
+    $('budget-o').textContent = `NZ$${budget}m`;
+    const unit = sev ? 'weighted QALY' : 'QALY';
+    $('ledger').innerHTML = `<div class="row head" role="row"><span role="columnheader">Proposal</span><span role="columnheader" style="text-align:right">Cost / year</span><span role="columnheader" style="text-align:right">${sev ? 'Weighted QALYs' : 'QALYs / year'}</span><span role="columnheader" style="text-align:right">Cost per ${unit}</span><span role="columnheader" style="text-align:right">Decision</span></div>` +
+      P.map(p => `<div class="row ${funded.has(p.id) ? 'funded' : ''} ${showOpt ? 'showopt' : ''} ${opt.set.has(p.id) ? 'inopt' : ''}" role="row">
+        <div class="name" role="cell"><b>${p.n}</b>${p.w > 1 && sev ? `<span class="chip sev">severity ×${p.w}</span>` : ''}${p.rescue ? '<span class="chip rescue">identified lives</span>' : ''}${showOpt && opt.set.has(p.id) ? '<span class="chip opt">in best portfolio</span>' : ''}<p>${p.d}</p></div>
+        <div class="num" role="cell" data-l="Cost">NZ$${fmt(p.c)}m</div>
+        <div class="num" role="cell" data-l="QALYs">${fmt(qOf(p))}</div>
+        <div class="icer" role="cell" data-l="Per QALY">${money(icer(p))}</div>
+        <button type="button" class="stampbtn" data-id="${p.id}" aria-pressed="${funded.has(p.id)}" aria-label="${funded.has(p.id) ? 'Unfund' : 'Fund'} ${p.n}">${funded.has(p.id) ? 'Funded' : 'Fund'}</button></div>`).join('');
+    $('showopt').textContent = showOpt ? 'Hide the best portfolio' : 'Show the best portfolio';
+    league(opt);
+    verdict(opt, spend, q, over);
+  }
+  function league(opt) {
+    const css = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+    const sorted = [...P].sort((a, b) => icer(a) - icer(b)), total = sorted.reduce((a, p) => a + p.c, 0);
+    const W = 900, H = 300, L = 70, R = 20, T = 20, B = 40, maxLog = 6.5, minLog = 3.5;
+    const X = c => L + c / total * (W - L - R), Y = v => T + (1 - (Math.log10(v) - minLog) / (maxLog - minLog)) * (H - T - B);
+    let x = 0, out = '';
+    [1e4, 1e5, 1e6].forEach(v => out += `<path d="M${L} ${Y(v)}H${W - R}" stroke="${css('--line')}"/><text x="${L - 8}" y="${Y(v) + 4}" text-anchor="end">${money(v)}</text>`);
+    for (const p of sorted) {
+      const y = Y(Math.max(10 ** minLog, Math.min(10 ** maxLog, icer(p)))), on = funded.has(p.id);
+      out += `<rect x="${X(x) + .5}" y="${y}" width="${Math.max(1, X(x + p.c) - X(x) - 1)}" height="${H - B - y}" fill="${on ? css('--fund') : css('--line')}" ${p.rescue ? `stroke="${css('--stamp')}" stroke-width="2"` : ''}><title>${p.n}: ${money(icer(p))} per QALY</title></rect>`;
+      x += p.c;
+    }
+    out += `<path d="M${X(budget)} ${T - 6}V${H - B}" stroke="${css('--amber')}" stroke-width="2.5" stroke-dasharray="5 4"/><text x="${X(budget) + 6}" y="${T + 6}" style="fill:${css('--amber')}">budget NZ$${budget}m</text>`;
+    out += `<text x="${L}" y="${H - 14}">cumulative annual cost → (NZ$${fmt(total)}m for everything)</text><text x="${L - 60}" y="${T}" >per QALY</text>`;
+    $('league').innerHTML = out;
+  }
+  function verdict(opt, spend, q, over) {
+    const optItems = P.filter(p => opt.set.has(p.id)), outItems = P.filter(p => !opt.set.has(p.id));
+    const thr = Math.max(...optItems.map(icer)), next = Math.min(...outItems.map(icer));
+    const mine = P.filter(p => funded.has(p.id)), myThr = mine.length ? Math.max(...mine.map(icer)) : 0;
+    const rescue = funded.has('ert'), ertCost = P.find(p => p.id === 'ert');
+    const swap = rescue ? Math.round(ertCost.c * 1e6 / thr) : 0;
+    $('verdict').innerHTML = `<h3>${over ? 'You are over budget.' : !mine.length ? 'Stamp some proposals to see your verdict.' : opt.q - q < 1 ? 'You found the best portfolio.' : `Your portfolio buys ${fmt(q / opt.q * 100)}% of the health the budget could buy.`}</h3>
+      <p>With NZ$${budget}m, the best portfolio funds ${optItems.length} of ${P.length} proposals. Its least cost-effective member costs <b>${money(thr)}</b> per ${sev ? 'weighted ' : ''}QALY${isFinite(next) ? `, and the best proposal left out costs ${money(next)}` : ''}. That is the threshold this budget implies: spend more per QALY on anything, and something cheaper per QALY has to go.</p>
+      ${mine.length && !over ? `<p>Your own choices imply a threshold of <b>${money(myThr)}</b> per QALY: the least cost-effective thing you funded.${myThr > thr * 1.05 ? ' Because that is higher than the budget\'s threshold, some health elsewhere was displaced to pay for it.' : ''}</p>` : ''}
+      ${rescue ? `<p>Funding the enzyme therapy for six children uses NZ$${ertCost.c}m. At the budget's threshold, that money would buy about <b>${fmt(swap)} QALYs</b> elsewhere, against ${fmt(qOf(ertCost))} for the children. Whether that trade is right is a moral question the numbers can only make visible.</p>` : ''}`;
+  }
+  $('ledger').addEventListener('click', e => { const b = e.target.closest('[data-id]'); if (!b) return; const id = b.dataset.id; funded.has(id) ? funded.delete(id) : funded.add(id); save(); render(); document.querySelector(`[data-id="${id}"]`)?.focus(); });
+  $('budget').addEventListener('input', e => { budget = Number(e.target.value); render(); });
+  $('severity').addEventListener('change', e => { sev = e.target.checked; render(); });
+  $('showopt').addEventListener('click', () => { showOpt = !showOpt; render(); });
+  $('fundbest').addEventListener('click', () => { funded.clear(); best(budget).set.forEach(id => funded.add(id)); save(); render(); });
+  $('clear').addEventListener('click', () => { funded.clear(); save(); render(); });
+  if (!funded.size) ['immuno', 'hepc', 'cgm', 'ert'].forEach(id => funded.add(id)); // example starting choices
+  const rerender = () => render();
+  matchMedia('(prefers-color-scheme: dark)').addEventListener?.('change', rerender);
+  new MutationObserver(rerender).observe(document.documentElement, {attributes: true, attributeFilter: ['data-theme']});
+  render();
+})();
+</script>
+</body></html>

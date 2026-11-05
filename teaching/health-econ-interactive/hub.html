@@ -1,0 +1,158 @@
+<title>Health Economics, Interactive</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Young+Serif&family=Public+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="course.css">
+<style>
+.hero{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:36px;align-items:end;padding-bottom:24px;border-bottom:1px solid var(--line)}
+.hero h1{font-size:clamp(46px,7.5vw,88px)}
+.hero h1 em{color:var(--accent);font-style:normal}
+.progress{display:flex;gap:10px;align-items:center;margin-top:14px;font:500 13.5px var(--mono);color:var(--muted)}
+.progress .track{flex:1;height:8px;border-radius:4px;background:var(--line);overflow:hidden}
+.progress .track b{display:block;height:100%;background:var(--good);transition:width .4s}
+.chapters{display:grid;gap:18px;margin-top:30px}
+.ch{display:grid;grid-template-columns:110px minmax(0,1fr);gap:22px;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:22px}
+.ch .n{font:400 76px/.85 var(--display);color:var(--accent)}
+.ch .n small{display:block;font:500 11px var(--mono);letter-spacing:.1em;color:var(--muted);margin-top:10px;text-transform:uppercase}
+.ch h2{font-size:30px;margin-bottom:4px}
+.ch .meta{display:flex;flex-wrap:wrap;gap:8px;margin:6px 0 10px}
+.chip{font:500 12px var(--mono);border:1px solid var(--line);border-radius:30px;padding:3px 9px;color:var(--muted)}
+.chip.done{border-color:var(--good);color:var(--good)}
+.cols3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;margin-top:10px}
+.cols3 h3{font:600 13px var(--body);letter-spacing:.04em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+.cols3 ul{margin:0;padding-left:18px;font-size:14.5px}
+.cols3 li{margin-bottom:4px}
+.open{display:inline-flex;align-items:center;gap:8px;margin-top:12px;background:var(--accent);color:var(--card);text-decoration:none;font:600 14px var(--body);padding:9px 16px;border-radius:9px}
+details.quiz{margin-top:14px;border-top:1px dashed var(--line);padding-top:10px}
+details.quiz summary{cursor:pointer;font:600 15px var(--body)}
+.q{margin:14px 0}
+.q p{margin:0 0 8px;font-weight:600;font-size:15px}
+.q .opts{display:grid;gap:6px}
+.q button{all:unset;cursor:pointer;border:1px solid var(--line);border-radius:9px;padding:8px 12px;font-size:14.5px;box-sizing:border-box}
+.q button:hover{border-color:var(--accent)}
+.q button:focus-visible{outline:3px solid var(--accent2)}
+.q button.right{border-color:var(--good);background:color-mix(in srgb,var(--good) 14%,var(--card))}
+.q button.wrong{border-color:var(--bad);background:color-mix(in srgb,var(--bad) 12%,var(--card))}
+.fb{font-size:14px;margin-top:6px;color:var(--muted)}
+.disc{font-size:14.5px;color:var(--muted);margin-top:12px}
+.teacher{margin-top:50px;background:var(--soft);border-radius:16px;padding:22px 24px}
+@media(max-width:860px){.hero,.cols3{grid-template-columns:minmax(0,1fr)}.ch{grid-template-columns:minmax(0,1fr);gap:8px}.ch .n{font-size:56px}}
+</style>
+
+<div class="wrap">
+  <div class="hero">
+    <div><div class="lab">A course companion · health economics</div><h1>Health economics, <em>interactive</em></h1></div>
+    <div>
+      <p class="lede">Eight chapters, each built around a model you can operate. Read the objectives, play with the model, then test yourself. Quiz progress is saved in this browser only.</p>
+      <div class="progress"><span id="prog-t">0 / 24 correct</span><span class="track"><b id="prog-b" style="width:0"></b></span><button class="btn" id="reset" type="button" style="min-height:32px;padding:4px 10px;font-size:12.5px">Reset</button></div>
+    </div>
+  </div>
+  <div class="chapters" id="chapters"></div>
+  <div class="teacher">
+    <div class="lab">For teachers</div>
+    <h2 style="margin:6px 0 8px">Using this in a paper</h2>
+    <p>The chapters fit a 12-week 300- or 400-level health economics paper: one chapter per week, plus weeks for the CEA project and revision. Each chapter supports a 20-minute in-class activity. Ask students to predict before they move a slider, then explain any surprise. The discussion prompts work as tutorial questions or short essays.</p>
+    <p style="margin:0">All numbers are illustrative. Models are simplified for teaching and noted on each page.</p>
+  </div>
+</div>
+
+<script>
+(() => {
+  const $ = id => document.getElementById(id);
+  const C = [
+    {n: 1, t: 'Valuing health states', href: 'valuing.html', time: '25 min', tag: 'QALYs',
+      obj: ['Explain how the time trade-off turns preferences into QALY weights', 'Interpret values below zero', 'Contrast public and patient valuations'],
+      read: ['Dolan P (1997) Modeling valuations for EuroQol health states. Medical Care 35(11)', 'Drummond et al. Methods for the Economic Evaluation of Health Care Programmes, ch. 5'],
+      quiz: [
+        ['In a time trade-off, a respondent is indifferent between 10 years in a state and 6 years in full health. What is the state\'s value?', ['0.4', '0.6', '1.67', '6'], 1, 'Value = years in full health ÷ years in the state = 6/10.'],
+        ['What does a negative tariff value mean?', ['The questionnaire was answered incorrectly', 'On average, people prefer immediate death to living in that state', 'The state is temporary', 'Respondents misread the scale'], 1, 'The scale anchors death at 0, so negative values are states judged worse than death.'],
+        ['Why do health systems usually use general-public rather than patient valuations?', ['Patients cannot complete surveys', 'Public values are always higher', 'Taxpayers fund the system and judge states ex ante', 'It is required by EuroQol'], 2, 'The public-values argument is about whose preferences should govern spending of public money; adaptation is the counter-argument.']],
+      disc: 'Patients with a condition often rate it higher than the public does. Should adaptation count as a real welfare gain, or as a bias to correct?'},
+    {n: 2, t: 'Health as capital', href: 'grossman.html', time: '25 min', tag: 'Grossman',
+      obj: ['State the Grossman optimality condition', 'Explain why health falls and medical spending rises with age', 'Explain the predicted effects of education and wages'],
+      read: ['Grossman M (1972) On the concept of health capital and the demand for health. JPE 80(2)', 'Galama T, van Kippersluis H (2019) A theory of socio-economic disparities in health over the life cycle. Economic Journal 129'],
+      quiz: [
+        ['In the pure-investment Grossman model, the optimal health stock satisfies…', ['Marginal utility = price of care', 'MEC = r + δ', 'Health = wage × time', 'Investment = depreciation'], 1, 'The marginal efficiency of health capital equals its user cost: interest plus depreciation.'],
+        ['If depreciation rises with age, the model predicts that…', ['Health and care both fall', 'Health falls while gross investment in care can rise', 'Health rises', 'Care falls to zero'], 1, 'A falling stock that wears out faster can still need more replacement investment.'],
+        ['Education in Grossman\'s model mainly works by…', ['Raising the interest rate', 'Making health production more efficient', 'Lowering wages', 'Increasing depreciation'], 1, 'More efficient producers face a lower cost of health investment.']],
+      disc: 'People in poor health use more medical care, yet the simple model links high investment with high health. Which extension best reconciles this with the data?'},
+    {n: 3, t: 'Insurance and moral hazard', href: 'insurance.html', time: '30 min', tag: 'Arrow · Pauly',
+      obj: ['Value risk protection with a certainty equivalent', 'Show the deadweight loss from moral hazard', 'Explain the trade-off behind optimal coinsurance'],
+      read: ['Arrow KJ (1963) Uncertainty and the welfare economics of medical care. AER 53(5)', 'Pauly MV (1968) The economics of moral hazard. AER 58(3)', 'Manning WG et al. (1987) RAND HIE. AER 77(3)'],
+      quiz: [
+        ['If demand for care is completely price-inelastic, the optimal coinsurance rate is…', ['100%', '50%', '0% (full insurance)', 'Undefined'], 2, 'No behavioural response means no moral hazard, so full insurance maximises risk protection (Arrow).'],
+        ['The moral hazard loss arises because insured people…', ['Pay higher premiums', 'Buy care valued below its full cost', 'Become sicker', 'Avoid preventive care'], 1, 'At a lowered out-of-pocket price, they consume units of care worth less to them than they cost to produce.'],
+        ['The RAND Health Insurance Experiment estimated a price elasticity of demand for care of roughly…', ['−2', '−1', '−0.2', '0'], 2, 'About −0.2: demand responds, but modestly.']],
+      disc: 'Nyman argues that some extra care induced by insurance is an income transfer to the sick, not waste. When is he right?'},
+    {n: 4, t: 'Discounting the future', href: 'discounting.html', time: '25 min', tag: 'Ramsey',
+      obj: ['Compute present values at different rates', 'Decompose the Ramsey rule', 'Explain why uncertainty about the rate makes it decline'],
+      read: ['Ramsey FP (1928) A mathematical theory of saving. EJ 38', 'Weitzman ML (1998) Why the far-distant future should be discounted at its lowest possible rate. JEEM 36(3)', 'HM Treasury, The Green Book'],
+      quiz: [
+        ['With δ = 1.5%, η = 1 and g = 2%, the Ramsey rate is…', ['2%', '3.5%', '1.5%', '5%'], 1, 'r = δ + ηg = 1.5 + 1 × 2 = 3.5%.'],
+        ['At a 3.5% discount rate, roughly how many years does it take to halve a value?', ['10', '20', '35', '70'], 1, 'ln 2 / ln 1.035 ≈ 20 years.'],
+        ['Weitzman\'s argument implies that the certainty-equivalent rate…', ['Rises over time', 'Is constant', 'Falls towards the lowest plausible rate', 'Equals the mean rate forever'], 2, 'Averaging discount factors, not rates, lets the low-rate scenarios dominate in the far future.']],
+      disc: 'Should health benefits be discounted at a lower rate than costs, as in the Netherlands? Use the prevention example to argue either side.'},
+    {n: 5, t: 'Cost-effectiveness under a budget', href: 'budget.html', time: '35 min', tag: 'Thresholds',
+      obj: ['Rank interventions on a league table', 'Explain the threshold as a shadow price', 'Quantify the cost of the rule of rescue'],
+      read: ['Claxton K et al. (2015) Methods for the estimation of the NICE cost-effectiveness threshold. HTA 19(14)', 'Weinstein M, Zeckhauser R (1973) Critical ratios and efficient allocation. J Public Econ 2'],
+      quiz: [
+        ['With a fixed budget and divisible programmes, health is maximised by…', ['Funding the largest programmes first', 'Funding in order of lowest cost per QALY until the money runs out', 'Funding programmes for the severest conditions first', 'Funding equally'], 1, 'The league-table rule (Weinstein and Zeckhauser).'],
+        ['The cost-effectiveness threshold implied by a fixed budget is…', ['Set by law', 'The cost per QALY of the marginal funded programme', 'Always £30,000', 'The average cost per QALY'], 1, 'It is a shadow price: the opportunity cost of the last dollar.'],
+        ['Funding a NZ$9m programme at NZ$1.5m per QALY when the threshold is NZ$30k displaces about…', ['6 QALYs', '30 QALYs', '300 QALYs', '3,000 QALYs'], 2, 'NZ$9m ÷ NZ$30k = 300 QALYs forgone elsewhere.']],
+      disc: 'PHARMAC publishes no threshold. Is an implicit threshold more or less defensible than an explicit one?'},
+    {n: 6, t: 'VSL vs QALY', href: 'vsl-qaly.html', time: '30 min', tag: 'Valuing life',
+      obj: ['Convert a VSL into a value per discounted QALY', 'Distinguish demand-side and supply-side values', 'Explain why inconsistent values cost lives'],
+      read: ['Hirth RA et al. (2000) Willingness to pay for a QALY. MDM 20(3)', 'Viscusi WK (2018) Pricing Lives', 'Tengs TO et al. (1995) Five-hundred life-saving interventions. Risk Analysis 15(3)'],
+      quiz: [
+        ['Discounting the remaining life-years in a VSL conversion makes the implied value per QALY…', ['Lower', 'Higher', 'Unchanged', 'Negative'], 1, 'Fewer discounted QALYs share the same VSL, so each is worth more.'],
+        ['A health-system threshold estimated from the marginal productivity of spending is a…', ['Demand-side value', 'Supply-side value', 'Willingness to pay', 'Market price'], 1, 'It measures what the budget gives up at the margin.'],
+        ['If two agencies value health very differently and budgets could move, total health would rise by…', ['Moving money towards the agency with the higher value per QALY', 'Moving money towards the agency that buys QALYs most cheaply at the margin', 'Equalising budgets', 'Nothing'], 1, 'Move money to where a dollar buys the most health until marginal costs per QALY equalise.']],
+      disc: 'Should a death in a road crash count for more than a death from illness at the same age? Which parts of a "dread premium" belong in public appraisal?'},
+    {n: 7, t: 'Discrete choice experiments', href: 'dce.html', time: '25 min', tag: 'Stated preference',
+      obj: ['Set out a random utility model', 'Derive WTP as a ratio of coefficients', 'Identify threats such as attribute non-attendance'],
+      read: ['Lancsar E, Louviere J (2008) Conducting DCEs to inform healthcare decision making. PharmacoEconomics 26(8)', 'McFadden D (1974) Conditional logit analysis of qualitative choice behavior'],
+      quiz: [
+        ['In a conditional logit, WTP for an attribute equals…', ['β_attribute × β_cost', 'β_attribute ÷ (−β_cost)', 'β_cost ÷ β_attribute', 'The mean cost chosen'], 1, 'The marginal rate of substitution between the attribute and money.'],
+        ['A respondent who always picks the cheaper option shows…', ['Rational trading', 'Lexicographic preferences or attribute non-attendance', 'Scope sensitivity', 'Random utility'], 1, 'They do not trade, which breaks the compensatory model.'],
+        ['Why do DCE designs avoid dominated pairs?', ['They are hard to print', 'They give little information about trade-offs', 'They are illegal', 'They raise costs'], 1, 'Everyone picks the dominant option, so the task reveals no trade-off (except as a deliberate check).']],
+      disc: 'What would make your own estimated WTP for shorter waiting times more credible to a policymaker?'},
+    {n: 8, t: 'Who gains the QALYs?', href: 'equity.html', time: '25 min', tag: 'Equity',
+      obj: ['Compute an equally distributed equivalent', 'Show how inequality aversion can reverse rankings', 'Recognise distributional opportunity costs'],
+      read: ['Asaria M, Griffin S, Cookson R (2016) Distributional cost-effectiveness analysis: a tutorial. MDM 36(1)', 'Robson M et al. (2017) Eliciting the level of health inequality aversion in England. Health Econ 26(10)'],
+      quiz: [
+        ['With inequality aversion ε = 0, the equally distributed equivalent equals…', ['The worst-off group\'s health', 'Mean health', 'Median health', 'Zero'], 1, 'With no aversion, health is simply averaged.'],
+        ['As ε grows very large, the social welfare function approaches…', ['Utilitarian', 'Maximin (Rawlsian)', 'Libertarian', 'Random'], 1, 'Only the worst-off group\'s health matters in the limit.'],
+        ['A programme that adds fewer total QALYs can be preferred under DCEA when…', ['Its gains go mainly to groups with lower health and ε is high enough', 'It costs more', 'It has a higher ICER', 'Never'], 0, 'That is the core of distributional CEA.']],
+      disc: 'Who should choose the inequality aversion parameter: the public, Parliament, or the analyst? How would you elicit it in Aotearoa New Zealand?'}
+  ];
+  let state = {};
+  try { state = JSON.parse(localStorage.getItem('he-quiz') || '{}') || {}; } catch {}
+  const save = () => { try { localStorage.setItem('he-quiz', JSON.stringify(state)); } catch {} };
+  function render() {
+    $('chapters').innerHTML = C.map((c, ci) => {
+      const done = c.quiz.filter((_, qi) => state[`${ci}-${qi}`] === true).length;
+      return `<article class="ch"><div class="n">${c.n}<small>${c.time}</small></div><div>
+        <h2><a href="${c.href}" style="color:inherit;text-decoration:none">${c.t}</a></h2>
+        <div class="meta"><span class="chip">${c.tag}</span><span class="chip ${done === 3 ? 'done' : ''}">${done}/3 quiz</span></div>
+        <div class="cols3"><div><h3>You will be able to</h3><ul>${c.obj.map(o => `<li>${o}</li>`).join('')}</ul></div><div><h3>Read</h3><ul>${c.read.map(o => `<li>${o}</li>`).join('')}</ul></div><div><h3>Discuss</h3><p class="disc" style="margin:0">${c.disc}</p></div></div>
+        <a class="open" href="${c.href}">Open the model →</a>
+        <details class="quiz"${done < 3 && done > 0 ? ' open' : ''}><summary>Check your understanding</summary>
+          ${c.quiz.map(([q, opts, ans, why], qi) => { const k = `${ci}-${qi}`, st = state[k];
+            return `<div class="q" data-k="${k}"><p>${qi + 1}. ${q}</p><div class="opts">${opts.map((o, oi) => `<button type="button" data-a="${oi}" class="${st !== undefined && oi === ans ? 'right' : ''} ${state[k + 'c'] === oi && oi !== ans ? 'wrong' : ''}">${o}</button>`).join('')}</div>${st !== undefined ? `<div class="fb">${st ? '✓ Correct. ' : '✗ Not quite. '}${why}</div>` : ''}</div>`; }).join('')}
+        </details></div></article>`;
+    }).join('');
+    const total = Object.entries(state).filter(([k, v]) => !k.endsWith('c') && v === true).length;
+    $('prog-t').textContent = `${total} / 24 correct`; $('prog-b').style.width = `${total / 24 * 100}%`;
+  }
+  $('chapters').addEventListener('click', e => {
+    const b = e.target.closest('.q button'); if (!b) return;
+    const q = b.closest('.q'), k = q.dataset.k, [ci, qi] = k.split('-').map(Number), ans = C[ci].quiz[qi][2], a = Number(b.dataset.a);
+    if (state[k] === true) return;
+    state[k] = a === ans; state[k + 'c'] = a; save();
+    const open = [...document.querySelectorAll('details.quiz')].map(d => d.open);
+    render(); document.querySelectorAll('details.quiz').forEach((d, i) => d.open = open[i] || i === ci);
+  });
+  $('reset').addEventListener('click', () => { state = {}; save(); render(); });
+  render();
+})();
+</script>

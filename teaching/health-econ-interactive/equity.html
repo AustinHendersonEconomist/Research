@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Who Gains the QALYs</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Young+Serif&family=Public+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="course.css"><style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}</style></head>
+<body><div class="wrap">
+<div class="crumb"><a href="./">← Health Economics, Interactive</a><span class="lab">Chapter 8 of 8</span></div>
+<div class="chapter-head"><div class="numeral">8</div><div><div class="lab">Distributional cost-effectiveness analysis</div><h1>Who gains the QALYs?</h1></div></div>
+<p class="lede">Standard cost-effectiveness analysis treats a QALY as a QALY, whoever gains it. Distributional cost-effectiveness analysis (DCEA) asks how gains and opportunity costs fall across social groups, and lets the decision-maker state how much they care about inequality. With enough inequality aversion, a programme with fewer QALYs can be the better choice.</p>
+
+<div class="grid2">
+  <div>
+    <div class="panel">
+      <div class="ctl"><label for="eps">Inequality aversion ε (Atkinson) <output id="eps-o"></output></label><input id="eps" type="range" min="0" max="15" step="0.5" value="0"><small>0 means a QALY is a QALY. Higher values give more weight to gains for groups with less health. Estimates for England put typical public views around 10–11.</small></div>
+      <div class="ctl"><label for="scen">Comparison</label><select id="scen">
+        <option value="0">Same budget: a cancer drug vs a community diabetes programme</option>
+        <option value="1">Same budget: hip surgery waitlist vs smoking cessation in deprived areas</option></select></div>
+    </div>
+    <div class="callout">Groups are deprivation quintiles of 1 million people each, with illustrative health-adjusted life expectancy (HALE) at birth from 62 to 72 years. Programme gains are added to each group's average. Opportunity costs are displaced evenly, as a simplifying assumption.</div>
+  </div>
+  <div>
+    <div class="figure"><svg id="fig" viewBox="0 0 560 280" role="img" aria-label="QALY gains by deprivation quintile for two programmes"></svg></div>
+    <div class="stats"><div><span>Total QALYs, A vs B</span><b id="tot">—</b></div><div><span>Welfare gain (equally distributed equivalent), A vs B</span><b id="ede">—</b></div><div><span>Preferred</span><b id="pref">—</b></div></div>
+    <div class="callout" id="note"></div>
+  </div>
+</div>
+<section>
+  <h2>The equally distributed equivalent</h2>
+  <div class="grid2">
+    <div class="panel"><div class="eq">h<sub>EDE</sub> = ( mean of h<sub>i</sub><sup>1−ε</sup> )<sup>1/(1−ε)</sup></div><p>The equally distributed equivalent is the level of health which, if everyone had it, would be valued the same as the actual unequal distribution. It equals average health when ε = 0 and falls towards the worst-off group's health as ε grows.</p></div>
+    <div class="panel"><h3>Where the threshold fits</h3><p>Opportunity costs matter too. If displaced services would have benefited deprived groups more, a programme can widen inequality even when its own gains are evenly spread. Full DCEA models both sides.</p></div>
+  </div>
+</section>
+<p class="lab" style="margin-top:40px">Readings: Asaria M, Griffin S, Cookson R. Distributional cost-effectiveness analysis: a tutorial. <i>Medical Decision Making</i> 2016;36(1):8–19. Cookson R, Griffin S, Norheim OF, Culyer AJ (eds). <i>Distributional Cost-Effectiveness Analysis</i>. Oxford University Press, 2020. Robson M, et al. Eliciting the level of health inequality aversion in England. <i>Health Economics</i> 2017;26(10):1328–1334.</p>
+</div>
+<script>
+(() => {
+  const $ = id => document.getElementById(id), css = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+  const fmt = (n, d = 0) => n.toLocaleString('en-NZ', {maximumFractionDigits: d, minimumFractionDigits: d});
+  const BASE = [62, 65, 67.5, 70, 72], POP = 1e6;
+  const SC = [
+    {a: 'Cancer drug', b: 'Diabetes programme', A: [1200, 1500, 1800, 2100, 2400], B: [2600, 1900, 1300, 900, 600]},
+    {a: 'Hip surgery waitlist', b: 'Smoking cessation (deprived areas)', A: [900, 1100, 1300, 1500, 1700], B: [2800, 1700, 900, 500, 300]}
+  ];
+  const ede = (h, e) => { if (e === 0) return h.reduce((a, b) => a + b, 0) / h.length; if (Math.abs(e - 1) < 1e-9) return Math.exp(h.reduce((a, b) => a + Math.log(b), 0) / h.length); return Math.pow(h.reduce((a, b) => a + Math.pow(b, 1 - e), 0) / h.length, 1 / (1 - e)); };
+  function run() {
+    const e = +$('eps').value, s = SC[+$('scen').value];
+    $('eps-o').textContent = fmt(e, 1);
+    const per = g => g.map(q => q / POP); // QALYs per person added to each quintile's mean
+    const hA = BASE.map((b, i) => b + per(s.A)[i]), hB = BASE.map((b, i) => b + per(s.B)[i]);
+    const e0 = ede(BASE, e), gA = (ede(hA, e) - e0) * POP * 5, gB = (ede(hB, e) - e0) * POP * 5;
+    const tA = s.A.reduce((a, b) => a + b, 0), tB = s.B.reduce((a, b) => a + b, 0);
+    const W = 560, H = 280, L = 50, R = 14, T = 18, B = 40, mx = Math.max(...s.A, ...s.B) * 1.15, gw = (W - L - R) / 5;
+    const Y = v => T + (1 - v / mx) * (H - T - B);
+    let out = [0, mx / 2].map(v => `<path d="M${L} ${Y(v)}H${W - R}" stroke="${css('--line')}"/><text x="${L - 6}" y="${Y(v) + 4}" text-anchor="end">${fmt(v)}</text>`).join('');
+    BASE.forEach((b, i) => { const x0 = L + i * gw;
+      out += `<rect x="${x0 + gw * .12}" y="${Y(s.A[i])}" width="${gw * .35}" height="${H - B - Y(s.A[i])}" fill="${css('--accent')}"/><rect x="${x0 + gw * .52}" y="${Y(s.B[i])}" width="${gw * .35}" height="${H - B - Y(s.B[i])}" fill="${css('--accent2')}"/>`;
+      out += `<text x="${x0 + gw / 2}" y="${H - 22}" text-anchor="middle">Q${i + 1}${i === 0 ? ' most deprived' : i === 4 ? ' least' : ''}</text><text x="${x0 + gw / 2}" y="${H - 8}" text-anchor="middle">HALE ${b}</text>`; });
+    out += `<text x="${L + 4}" y="${T + 6}" style="fill:${css('--accent')}">${s.a}</text><text x="${L + 4}" y="${T + 22}" style="fill:${css('--accent2')}">${s.b}</text>`;
+    $('fig').innerHTML = out;
+    $('tot').textContent = `${fmt(tA)} vs ${fmt(tB)}`; $('ede').textContent = `${fmt(gA)} vs ${fmt(gB)}`;
+    $('pref').textContent = gA > gB ? s.a : s.b;
+    $('note').innerHTML = e === 0 ? `With no inequality aversion, the comparison is total QALYs: ${tA > tB ? s.a : s.b} wins.` : `At ε = ${fmt(e, 1)}, gains to the most deprived count for more. Measured in equally distributed equivalent QALYs, ${gA > gB ? s.a : s.b} is preferred.${(tA > tB) !== (gA > gB) ? ' <b>The ranking has reversed</b> compared with simple QALY counting.' : ''}`;
+  }
+  ['eps', 'scen'].forEach(id => $(id).addEventListener('input', run));
+  matchMedia('(prefers-color-scheme: dark)').addEventListener?.('change', run);
+  run();
+})();
+</script></body></html>
