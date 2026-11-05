@@ -37,21 +37,51 @@ details.quiz summary{cursor:pointer;font:600 15px var(--body)}
 .disc{font-size:14.5px;color:var(--muted);margin-top:12px}
 .teacher{margin-top:50px;background:var(--soft);border-radius:16px;padding:22px 24px}
 @media(max-width:860px){.hero,.cols3{grid-template-columns:minmax(0,1fr)}.ch{grid-template-columns:minmax(0,1fr);gap:8px}.ch .n{font-size:56px}}
+.hon{margin-top:34px;background:#0e2129;color:#cde3da;border-radius:18px;padding:26px 28px}
+.hon h2{color:#fff;font-size:clamp(34px,5vw,54px);margin:6px 0 10px}
+.hon p{color:#cde3da}
+.hon-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:28px;align-items:start}
+.hon-actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:14px}
+.hon-play{background:#ffd07a;color:#1a1408;font-weight:700;text-decoration:none;border-radius:9px;padding:10px 16px}
+.hon-ghost{border:1px solid #24424c;color:#cde3da;text-decoration:none;border-radius:9px;padding:10px 16px}
+.runs{display:grid;gap:6px}
+.run{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:10px;align-items:center;text-decoration:none;color:#cde3da;border:1px solid #24424c;border-radius:10px;padding:8px 12px;background:#14303a}
+.run:hover{border-color:#ffd07a}
+.run b{font-weight:600;font-size:14px}.run .lab{color:#7fa89d}.run span:last-child{color:#ffd07a;font-weight:600;font-size:13px}
+.xwalk{margin-top:18px}.xwalk summary{cursor:pointer;font-weight:600;color:#ffd07a}
+.xwalk .tablewrap{overflow-x:auto;margin-top:10px}
+.xwalk table{border-collapse:collapse;width:100%;font-size:14px}
+.xwalk td,.xwalk th{padding:7px 10px;border-bottom:1px solid #24424c;text-align:left}
+.xwalk th{font:500 11px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:#7fa89d}
+.xwalk a{color:#ffd07a}
+@media(max-width:860px){.hon-grid{grid-template-columns:minmax(0,1fr)}.hon{padding:20px}}
 </style>
 
 <div class="wrap">
   <div class="hero">
     <div><div class="lab">A course companion · health economics</div><h1>Health economics, <em>interactive</em></h1></div>
     <div>
-      <p class="lede">Eight chapters, each built around a model you can operate. Read the objectives, play with the model, then test yourself. Quiz progress is saved in this browser only.</p>
-      <div class="progress"><span id="prog-t">0 / 24 correct</span><span class="track"><b id="prog-b" style="width:0"></b></span><button class="btn" id="reset" type="button" style="min-height:32px;padding:4px 10px;font-size:12.5px">Reset</button></div>
+      <p class="lede">Nine chapters, each built around a model you can operate, and a strategy game where you run a whole health system with them. Read the objectives, play with the model, test yourself, then govern. Quiz progress is saved in this browser only.</p>
+      <div class="progress"><span id="prog-t">0 / 27 correct</span><span class="track"><b id="prog-b" style="width:0"></b></span><button class="btn" id="reset" type="button" style="min-height:32px;padding:4px 10px;font-size:12.5px">Reset</button></div>
     </div>
   </div>
+  <section class="hon" aria-labelledby="hon-h">
+    <div class="hon-grid">
+      <div>
+        <div class="lab" style="color:#ffd07a">The capstone · a strategy game</div>
+        <h2 id="hon-h">Health of Nations</h2>
+        <p>You are the Minister of Health of a whole country: a fixed budget, a population with hidden preferences, six years and two elections. Every mechanic is a concept from this course: QALY league tables, value-of-information studies, copays and moral hazard, discrete choice experiments, equity-weighted funding, prevention as capital. The game's Codex links each concept back here.</p>
+        <div class="hon-actions"><a class="hon-play" data-game="" href="#" target="_blank" rel="noopener">Play Health of Nations ↗</a><a class="hon-ghost" href="#crosswalk">Concept crosswalk</a></div>
+      </div>
+      <div class="runs"><div class="lab" style="color:#9fc0b4;margin-bottom:6px">Nine classroom runs, one per chapter</div><a class="run" data-game="?assignment=a1" href="#" target="_blank" rel="noopener"><span class="lab">Ch. 1 · seed 30601</span><b>Reading the Q in the league table</b><span>Play ↗</span></a><a class="run" data-game="?assignment=a2" href="#" target="_blank" rel="noopener"><span class="lab">Ch. 2 · seed 30602</span><b>Prevention as an investment</b><span>Play ↗</span></a><a class="run" data-game="?assignment=a3" href="#" target="_blank" rel="noopener"><span class="lab">Ch. 3 · seed 30603</span><b>The copay experiment</b><span>Play ↗</span></a><a class="run" data-game="?assignment=a4" href="#" target="_blank" rel="noopener"><span class="lab">Ch. 4 · seed 30604</span><b>Elections and the long game</b><span>Play ↗</span></a><a class="run" data-game="?assignment=a5" href="#" target="_blank" rel="noopener"><span class="lab">Ch. 5 · seed 30605</span><b>Strictly by the league table</b><span>Play ↗</span></a><a class="run" data-game="?assignment=a6" href="#" target="_blank" rel="noopener"><span class="lab">Ch. 6 · seed 30606</span><b>Governing Aotearoa on a PHARMAC budget</b><span>Play ↗</span></a><a class="run" data-game="?assignment=a7" href="#" target="_blank" rel="noopener"><span class="lab">Ch. 7 · seed 30607</span><b>Ask before you choose</b><span>Play ↗</span></a><a class="run" data-game="?assignment=a8" href="#" target="_blank" rel="noopener"><span class="lab">Ch. 8 · seed 30608</span><b>Equity weights on the same country</b><span>Play ↗</span></a><a class="run" data-game="?assignment=a9" href="#" target="_blank" rel="noopener"><span class="lab">Ch. 9 · seed 30609</span><b>Paying to know</b><span>Play ↗</span></a></div>
+    </div>
+    <details class="xwalk" id="crosswalk"><summary>Every concept in the game's Codex, and the chapter that models it</summary><div class="tablewrap"><table><thead><tr><th>Codex concept in Health of Nations</th><th>Chapter</th></tr></thead><tbody><tr><td>Opportunity Cost</td><td><a href="budget.html">Ch. 5 · Cost-effectiveness under a budget</a></td></tr><tr><td>Cost-Effectiveness League Tables</td><td><a href="budget.html">Ch. 5 · Cost-effectiveness under a budget</a></td></tr><tr><td>Value of Information</td><td><a href="voi.html">Ch. 9 · The price of knowing</a></td></tr><tr><td>Moral Hazard</td><td><a href="insurance.html">Ch. 3 · Insurance and moral hazard</a></td></tr><tr><td>Adverse Selection</td><td><a href="insurance.html">Ch. 3 · Insurance and moral hazard</a></td></tr><tr><td>Supplier-Induced Demand</td><td><a href="insurance.html">Ch. 3 · Insurance and moral hazard</a></td></tr><tr><td>Rationing by Waiting</td><td><a href="dce.html">Ch. 7 · Discrete choice experiments</a></td></tr><tr><td>Prevention as Capital</td><td><a href="grossman.html">Ch. 2 · Health as capital</a></td></tr><tr><td>Discounting and Political Myopia</td><td><a href="discounting.html">Ch. 4 · Discounting the future</a></td></tr><tr><td>Distributional Cost-Effectiveness Analysis</td><td><a href="equity.html">Ch. 8 · Who gains the QALYs?</a></td></tr><tr><td>Rule of Rescue and Severity</td><td><a href="budget.html">Ch. 5 · Cost-effectiveness under a budget</a></td></tr><tr><td>Generics and Biosimilars</td><td><a href="budget.html">Ch. 5 · Cost-effectiveness under a budget</a></td></tr><tr><td>Screening and Test Statistics</td><td><a href="voi.html">Ch. 9 · The price of knowing</a></td></tr><tr><td>Provider Payment Models</td><td><a href="insurance.html">Ch. 3 · Insurance and moral hazard</a></td></tr><tr><td>Demand Elasticity of Health Care</td><td><a href="insurance.html">Ch. 3 · Insurance and moral hazard</a></td></tr><tr><td>Political Budget Cycles</td><td><a href="discounting.html">Ch. 4 · Discounting the future</a></td></tr><tr><td>Fiscal Sustainability</td><td><a href="discounting.html">Ch. 4 · Discounting the future</a></td></tr><tr><td>Preference Heterogeneity and Discrete Choice Experiments</td><td><a href="dce.html">Ch. 7 · Discrete choice experiments</a></td></tr></tbody></table></div></details>
+  </section>
   <div class="chapters" id="chapters"></div>
   <div class="teacher">
     <div class="lab">For teachers</div>
     <h2 style="margin:6px 0 8px">Using this in a paper</h2>
-    <p>The chapters fit a 12-week 300- or 400-level health economics paper: one chapter per week, plus weeks for the CEA project and revision. Each chapter supports a 20-minute in-class activity. Ask students to predict before they move a slider, then explain any surprise. The discussion prompts work as tutorial questions or short essays.</p>
+    <p>The chapters fit a 12-week 300- or 400-level health economics paper: one chapter per week, plus weeks for the game capstone and revision. Each chapter ends with a seeded classroom run of Health of Nations; because the seed fixes the country, a class can compare strategies on identical terrain and submit results with the game's copy-result button or class leaderboard. Each chapter supports a 20-minute in-class activity. Ask students to predict before they move a slider, then explain any surprise. The discussion prompts work as tutorial questions or short essays.</p>
     <p style="margin:0">All numbers are illustrative. Models are simplified for teaching and noted on each page.</p>
   </div>
 </div>
@@ -59,6 +89,7 @@ details.quiz summary{cursor:pointer;font:600 15px var(--body)}
 <script>
 (() => {
   const $ = id => document.getElementById(id);
+  const GAMEBASE = /github\.io$|^localhost$|^127\.0\.0\.1$/.test(location.hostname) ? '../' : 'https://austinhendersoneconomist.github.io/health-of-nations-play/';
   const C = [
     {n: 1, t: 'Valuing health states', href: 'valuing.html', time: '25 min', tag: 'QALYs',
       obj: ['Explain how the time trade-off turns preferences into QALY weights', 'Interpret values below zero', 'Contrast public and patient valuations'],
@@ -123,7 +154,15 @@ details.quiz summary{cursor:pointer;font:600 15px var(--body)}
         ['With inequality aversion ε = 0, the equally distributed equivalent equals…', ['The worst-off group\'s health', 'Mean health', 'Median health', 'Zero'], 1, 'With no aversion, health is simply averaged.'],
         ['As ε grows very large, the social welfare function approaches…', ['Utilitarian', 'Maximin (Rawlsian)', 'Libertarian', 'Random'], 1, 'Only the worst-off group\'s health matters in the limit.'],
         ['A programme that adds fewer total QALYs can be preferred under DCEA when…', ['Its gains go mainly to groups with lower health and ε is high enough', 'It costs more', 'It has a higher ICER', 'Never'], 0, 'That is the core of distributional CEA.']],
-      disc: 'Who should choose the inequality aversion parameter: the public, Parliament, or the analyst? How would you elicit it in Aotearoa New Zealand?'}
+      disc: 'Who should choose the inequality aversion parameter: the public, Parliament, or the analyst? How would you elicit it in Aotearoa New Zealand?'},
+    {n: 9, t: 'The price of knowing', href: 'voi.html', time: '25 min', tag: 'Value of information',
+      obj: ['Compute EVPI for an adopt-or-reject decision', 'Explain why EVSI rises with sample size and levels off', 'Choose a trial size by expected net benefit of sampling'],
+      read: ['Claxton K (1999) The irrelevance of inference. JHE 18(3)', 'Wilson ECF (2015) A practical guide to value of information analysis. PharmacoEconomics 33(2)'],
+      quiz: [
+        ['If a study could not change the decision whatever it found, its value of information is…', ['Large, because uncertainty is high', 'Zero', 'Equal to its cost', 'Negative'], 1, 'Information has decision value only if some possible result would change what you do.'],
+        ['Population EVPI is…', ['The cost of a trial', 'An upper bound on what any research on the decision could be worth', 'The expected net benefit of the treatment', 'The variance of net benefit'], 1, 'Perfect information is the best any study could deliver, so EVPI caps the value of research.'],
+        ['The optimal trial size maximises…', ['EVSI', 'Sample size', 'EVSI minus the trial cost (ENBS)', 'The p-value'], 2, 'EVSI keeps rising with n, but costs rise too; the best design maximises the difference.']],
+      disc: 'PHARMAC often funds medicines with thin evidence. When should it pay for more evidence first, and who should fund that research?'}
   ];
   let state = {};
   try { state = JSON.parse(localStorage.getItem('he-quiz') || '{}') || {}; } catch {}
@@ -135,14 +174,14 @@ details.quiz summary{cursor:pointer;font:600 15px var(--body)}
         <h2><a href="${c.href}" style="color:inherit;text-decoration:none">${c.t}</a></h2>
         <div class="meta"><span class="chip">${c.tag}</span><span class="chip ${done === 3 ? 'done' : ''}">${done}/3 quiz</span></div>
         <div class="cols3"><div><h3>You will be able to</h3><ul>${c.obj.map(o => `<li>${o}</li>`).join('')}</ul></div><div><h3>Read</h3><ul>${c.read.map(o => `<li>${o}</li>`).join('')}</ul></div><div><h3>Discuss</h3><p class="disc" style="margin:0">${c.disc}</p></div></div>
-        <a class="open" href="${c.href}">Open the model →</a>
+        <a class="open" href="${c.href}">Open the model →</a> <a class="open" style="background:#0e2129;color:#ffd07a" href="${GAMEBASE}?assignment=a${c.n}" target="_blank" rel="noopener">Govern it in Health of Nations ↗</a>
         <details class="quiz"${done < 3 && done > 0 ? ' open' : ''}><summary>Check your understanding</summary>
           ${c.quiz.map(([q, opts, ans, why], qi) => { const k = `${ci}-${qi}`, st = state[k];
             return `<div class="q" data-k="${k}"><p>${qi + 1}. ${q}</p><div class="opts">${opts.map((o, oi) => `<button type="button" data-a="${oi}" class="${st !== undefined && oi === ans ? 'right' : ''} ${state[k + 'c'] === oi && oi !== ans ? 'wrong' : ''}">${o}</button>`).join('')}</div>${st !== undefined ? `<div class="fb">${st ? '✓ Correct. ' : '✗ Not quite. '}${why}</div>` : ''}</div>`; }).join('')}
         </details></div></article>`;
     }).join('');
     const total = Object.entries(state).filter(([k, v]) => !k.endsWith('c') && v === true).length;
-    $('prog-t').textContent = `${total} / 24 correct`; $('prog-b').style.width = `${total / 24 * 100}%`;
+    $('prog-t').textContent = `${total} / 27 correct`; $('prog-b').style.width = `${total / 27 * 100}%`;
   }
   $('chapters').addEventListener('click', e => {
     const b = e.target.closest('.q button'); if (!b) return;
@@ -153,6 +192,8 @@ details.quiz summary{cursor:pointer;font:600 15px var(--body)}
     render(); document.querySelectorAll('details.quiz').forEach((d, i) => d.open = open[i] || i === ci);
   });
   $('reset').addEventListener('click', () => { state = {}; save(); render(); });
+  // Game links: relative when the course is served beside the game, else the public site
+  document.querySelectorAll('[data-game]').forEach(a => { a.href = GAMEBASE + (a.dataset.game || ''); });
   render();
 })();
 </script>

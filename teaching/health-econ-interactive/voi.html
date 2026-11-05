@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>The Price of Knowing</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Young+Serif&family=Public+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="course.css"><style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}</style></head>
+<body><div class="wrap">
+<div class="crumb"><a href="./">← Health Economics, Interactive</a><span class="lab">Chapter 9 of 9</span></div>
+<div class="chapter-head"><div class="numeral">9</div><div><div class="lab">Value of information</div><h1>The price of knowing</h1></div></div>
+<p class="lede">A new medicine looks worthwhile on average, but the evidence is thin. Fund it now and you may be wrong; fund a trial first and you spend money and time to be less wrong. Value-of-information analysis puts a price on that uncertainty, so research budgets can be judged with the same yardstick as treatments.</p>
+
+<div class="grid2">
+  <div>
+    <div class="panel">
+      <div class="ctl"><label for="mu">Expected QALY gain per patient <output id="mu-o"></output></label><input id="mu" type="range" min="0" max="0.25" step="0.005" value="0.08"></div>
+      <div class="ctl"><label for="sd">Uncertainty about that gain (SD) <output id="sd-o"></output></label><input id="sd" type="range" min="0.005" max="0.15" step="0.005" value="0.05"><small>In Health of Nations this is the width of a medicine's evidence bracket.</small></div>
+      <div class="ctl"><label for="cost">Cost per patient <output id="cost-o"></output></label><input id="cost" type="range" min="500" max="10000" step="100" value="3000"></div>
+      <div class="ctl"><label for="k">Threshold, NZ$ per QALY <output id="k-o"></output></label><input id="k" type="range" min="10000" max="100000" step="1000" value="45000"></div>
+      <div class="ctl"><label for="pop">Patients affected over the decision's life <output id="pop-o"></output></label><input id="pop" type="range" min="500" max="50000" step="500" value="10000"></div>
+      <div class="ctl"><label for="pp">Trial cost per participant <output id="pp-o"></output></label><input id="pp" type="range" min="500" max="20000" step="500" value="5000"><small>Plus NZ$500,000 to set up the trial. Individual outcomes vary with SD 0.3 QALYs.</small></div>
+    </div>
+  </div>
+  <div>
+    <div class="figure"><svg id="dist" viewBox="0 0 560 220" role="img" aria-label="Distribution of net monetary benefit per patient"></svg></div>
+    <div class="stats"><div><span>Decision today</span><b id="dec">—</b></div><div><span>Chance that decision is wrong</span><b id="pw">—</b></div><div><span>Population EVPI</span><b id="evpi">—</b></div></div>
+    <div class="figure" style="margin-top:14px"><svg id="evsi" viewBox="0 0 560 230" role="img" aria-label="Expected value of sample information and expected net benefit of sampling by trial size"></svg></div>
+    <div class="callout" id="note"></div>
+  </div>
+</div>
+
+<section>
+  <h2>Three quantities</h2>
+  <div class="grid2">
+    <div class="panel"><h3>EVPI: the most knowing could be worth</h3><p>If the truth were revealed for free, you would never fund a medicine that turns out to be poor value, or turn down one that turns out to be good. The expected value of perfect information is the expected net benefit of deciding with the truth, minus the net benefit of deciding now. Scaled to everyone the decision affects, it caps what any research could be worth.</p></div>
+    <div class="panel"><h3>EVSI and ENBS: what a real trial is worth</h3><p>A trial with <i>n</i> participants narrows the uncertainty without removing it. Its expected value of sample information rises with <i>n</i> and levels off below EVPI. Subtract the trial's cost to get the expected net benefit of sampling. The best trial size maximises it, and if it is negative at every size, decide now.</p></div>
+    <div class="panel"><h3>When information is worthless</h3><p>If the decision would not change whatever a study found, the study has no decision value, however interesting it is. Move the expected gain far from the break-even point and watch EVPI fall towards zero.</p></div>
+    <div class="panel"><h3>In the game</h3><p>Registry studies in Health of Nations narrow a medicine's evidence bracket for a price. They are worth buying when the bracket straddles your funding line and the therapy is large enough to matter. That is this chapter's rule in a minister's uniform.</p></div>
+  </div>
+</section>
+<p class="lab" style="margin-top:40px">Readings: Claxton K (1999) The irrelevance of inference. <i>Journal of Health Economics</i> 18(3):341–364. Wilson ECF (2015) A practical guide to value of information analysis. <i>PharmacoEconomics</i> 33(2):105–121. Model: normal prior on the incremental QALY gain; the trial reports a normally distributed mean; closed-form preposterior analysis.</p>
+</div>
+<script>
+(() => {
+  const $ = id => document.getElementById(id), css = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+  const fmt = (n, d = 0) => n.toLocaleString('en-NZ', {maximumFractionDigits: d, minimumFractionDigits: d});
+  const money = n => Math.abs(n) >= 1e6 ? `$${fmt(n / 1e6, 1)}m` : `$${fmt(n / 1e3, 0)}k`;
+  const phi = x => Math.exp(-x * x / 2) / Math.sqrt(2 * Math.PI);
+  const Phi = x => { const t = 1 / (1 + .2316419 * Math.abs(x)), d = .3989423 * Math.exp(-x * x / 2), p = d * t * (.3193815 + t * (-.3565638 + t * (1.781478 + t * (-1.821256 + t * 1.330274)))); return x > 0 ? 1 - p : p; };
+  const ev = (m, s) => s <= 0 ? 0 : s * phi(m / s) - Math.abs(m) * Phi(-Math.abs(m) / s); // E[max(X,0)] − max(m,0)
+  const SIGIND = 0.3, FIXED = 500000;
+  function run() {
+    const mu = +$('mu').value, sd = +$('sd').value, cost = +$('cost').value, k = +$('k').value, pop = +$('pop').value, pp = +$('pp').value;
+    $('mu-o').textContent = fmt(mu, 3); $('sd-o').textContent = fmt(sd, 3); $('cost-o').textContent = `NZ$${fmt(cost)}`; $('k-o').textContent = `NZ$${fmt(k)}`; $('pop-o').textContent = fmt(pop); $('pp-o').textContent = `NZ$${fmt(pp)}`;
+    const m = k * mu - cost, s = k * sd; // INB per patient
+    const evpi = ev(m, s) * pop, wrong = Phi(-Math.abs(m) / s);
+    $('dec').textContent = m >= 0 ? 'Fund' : 'Decline'; $('pw').textContent = `${fmt(wrong * 100)}%`; $('evpi').textContent = money(evpi);
+    // distribution chart
+    const W = 560, H = 220, L = 20, R = 20, T = 18, B = 34, lo = m - 4 * s, hi = m + 4 * s;
+    const X = v => L + (v - lo) / (hi - lo) * (W - L - R), Y = d => H - B - d / (phi(0) / s) * (H - T - B);
+    const pts = Array.from({length: 161}, (_, i) => lo + (hi - lo) * i / 160);
+    const area = (cond, col) => `<path d="M${X(pts.find(cond) ?? lo)} ${H - B} ${pts.filter(cond).map(v => `L${X(v)} ${Y(phi((v - m) / s) / s)}`).join(' ')} L${X([...pts].reverse().find(cond) ?? lo)} ${H - B}Z" fill="${css(col)}" opacity=".35"/>`;
+    let out = area(v => v < 0, '--bad') + area(v => v >= 0, '--good');
+    out += `<path d="${pts.map((v, i) => `${i ? 'L' : 'M'}${X(v)},${Y(phi((v - m) / s) / s)}`).join('')}" fill="none" stroke="${css('--ink')}" stroke-width="2"/>`;
+    if (lo < 0 && hi > 0) out += `<path d="M${X(0)} ${T}V${H - B}" stroke="${css('--ink')}" stroke-dasharray="4 4"/><text x="${X(0) + 5}" y="${T + 10}">break-even</text>`;
+    out += [lo, m, hi].map(v => `<text x="${X(v)}" y="${H - 12}" text-anchor="middle">${money(v)}</text>`).join('') + `<text x="${L}" y="${T}">net monetary benefit per patient</text>`;
+    $('dist').innerHTML = out;
+    // EVSI / ENBS by trial size
+    const ns = Array.from({length: 60}, (_, i) => Math.round(10 * Math.pow(1000, i / 59)));
+    const rows = ns.map(n => { const se = SIGIND / Math.sqrt(n), sPre = k * sd * sd / Math.sqrt(sd * sd + se * se); const evsi = ev(m, sPre) * pop; return {n, evsi, enbs: evsi - FIXED - pp * n}; });
+    const best = rows.reduce((a, b) => b.enbs > a.enbs ? b : a);
+    const W2 = 560, H2 = 230, L2 = 56, R2 = 14, T2 = 16, B2 = 34, mx = Math.max(evpi, 1) * 1.1, mn = Math.min(0, ...rows.map(r => r.enbs)) * 1.05;
+    const X2 = n => L2 + Math.log10(n / 10) / 3 * (W2 - L2 - R2), Y2 = v => T2 + (mx - Math.max(mn, v)) / (mx - mn) * (H2 - T2 - B2);
+    let o2 = `<path d="M${L2} ${Y2(0)}H${W2 - R2}" stroke="${css('--line')}"/><path d="M${L2} ${Y2(evpi)}H${W2 - R2}" stroke="${css('--muted')}" stroke-dasharray="4 4"/><text x="${W2 - R2}" y="${Y2(evpi) - 5}" text-anchor="end">population EVPI ${money(evpi)}</text>`;
+    o2 += `<path d="${rows.map((r, i) => `${i ? 'L' : 'M'}${X2(r.n)},${Y2(r.evsi)}`).join('')}" fill="none" stroke="${css('--accent')}" stroke-width="2.6"/>`;
+    o2 += `<path d="${rows.map((r, i) => `${i ? 'L' : 'M'}${X2(r.n)},${Y2(r.enbs)}`).join('')}" fill="none" stroke="${css('--accent2')}" stroke-width="2.6"/>`;
+    if (best.enbs > 0) o2 += `<circle cx="${X2(best.n)}" cy="${Y2(best.enbs)}" r="6" fill="${css('--accent2')}"/>`;
+    o2 += [10, 100, 1000, 10000].map(n => `<text x="${X2(n)}" y="${H2 - 14}" text-anchor="middle">${fmt(n)}</text>`).join('') + `<text x="${(L2 + W2) / 2}" y="${H2 - 1}" text-anchor="middle">trial participants (log scale)</text><text x="${L2 + 4}" y="${T2 + 8}" style="fill:${css('--accent')}">EVSI</text><text x="${L2 + 4}" y="${T2 + 22}" style="fill:${css('--accent2')}">ENBS = EVSI − trial cost</text>`;
+    $('evsi').innerHTML = o2;
+    $('note').innerHTML = best.enbs > 0 ? `Commission a trial of about <b>${fmt(best.n)}</b> participants. It is expected to be worth <b>${money(best.evsi)}</b> in better decisions, against a cost of ${money(FIXED + pp * best.n)}: a net gain of ${money(best.enbs)}.` : `No trial pays for itself here. With a ${fmt(wrong * 100)}% chance of being wrong across ${fmt(pop)} patients, the decision is ${m >= 0 ? 'to fund' : 'to decline'} now, and research money is better spent elsewhere.`;
+  }
+  document.querySelectorAll('input').forEach(i => i.addEventListener('input', run));
+  matchMedia('(prefers-color-scheme: dark)').addEventListener?.('change', run);
+  run();
+})();
+</script><section id="play" style="margin:56px auto 0;max-width:1120px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))"><div style="border-radius:16px;padding:22px 24px;background:#0e2129;color:#cde3da"><div style="font:600 12px ui-monospace,monospace;letter-spacing:.18em;color:#ffd07a">TRY IT IN HEALTH OF NATIONS</div><div style="font-size:clamp(22px,3vw,30px);font-family:Georgia,serif;margin:6px 0 4px;color:#fff">Now govern it.</div><p style="margin:0;line-height:1.6;max-width:70ch">You've operated the model. In the game you're the Minister of Health of a whole country, and this chapter's idea is one of the forces you'll have to manage. The seed is fixed, so everyone in the class governs the identical country and results can be compared.</p><div style="border:1px solid #7a8a80;border-radius:12px;padding:14px 16px;margin-top:10px"><div style="font:500 11px ui-monospace,monospace;letter-spacing:.1em;text-transform:uppercase;opacity:.75">Classroom run · seed 30609 · minister · beveridge</div><div style="font-size:18px;font-weight:600;margin:4px 0 6px">Paying to know</div><p style="margin:0 0 10px;line-height:1.6">In Year 1, commission registry studies on the two therapies with the widest evidence brackets before deciding whether to fund them. Replay the seed without studies. Did the studies change any decision? If not, what was their value of information?</p><a data-game="?assignment=a9" href="#" target="_blank" rel="noopener" style="display:inline-block;background:#ffd07a;color:#1a1408;font-weight:700;text-decoration:none;border-radius:8px;padding:8px 14px">Play this run in Health of Nations ↗</a></div></div></section><script>(()=>{const live='https://austinhendersoneconomist.github.io/health-of-nations-play/';const local=/github\.io$|^localhost$|^127\.0\.0\.1$/.test(location.hostname)&&!/\/artifact\//.test(location.pathname);const base=local?'../':live;document.querySelectorAll('[data-game]').forEach(a=>{a.href=base+(a.dataset.game||'')});})();</script></body></html>
